@@ -1,13 +1,15 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export default function ActionLinks() {
   return (
     <>
-      <Button variant="outline" className="mr-2">
-        Log In
-      </Button>
-      <Button>Sign Up</Button>
+      <SignedOut>
+        <SignInButton />
+      </SignedOut>
+      <SignedIn>
+        <UserButton />
+      </SignedIn>
     </>
   );
 }
