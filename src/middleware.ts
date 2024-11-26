@@ -10,8 +10,13 @@ const isPublicRoute = createRouteMatcher([
   "/home(.*)",
 ]);
 
+const isPrivateRoute = createRouteMatcher([
+  "/dashboard(.*)",
+  "/dashboard/generate-receipt(.*)",
+]);
+
 export default clerkMiddleware(async (auth, request) => {
-  if (!isPublicRoute(request)) {
+  if (isPrivateRoute(request)) {
     await auth.protect();
   }
 });

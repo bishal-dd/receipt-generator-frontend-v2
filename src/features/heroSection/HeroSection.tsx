@@ -8,8 +8,7 @@ export default function HeroSection() {
         Digitally
       </h1>
       <p className="mb-8 text-xl text-gray-300 md:text-2xl">
-        Effortlessly manage, sign, and store your documents in one secure
-        platform.
+        Effortlessly manage, your paperwork
       </p>
       <div className="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-x-4 sm:space-y-0">
         <Button size="lg" className="text-lg">
