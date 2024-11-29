@@ -1,3 +1,4 @@
+"use client";
 import { Input } from "@/components/ui/input";
 
 import {
@@ -15,8 +16,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
+import { useGenerateReceipt } from "./data/hooks";
 export default function GenerateReceipt() {
+  const { getUserProfile } = useGenerateReceipt(
+    "user_2aJJmO4RbjoifZhuqxFwiFs0WAd"
+  );
+  const { profile } = getUserProfile();
+  console.log(profile);
   const receiptData = {
     companyName: "Acme Corporation",
     companyAddress: "123 Business St, City, State 12345",
