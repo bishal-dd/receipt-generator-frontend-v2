@@ -1,19 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
 import { requestAPI } from "@/utils";
 import { userProfileQuery } from "../graphql/queries/userProfile";
-import { UserProfileQuery } from "@/gql/graphql";
+import { UserProfileQuery, ProfileFragmentFragment } from "@/gql/graphql";
 export function useGenerateReceipt(userId: string) {
   const getUserProfile = () => {
-    const { data, isLoading, error } = useQuery({
+    const { data, isLoading, error } = useQuery<UserProfileQuery, Error>({
       queryKey: ["userProfile", userId],
       queryFn: async () => {
-        return await requestAPI(userProfileQuery, { userId });
+        const response = await requestAPI<UserProfileQuery>(userProfileQuery, {
+          userId,
+        });
+        return response;
       },
-      enabled: !!userId,
+      enabled: !!userId, // Only run query if userId exists
     });
-
+    console.log(data);
+    const profile = data?.profileByUserId as ProfileFragmentFragment;
     return {
-      profile: data?.profileByUserId,
+      profile: profile,
       isLoading,
       error,
     };

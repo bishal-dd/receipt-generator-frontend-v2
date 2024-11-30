@@ -17,14 +17,41 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useGenerateReceipt } from "./data/hooks";
+import { useOrganization } from "@clerk/nextjs";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import { Header } from "./ui/Header";
 export default function GenerateReceipt() {
+  const { organization, isLoaded } = useOrganization({ memberships: true });
+
+  // Loading state
+  if (!isLoaded) {
+    return <div>Loading...</div>;
+  }
+
+  // Default values
+  console.log(organization);
+  const organizationName = organization?.name || "No Organization";
+  const organizationImageUrl = organization?.imageUrl || "";
+  const orgHasImage = organization?.hasImage;
+  console.log(organizationImageUrl);
   const { getUserProfile } = useGenerateReceipt(
     "user_2aJJmO4RbjoifZhuqxFwiFs0WAd"
   );
+
   const { profile } = getUserProfile();
   console.log(profile);
+
+  const organizationProfile = {
+    name: organizationName || "",
+    email: profile?.email || "",
+    phone: profile?.phone_no || "",
+    address: profile?.address || "",
+    imageUrl: organizationImageUrl,
+    hasImage: orgHasImage,
+  };
   const receiptData = {
-    companyName: "Acme Corporation",
+    companyName: organizationName,
     companyAddress: "123 Business St, City, State 12345",
     companyPhone: "(555) 123-4567",
     companyEmail: "info@acmecorp.com",
@@ -45,40 +72,12 @@ export default function GenerateReceipt() {
     notes:
       "Thank you for your business! Please keep this receipt for your records.",
   };
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen  lg:w-[80vw]">
       <Card className="w-full max-w-3xl mx-auto">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold text-center">
-            <Input
-              defaultValue={receiptData.companyName}
-              placeholder="Company Name"
-              className="text-2xl font-bold text-center w-auto mx-auto "
-            />
-          </CardTitle>
-          <div className="text-center text-sm text-gray-500 space-y-2">
-            <p className="flex justify-center">
-              <Input
-                defaultValue={receiptData.companyAddress}
-                placeholder="Company Address"
-                className="w-full max-w-md mx-auto text-center"
-              />
-            </p>
-            <p className="flex justify-center gap-2">
-              <Input
-                defaultValue={receiptData.companyPhone}
-                placeholder="Company Phone"
-                className="w-auto max-w-xs"
-              />{" "}
-              |
-              <Input
-                defaultValue={receiptData.companyEmail}
-                placeholder="Company Email"
-                className="w-auto max-w-xs"
-              />
-            </p>
-          </div>
-        </CardHeader>
+        <Header organization={organizationProfile} />
+
         <CardContent>
           <div className="flex justify-between mb-6">
             <div>
