@@ -15,6 +15,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "\n  fragment ProfileFragment on Profile {\n    id\n    company_name\n    logo_image\n    phone_no\n    email\n    address\n    city\n    title\n    signature_image\n  }\n": types.ProfileFragmentFragmentDoc,
+    "\n  mutation UpdateProfile($input: UpdateProfile!) {\n    updateProfile(input: $input) {\n      ...ProfileFragment\n    }\n  }\n": types.UpdateProfileDocument,
     "\n  query UserProfile($userId: String!) {\n    profileByUserId(userId: $userId) {\n      ...ProfileFragment\n    }\n  }\n": types.UserProfileDocument,
 };
 
@@ -36,6 +37,10 @@ export function graphql(source: string): unknown;
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  fragment ProfileFragment on Profile {\n    id\n    company_name\n    logo_image\n    phone_no\n    email\n    address\n    city\n    title\n    signature_image\n  }\n"): (typeof documents)["\n  fragment ProfileFragment on Profile {\n    id\n    company_name\n    logo_image\n    phone_no\n    email\n    address\n    city\n    title\n    signature_image\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation UpdateProfile($input: UpdateProfile!) {\n    updateProfile(input: $input) {\n      ...ProfileFragment\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateProfile($input: UpdateProfile!) {\n    updateProfile(input: $input) {\n      ...ProfileFragment\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -1,13 +1,6 @@
 "use client";
-import { Input } from "@/components/ui/input";
 
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -16,40 +9,59 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useGenerateReceipt } from "./data/hooks";
+import { useGenerateReceipt, useProfileMutation } from "./data/hooks";
 import { useOrganization } from "@clerk/nextjs";
-import { useEffect, useState } from "react";
-import Image from "next/image";
 import { Header } from "./ui/Header";
+import { UpdateProfile } from "@/gql/graphql";
+import { useQuery } from "@tanstack/react-query";
+import { requestAPI } from "@/utils";
+import { userProfileQuery } from "./data/graphql/queries/userProfile";
+import { UserProfileQuery, ProfileFragmentFragment } from "@/gql/graphql";
+import { useCallback, useMemo } from "react";
+
 export default function GenerateReceipt() {
-  const { organization, isLoaded } = useOrganization({ memberships: true });
+  const userId = "user_2aJJmO4RbjoifZhuqxFwiFs0WAd";
 
-  // Loading state
-  if (!isLoaded) {
-    return <div>Loading...</div>;
-  }
+  const { organization, isLoaded: orgLoaded } = useOrganization({
+    memberships: true,
+  });
+  const { updateProfile } = useProfileMutation();
+  const { profile, profileLoading, error } = useGenerateReceipt(userId);
 
-  // Default values
-  console.log(organization);
-  const organizationName = organization?.name || "No Organization";
-  const organizationImageUrl = organization?.imageUrl || "";
-  const orgHasImage = organization?.hasImage;
-  console.log(organizationImageUrl);
-  const { getUserProfile } = useGenerateReceipt(
-    "user_2aJJmO4RbjoifZhuqxFwiFs0WAd"
+  console.log("herrrrrr");
+
+  const organizationName = useMemo(
+    () => organization?.name || "No Organization",
+    [organization]
+  );
+  const organizationImageUrl = useMemo(
+    () => organization?.imageUrl || "",
+    [organization]
+  );
+  const orgHasImage = useMemo(() => organization?.hasImage, [organization]);
+
+  const updateCompanyName = useCallback(
+    (name: string) => {
+      console.log(name);
+      updateProfile({ id: profile.id, company_name: name });
+    },
+    [updateProfile]
   );
 
-  const { profile } = getUserProfile();
-  console.log(profile);
+  // Memoize organization profile
+  const organizationProfile = useMemo(
+    () => ({
+      name: organizationName,
+      email: profile?.email || "",
+      phone: profile?.phone_no || "",
+      address: profile?.address || "",
+      imageUrl: organizationImageUrl,
+      hasImage: orgHasImage,
+    }),
+    [organizationName, profile, organizationImageUrl, orgHasImage]
+  );
 
-  const organizationProfile = {
-    name: organizationName || "",
-    email: profile?.email || "",
-    phone: profile?.phone_no || "",
-    address: profile?.address || "",
-    imageUrl: organizationImageUrl,
-    hasImage: orgHasImage,
-  };
+  // Keep receiptData outside of return to ensure hooks are always called
   const receiptData = {
     companyName: organizationName,
     companyAddress: "123 Business St, City, State 12345",
@@ -73,11 +85,21 @@ export default function GenerateReceipt() {
       "Thank you for your business! Please keep this receipt for your records.",
   };
 
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen  lg:w-[80vw]">
-      <Card className="w-full max-w-3xl mx-auto">
-        <Header organization={organizationProfile} />
+  // Render based on loading state AFTER all hooks have been called
+  if (!orgLoaded || profileLoading) {
+    return <div>Loading...</div>;
+  }
 
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen lg:w-[80vw]">
+      <Card className="w-full max-w-3xl mx-auto">
+        <Header
+          organization={organizationProfile}
+          updateProfileValues={updateCompanyName}
+        />
         <CardContent>
           <div className="flex justify-between mb-6">
             <div>

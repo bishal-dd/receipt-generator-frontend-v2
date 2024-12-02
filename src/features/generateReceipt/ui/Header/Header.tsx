@@ -2,8 +2,10 @@
 import { Input } from "@/components/ui/input";
 
 import { CardHeader, CardTitle } from "@/components/ui/card";
-
+import { DebounceInput } from "react-debounce-input";
 import Image from "next/image";
+import { UpdateProfile } from "@/gql/graphql";
+import UpdateInput from "./UpdateInput";
 
 type Props = {
   organization: {
@@ -14,8 +16,9 @@ type Props = {
     phone: string | number;
     email: string;
   };
+  updateProfileValues: (name: string) => void;
 };
-export function Header({ organization }: Props) {
+export function Header({ organization, updateProfileValues }: Props) {
   return (
     <div className="flex justify-between mb-6">
       {organization.hasImage ? (
@@ -36,10 +39,13 @@ export function Header({ organization }: Props) {
       >
         <CardHeader className={`${organization.hasImage ? "" : "text-center"}`}>
           <CardTitle className="text-2xl font-bold">
-            <Input
-              defaultValue={organization.name}
-              placeholder="Company Name"
+            <UpdateInput
+              value={organization.name}
+              name="company_name"
               className="text-2xl font-bold text-center w-auto mx-auto"
+              placeholder="Company Name"
+              onChange={updateProfileValues}
+              type="text"
             />
           </CardTitle>
           <div className="text-sm text-gray-500 space-y-2">
