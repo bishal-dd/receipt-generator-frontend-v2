@@ -5,24 +5,28 @@ import { requestAPI } from "@/utils";
 
 export function useProfileMutation() {
   const mutation = useMutation({
-    mutationFn: (input: UpdateProfile) => {
-      return requestAPI(updateProfileMutation, {
-        input,
-      });
+    mutationFn: async (input: UpdateProfile) => {
+      try {
+        return await requestAPI(updateProfileMutation, { input });
+      } catch (error) {
+        console.error("API request failed:", error);
+        throw error;
+      }
     },
   });
 
   const updateProfile = (input: UpdateProfile) => {
-    console.log(input);
     mutation.mutate(input);
   };
 
   const updateProfileAsync = async (input: UpdateProfile) => {
     try {
-      await mutation.mutateAsync(input);
-      console.log("Profile updated successfully");
+      const response = await mutation.mutateAsync(input);
+      console.log("Profile updated successfully:", response);
+      return response;
     } catch (error) {
       console.error("Error updating profile:", error);
+      throw error;
     }
   };
 
@@ -32,5 +36,6 @@ export function useProfileMutation() {
     isLoading: mutation.isPending,
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
+    error: mutation.error,
   };
 }

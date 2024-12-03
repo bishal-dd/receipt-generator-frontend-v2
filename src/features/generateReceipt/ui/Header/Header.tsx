@@ -1,11 +1,6 @@
-"use client";
-import { Input } from "@/components/ui/input";
-
 import { CardHeader, CardTitle } from "@/components/ui/card";
-import { DebounceInput } from "react-debounce-input";
 import Image from "next/image";
-import { UpdateProfile } from "@/gql/graphql";
-import UpdateInput from "./UpdateInput";
+import { UpdateInput } from "@/components/utils";
 
 type Props = {
   organization: {
@@ -16,9 +11,18 @@ type Props = {
     phone: string | number;
     email: string;
   };
-  updateProfileValues: (name: string) => void;
+  updateCompanyName: (name: string) => void;
+  updateCompanyAddress: (address: string) => void;
+  updateCompanyPhone: (phone: number) => void;
+  updateCompanyEmail: (email: string) => void;
 };
-export function Header({ organization, updateProfileValues }: Props) {
+export function Header({
+  organization,
+  updateCompanyName,
+  updateCompanyAddress,
+  updateCompanyPhone,
+  updateCompanyEmail,
+}: Props) {
   return (
     <div className="flex justify-between mb-6">
       {organization.hasImage ? (
@@ -44,29 +48,38 @@ export function Header({ organization, updateProfileValues }: Props) {
               name="company_name"
               className="text-2xl font-bold text-center w-auto mx-auto"
               placeholder="Company Name"
-              onChange={updateProfileValues}
+              onChange={updateCompanyName}
               type="text"
             />
           </CardTitle>
           <div className="text-sm text-gray-500 space-y-2">
             <p className="flex justify-center">
-              <Input
-                defaultValue={organization.address}
-                placeholder="Company Address"
+              <UpdateInput
+                value={organization.address}
+                name="address"
                 className="w-full max-w-md text-center"
+                placeholder="Company Address"
+                onChange={updateCompanyAddress}
+                type="text"
               />
             </p>
             <p className="flex justify-center gap-2">
-              <Input
-                defaultValue={organization.phone}
+              <UpdateInput
+                value={organization.phone}
+                name="phone"
+                className="w-auto max-w-xs"
                 placeholder="Company Phone"
-                className="w-auto max-w-xs"
-              />{" "}
+                onChange={updateCompanyPhone}
+                type="number"
+              />
               |
-              <Input
-                defaultValue={organization.email}
-                placeholder="Company Email"
+              <UpdateInput
+                value={organization.email}
+                name="email"
                 className="w-auto max-w-xs"
+                placeholder="Company Email"
+                onChange={updateCompanyEmail}
+                type="text"
               />
             </p>
           </div>

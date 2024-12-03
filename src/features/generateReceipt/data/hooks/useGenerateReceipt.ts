@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { requestAPI } from "@/utils";
 import { userProfileQuery } from "../graphql/queries/userProfile";
 import { UserProfileQuery, ProfileFragmentFragment } from "@/gql/graphql";
@@ -7,7 +7,7 @@ export function useGenerateReceipt(userId: string) {
     data,
     isLoading: profileLoading,
     error,
-  } = useQuery<UserProfileQuery, Error>({
+  } = useSuspenseQuery<UserProfileQuery, Error>({
     queryKey: ["userProfile", userId],
     queryFn: async () => {
       const response = await requestAPI<UserProfileQuery>(userProfileQuery, {
@@ -15,7 +15,6 @@ export function useGenerateReceipt(userId: string) {
       });
       return response;
     },
-    enabled: !!userId,
   });
   return {
     profile: data?.profileByUserId as ProfileFragmentFragment,
