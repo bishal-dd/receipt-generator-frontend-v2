@@ -73,7 +73,11 @@ export default function GenerateReceipt() {
             <FileUpload
               width={200}
               height={150}
-              defaultPreview={""}
+              defaultPreview={
+                !profile.signature_image || profile.signature_image === ""
+                  ? null
+                  : profile.signature_image
+              }
               uploadText="Seal or Signature"
               userId={userId!}
               orginizationId={organization?.id!}

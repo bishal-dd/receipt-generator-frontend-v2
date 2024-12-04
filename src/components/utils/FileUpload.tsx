@@ -9,7 +9,7 @@ import { getPresignedUrl } from "@/utils";
 interface FileUploadProps {
   width?: number | string;
   height?: number | string;
-  defaultPreview?: string;
+  defaultPreview?: string | null;
   uploadText?: string;
   userId: string;
   orginizationId: string;
@@ -28,18 +28,29 @@ export function FileUpload({
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [uploadProgress, setUploadProgress] = useState<number>(0);
   const [isUploading, setIsUploading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setPreviewUrl(defaultPreview || null);
   }, [defaultPreview]);
 
+  const MAX_FILE_SIZE_MB = 5;
+
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const selectedFile = event.target.files?.[0];
     if (selectedFile) {
-      console.log("Selected file:", selectedFile);
+      setError(null);
+
+      if (selectedFile.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
+        setError(`File size exceeds the limit of ${MAX_FILE_SIZE_MB} MB.`);
+        if (fileInputRef.current) {
+          fileInputRef.current.value = "";
+        }
+        return;
+      }
 
       try {
         setIsUploading(true);
@@ -106,7 +117,9 @@ export function FileUpload({
 
   const handleRemove = (e: React.MouseEvent) => {
     e.stopPropagation();
+    onUpload("");
     setPreviewUrl(null);
+    setError(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -162,6 +175,11 @@ export function FileUpload({
           </div>
         )}
       </div>
+      {error && (
+        <p className="text-red-500 text-sm mt-2" aria-live="assertive">
+          {error}
+        </p>
+      )}
     </div>
   );
 }
