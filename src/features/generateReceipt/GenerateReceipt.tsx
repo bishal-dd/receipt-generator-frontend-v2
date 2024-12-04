@@ -2,7 +2,7 @@
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { useGenerateReceipt, useUpdateProfile } from "./data/hooks";
 import { useOrganization, useUser } from "@clerk/nextjs";
-import { Header, ReceiptInfo, ServiceInfo } from "./ui";
+import { Header, ReceiptInfo, ServiceInfo, Footer } from "./ui";
 import { useMemo } from "react";
 import { FileUpload, UpdateInput } from "@/components/utils";
 
@@ -71,31 +71,14 @@ export default function GenerateReceipt() {
           <ServiceInfo />
         </CardContent>
         <CardFooter>
-          <div className="flex flex-col justify-items-start">
-            <FileUpload
-              width={200}
-              height={150}
-              defaultPreview={
-                !profile.signature_image || profile.signature_image === ""
-                  ? null
-                  : profile.signature_image
-              }
-              uploadText="Seal or Signature"
-              userId={userId!}
-              orginizationId={organization?.id!}
-              onUpload={updateCompanySignature}
-            />
-            <div className="mt-4 w-full max-w-md">
-              <UpdateInput
-                value={organizationProfile.title}
-                name="title"
-                placeholder="Title"
-                onChange={updateCompanyTitle}
-                type="text"
-                className="w-full text-center"
-              />
-            </div>
-          </div>
+          <Footer
+            updateSignature={updateCompanySignature}
+            userId={userId!}
+            title={organizationProfile.title}
+            organizationId={organization?.id!}
+            updateTitle={updateCompanyTitle}
+            signature_image={profile.signature_image}
+          />
         </CardFooter>
       </Card>
     </div>
