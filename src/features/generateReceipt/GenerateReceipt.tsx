@@ -4,7 +4,7 @@ import { useGenerateReceipt, useUpdateProfile } from "./data/hooks";
 import { useOrganization, useUser } from "@clerk/nextjs";
 import { Header, ReceiptInfo, ServiceInfo } from "./ui";
 import { useMemo } from "react";
-import { FileUpload } from "@/components/utils";
+import { FileUpload, UpdateInput } from "@/components/utils";
 
 export default function GenerateReceipt() {
   const { user, isLoaded: userLoaded } = useUser();
@@ -21,6 +21,7 @@ export default function GenerateReceipt() {
     updateCompanyPhone,
     updateCompanyEmail,
     updateCompanySignature,
+    updateCompanyTitle,
   } = useUpdateProfile(profile.id);
 
   const organizationName = useMemo(
@@ -40,6 +41,7 @@ export default function GenerateReceipt() {
       email: profile?.email || "",
       phone: profile?.phone_no || "",
       address: profile?.address || "",
+      title: profile?.title || "",
       imageUrl: organizationImageUrl,
       hasImage: orgHasImage,
     }),
@@ -69,7 +71,7 @@ export default function GenerateReceipt() {
           <ServiceInfo />
         </CardContent>
         <CardFooter>
-          <div className="flex justify-items-start">
+          <div className="flex flex-col justify-items-start">
             <FileUpload
               width={200}
               height={150}
@@ -83,6 +85,16 @@ export default function GenerateReceipt() {
               orginizationId={organization?.id!}
               onUpload={updateCompanySignature}
             />
+            <div className="mt-4 w-full max-w-md">
+              <UpdateInput
+                value={organizationProfile.title}
+                name="title"
+                placeholder="Title"
+                onChange={updateCompanyTitle}
+                type="text"
+                className="w-full text-center"
+              />
+            </div>
           </div>
         </CardFooter>
       </Card>
