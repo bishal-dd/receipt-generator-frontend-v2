@@ -13,5 +13,7 @@ export function useUpdateProfile(profileId: string) {
     updateCompanyAddress: (address: string) => updateField("address", address),
     updateCompanyPhone: (phone: number) => updateField("phone_no", phone),
     updateCompanyEmail: (email: string) => updateField("email", email),
+    updateCompanySignature: (key: string) =>
+      updateField("signature_image", key),
   };
 }

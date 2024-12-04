@@ -3,12 +3,17 @@
 import { useState, useRef, useEffect } from "react";
 import { Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress"; // Import ShadCN Progress
+import { getPresignedUrl } from "@/utils";
 
 interface FileUploadProps {
   width?: number | string;
   height?: number | string;
   defaultPreview?: string;
   uploadText?: string;
+  userId: string;
+  orginizationId: string;
+  onUpload: (key: string) => void;
 }
 
 export function FileUpload({
@@ -16,19 +21,69 @@ export function FileUpload({
   height = 300,
   defaultPreview,
   uploadText,
+  userId,
+  orginizationId,
+  onUpload,
 }: FileUploadProps) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [uploadProgress, setUploadProgress] = useState<number>(0);
+  const [isUploading, setIsUploading] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setPreviewUrl(defaultPreview || null);
   }, [defaultPreview]);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const selectedFile = event.target.files?.[0];
     if (selectedFile) {
-      const imageUrl = URL.createObjectURL(selectedFile);
-      setPreviewUrl(imageUrl);
+      console.log("Selected file:", selectedFile);
+
+      try {
+        setIsUploading(true);
+        setUploadProgress(0);
+
+        const presignedUrl = await getPresignedUrl(
+          selectedFile.name,
+          selectedFile.type,
+          orginizationId,
+          userId
+        );
+
+        const xhr = new XMLHttpRequest();
+        xhr.open("PUT", presignedUrl, true);
+        xhr.setRequestHeader("Content-Type", selectedFile.type);
+
+        xhr.upload.onprogress = (event) => {
+          if (event.lengthComputable) {
+            const progress = (event.loaded / event.total) * 100;
+            setUploadProgress(progress);
+          }
+        };
+
+        xhr.onload = () => {
+          if (xhr.status === 200) {
+            onUpload(`${orginizationId}/${userId}/${selectedFile.name}`);
+            const imageUrl = URL.createObjectURL(selectedFile);
+            setPreviewUrl(imageUrl);
+          } else {
+            console.error("Upload failed", xhr.responseText);
+          }
+          setIsUploading(false);
+        };
+
+        xhr.onerror = () => {
+          console.error("Upload error", xhr.responseText);
+          setIsUploading(false);
+        };
+
+        xhr.send(selectedFile);
+      } catch (error) {
+        console.error("Error uploading file:", error);
+        setIsUploading(false);
+      }
     }
   };
 
@@ -42,8 +97,10 @@ export function FileUpload({
     event.stopPropagation();
     const droppedFile = event.dataTransfer.files?.[0];
     if (droppedFile) {
-      const imageUrl = URL.createObjectURL(droppedFile);
-      setPreviewUrl(imageUrl);
+      fileInputRef.current!.files = event.dataTransfer.files;
+      handleFileChange({
+        target: { files: event.dataTransfer.files },
+      } as React.ChangeEvent<HTMLInputElement>);
     }
   };
 
@@ -97,6 +154,11 @@ export function FileUpload({
             <p className="mt-2 text-sm text-gray-600">
               {uploadText || "Drag and drop or click to upload"}
             </p>
+          </div>
+        )}
+        {isUploading && (
+          <div className="absolute bottom-0 left-0 right-0 p-2">
+            <Progress value={uploadProgress} className="h-2" />
           </div>
         )}
       </div>

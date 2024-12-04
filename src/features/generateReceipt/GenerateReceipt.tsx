@@ -1,17 +1,18 @@
 "use client";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { useGenerateReceipt, useUpdateProfile } from "./data/hooks";
-import { useOrganization } from "@clerk/nextjs";
+import { useOrganization, useUser } from "@clerk/nextjs";
 import { Header, ReceiptInfo, ServiceInfo } from "./ui";
 import { useMemo } from "react";
 import { FileUpload } from "@/components/utils";
 
 export default function GenerateReceipt() {
-  const userId = "user_2aJJmO4RbjoifZhuqxFwiFs0WAd";
+  const { user, isLoaded: userLoaded } = useUser();
+  const userId = user?.id;
   const { organization, isLoaded: orgLoaded } = useOrganization({
     memberships: true,
   });
-  const { profile, profileLoading, error } = useGenerateReceipt(userId);
+  const { profile, profileLoading, error } = useGenerateReceipt(userId!);
   console.log(profile);
   console.log("herrrrrr");
   const {
@@ -19,6 +20,7 @@ export default function GenerateReceipt() {
     updateCompanyAddress,
     updateCompanyPhone,
     updateCompanyEmail,
+    updateCompanySignature,
   } = useUpdateProfile(profile.id);
 
   const organizationName = useMemo(
@@ -45,7 +47,7 @@ export default function GenerateReceipt() {
   );
 
   // Render based on loading state AFTER all hooks have been called
-  if (!orgLoaded || profileLoading) {
+  if (!userLoaded || !orgLoaded || profileLoading) {
     return <div>Loading...</div>;
   }
 
@@ -73,6 +75,9 @@ export default function GenerateReceipt() {
               height={150}
               defaultPreview={""}
               uploadText="Seal or Signature"
+              userId={userId!}
+              orginizationId={organization?.id!}
+              onUpload={updateCompanySignature}
             />
           </div>
         </CardFooter>
