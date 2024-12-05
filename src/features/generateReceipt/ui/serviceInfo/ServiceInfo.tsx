@@ -10,105 +10,136 @@ import {
 } from "@/components/ui/table";
 import { useState } from "react";
 import { Plus, Minus } from "lucide-react";
+import {
+  FieldArrayWithId,
+  FieldErrors,
+  UseFieldArrayAppend,
+  UseFieldArrayRemove,
+  useWatch,
+} from "react-hook-form";
+import { ReceiptFormData } from "../../utils";
+import { Button } from "@/components/ui/button";
 
-export function ServiceInfo() {
-  const [items, setItems] = useState([
-    { description: "", quantity: 1, unitPrice: 0, total: 0 },
-  ]);
-  const TAX_RATE = 0.08;
+type Props = {
+  register: any;
+  control: any; // Replace `any` with appropriate type
+  fields: FieldArrayWithId<ReceiptFormData, "services", "id">[];
+  append: UseFieldArrayAppend<ReceiptFormData, "services">;
+  remove: UseFieldArrayRemove;
+  errors: FieldErrors<ReceiptFormData>;
+};
+export function ServiceInfo({
+  fields,
+  append,
+  remove,
+  errors,
+  register,
+  control,
+}: Props) {
+  const services = useWatch({
+    control,
+    name: "services",
+  });
 
-  const addRow = () => {
-    setItems([
-      ...items,
-      { description: "", quantity: 1, unitPrice: 0, total: 0 },
-    ]);
-  };
+  // Calculate total based on watched services
+  const subtotal = services
+    ? services.reduce(
+        (total: number, field: { quantity: any; unitPrice: any }) =>
+          total + (field.quantity || 0) * (field.unitPrice || 0),
+        0
+      )
+    : 0;
 
-  const removeRow = (index: number) => {
-    setItems(items.filter((_, i) => i !== index));
-  };
-
-  const updateRow = (index: number, field: string, value: any) => {
-    const updatedItems = items.map((item, i) => {
-      if (i === index) {
-        const updatedValue =
-          field === "quantity" || field === "unitPrice"
-            ? parseFloat(value) || 0 // Default to 0 if parsing fails
-            : value;
-
-        const updatedItem = { ...item, [field]: updatedValue };
-
-        // Update total only if both quantity and unitPrice are valid numbers
-        const total =
-          parseFloat(String(updatedItem.quantity)) *
-          parseFloat(String(updatedItem.unitPrice));
-        return { ...updatedItem, total: isNaN(total) ? 0 : total };
-      }
-      return item;
-    });
-
-    setItems(updatedItems);
-  };
-
-  const subtotal = items.reduce((sum, item) => sum + item.total, 0);
-  const tax = subtotal * TAX_RATE;
-  const total = subtotal + tax;
-
+  const taxRate = 0.08;
+  const tax = subtotal * taxRate;
+  const total = subtotal * (1 + taxRate);
   return (
     <>
       <Table>
         <TableHeader>
           <TableRow>
             <TableHead>Actions</TableHead>
-            <TableHead>Description</TableHead>
+            <TableHead>Description </TableHead>
             <TableHead className="text-right">Quantity</TableHead>
             <TableHead className="text-right">Unit Price</TableHead>
             <TableHead className="text-right">Total</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {items.map((item, index) => (
-            <TableRow key={index}>
+          {fields.map((field, index) => (
+            <TableRow key={field.id}>
               <TableCell>
-                <button className="text-green-600 mr-2" onClick={addRow}>
-                  <Plus />
-                </button>
-                <button
-                  className="text-red-600"
-                  onClick={() => removeRow(index)}
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-6 w-6 text-green-700 hover:bg-black/10 hover:text-green-700"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    append({ description: "", quantity: 1, unitPrice: 0 });
+                  }}
                 >
-                  <Minus />
-                </button>
+                  <Plus className="h-4 w-4" />
+                </Button>
+                {fields.length > 1 && (
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-6 w-6 text-red-700 hover:bg-black/10 hover:text-red-700"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      remove(index);
+                    }}
+                  >
+                    <Minus className="h-4 w-4" />
+                  </Button>
+                )}
               </TableCell>
               <TableCell>
                 <Input
                   placeholder="Description"
-                  value={item.description}
-                  onChange={(e) =>
-                    updateRow(index, "description", e.target.value)
-                  }
+                  {...register(`services.${index}.description`)}
                 />
+                {errors.services?.[index]?.description && (
+                  <p className="text-red-600">
+                    {errors.services[index].description?.message}
+                  </p>
+                )}
               </TableCell>
               <TableCell className="text-right">
                 <Input
                   type="number"
                   className="w-20"
-                  value={item.quantity || ""}
-                  onChange={(e) => updateRow(index, "quantity", e.target.value)}
+                  {...register(`services.${index}.quantity`, {
+                    valueAsNumber: true,
+                  })}
                 />
+                {errors.services?.[index]?.quantity && (
+                  <p className="text-red-600">
+                    {errors.services[index].quantity?.message}
+                  </p>
+                )}
               </TableCell>
               <TableCell className="text-right">
                 <Input
                   type="number"
-                  value={item.unitPrice || ""}
+                  {...register(`services.${index}.unitPrice`, {
+                    valueAsNumber: true,
+                  })}
                   className="w-50"
-                  onChange={(e) =>
-                    updateRow(index, "unitPrice", e.target.value)
-                  }
                 />
+                {errors.services?.[index]?.unitPrice && (
+                  <p className="text-red-600">
+                    {errors.services[index].unitPrice?.message}
+                  </p>
+                )}
               </TableCell>
               <TableCell className="text-right">
-                ${item.total.toFixed(2)}
+                {" "}
+                $
+                {(
+                  (services?.[index]?.quantity || 0) *
+                  (services?.[index]?.unitPrice || 0)
+                ).toFixed(2)}{" "}
               </TableCell>
             </TableRow>
           ))}
