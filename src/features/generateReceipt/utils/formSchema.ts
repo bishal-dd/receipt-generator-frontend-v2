@@ -7,6 +7,7 @@ export const receiptSchema = z.object({
   customerEmail: z.string().optional(),
   customerAddress: z.string().optional(),
   paymentMethod: z.string().min(1, "Payment method is required."),
+  date: z.date(),
   paymentNote: z.string().optional(),
   services: z
     .array(

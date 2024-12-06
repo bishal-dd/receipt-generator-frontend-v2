@@ -1,5 +1,12 @@
-"use client";
-import { useState } from "react";
+import { useWatch } from "react-hook-form";
+import {
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { DatePicker } from "@/components/utils";
 import {
@@ -10,56 +17,74 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Controller, useWatch } from "react-hook-form";
 
 type Props = {
-  register: any;
   control: any;
-  errors: any;
 };
-export function ReceiptInfo({ register, errors, control }: Props) {
+
+export function ReceiptInfo({ control }: Props) {
   const paymentMethod = useWatch({
     control,
     name: "paymentMethod",
   });
+
   return (
     <div className="flex justify-between mb-6">
       {/* Left: Bill To Section */}
       <div className="p-5 space-y-5">
         <h2 className="font-semibold">Bill To:</h2>
-        <Input
-          placeholder="Customer Name"
+
+        <FormField
+          control={control}
           name="customerName"
-          {...register("customerName")}
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Input placeholder="Customer Name" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-        {errors.customerName && (
-          <p className="text-red-600">{errors.customerName.message}</p>
-        )}
-        <Input
-          placeholder="Customer Number"
-          name="customerNumber"
-          {...register("customerPhoneNumber")}
+
+        <FormField
+          control={control}
+          name="customerPhoneNumber"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Input placeholder="Customer Number" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-        {errors.customerPhoneNumber && (
-          <p className="text-red-600">{errors.customerPhoneNumber.message}</p>
-        )}
-        <Input
-          placeholder="Customer Email"
-          type="email"
+
+        <FormField
+          control={control}
           name="customerEmail"
-          {...register("customerEmail")}
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Input placeholder="Customer Email" type="email" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-        {errors.customerEmail && (
-          <p className="text-red-600">{errors.customerEmail.message}</p>
-        )}
-        <Input
-          placeholder="Customer Address"
+
+        <FormField
+          control={control}
           name="customerAddress"
-          {...register("customerAddress")}
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Input placeholder="Customer Address" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-        {errors.customerAddress && (
-          <p className="text-red-600">{errors.customerAddress.message}</p>
-        )}
       </div>
 
       {/* Right: Receipt Info Section */}
@@ -71,53 +96,66 @@ export function ReceiptInfo({ register, errors, control }: Props) {
         </div>
 
         {/* Date */}
-        <div className="space-y-1">
-          <label htmlFor="date" className="font-semibold">
-            Date:
-          </label>
-          <div id="date">
-            <DatePicker />
-          </div>
-        </div>
+        <FormField
+          control={control}
+          name="dob"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel>Date of Birth</FormLabel>
+              <DatePicker
+                selected={field.value || new Date()}
+                onSelect={(date) => field.onChange(date)}
+              />
+              <FormDescription>
+                Date is required and must be a valid date.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         {/* Payment Method */}
-        <div className="space-y-1">
-          <span className="font-semibold">Payment Method:</span>
-          <Controller
-            name="paymentMethod"
-            control={control}
-            render={({ field }) => (
-              <Select onValueChange={field.onChange} value={field.value}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Select Payment Method" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="Card">Card</SelectItem>
-                    <SelectItem value="Cash">Cash</SelectItem>
-                    <SelectItem value="BankTransfer">Bank Transfer</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            )}
-          />
-          {errors.paymentMethod && (
-            <p className="text-red-600">{errors.paymentMethod.message}</p>
+        <FormField
+          control={control}
+          name="paymentMethod"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Payment Method</FormLabel>
+              <FormControl>
+                <Select onValueChange={field.onChange} value={field.value}>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Select Payment Method" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="Card">Card</SelectItem>
+                      <SelectItem value="Cash">Cash</SelectItem>
+                      <SelectItem value="BankTransfer">
+                        Bank Transfer
+                      </SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
           )}
-        </div>
+        />
 
         {paymentMethod === "BankTransfer" && (
-          <div className="space-y-1">
-            <span className="font-semibold">Payment Note:</span>
-            <Input
-              placeholder="Enter payment note"
-              name="paymentNote"
-              {...register("paymentNote")}
-            />
-            {errors.paymentNote && (
-              <p className="text-red-600">{errors.paymentNote.message}</p>
+          <FormField
+            control={control}
+            name="paymentNote"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Payment Note</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter payment note" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
             )}
-          </div>
+          />
         )}
       </div>
     </div>

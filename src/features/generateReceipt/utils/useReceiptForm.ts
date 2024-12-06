@@ -3,12 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { receiptSchema, ReceiptFormData } from ".";
 
 export function useReceiptForm() {
-  const {
-    register,
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ReceiptFormData>({
+  const receiptForm = useForm<ReceiptFormData>({
     resolver: zodResolver(receiptSchema),
     defaultValues: {
       customerName: "",
@@ -16,21 +11,19 @@ export function useReceiptForm() {
       customerEmail: "",
       customerAddress: "",
       paymentMethod: "",
+      date: new Date(),
       paymentNote: "",
       services: [{ description: "", quantity: 1, unitPrice: 0 }],
     },
   });
-
+  const { control } = receiptForm;
   const { fields, append, remove } = useFieldArray({
     control,
     name: "services",
   });
 
   return {
-    register,
-    control,
-    handleSubmit,
-    errors,
+    receiptForm,
     fields,
     append,
     remove,

@@ -19,23 +19,22 @@ import {
 } from "react-hook-form";
 import { ReceiptFormData } from "../../utils";
 import { Button } from "@/components/ui/button";
+import {
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 
 type Props = {
-  register: any;
   control: any; // Replace `any` with appropriate type
   fields: FieldArrayWithId<ReceiptFormData, "services", "id">[];
   append: UseFieldArrayAppend<ReceiptFormData, "services">;
   remove: UseFieldArrayRemove;
-  errors: FieldErrors<ReceiptFormData>;
 };
-export function ServiceInfo({
-  fields,
-  append,
-  remove,
-  errors,
-  register,
-  control,
-}: Props) {
+export function ServiceInfo({ fields, append, remove, control }: Props) {
   const services = useWatch({
     control,
     name: "services",
@@ -95,43 +94,70 @@ export function ServiceInfo({
                 )}
               </TableCell>
               <TableCell>
-                <Input
-                  placeholder="Description"
-                  {...register(`services.${index}.description`)}
+                <FormField
+                  control={control}
+                  name={`services.${index}.description`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input placeholder="Description" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
-                {errors.services?.[index]?.description && (
-                  <p className="text-red-600">
-                    {errors.services[index].description?.message}
-                  </p>
-                )}
               </TableCell>
               <TableCell className="text-right">
-                <Input
-                  type="number"
-                  className="w-20"
-                  {...register(`services.${index}.quantity`, {
-                    valueAsNumber: true,
-                  })}
+                <FormField
+                  control={control}
+                  name={`services.${index}.quantity`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          className="w-20"
+                          {...field}
+                          value={field.value || ""}
+                          onChange={(e) =>
+                            field.onChange(
+                              e.target.value === ""
+                                ? ""
+                                : Number(e.target.value)
+                            )
+                          }
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
-                {errors.services?.[index]?.quantity && (
-                  <p className="text-red-600">
-                    {errors.services[index].quantity?.message}
-                  </p>
-                )}
               </TableCell>
               <TableCell className="text-right">
-                <Input
-                  type="number"
-                  {...register(`services.${index}.unitPrice`, {
-                    valueAsNumber: true,
-                  })}
-                  className="w-50"
+                <FormField
+                  control={control}
+                  name={`services.${index}.unitPrice`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          className="w-50"
+                          {...field}
+                          value={field.value || ""}
+                          onChange={(e) =>
+                            field.onChange(
+                              e.target.value === ""
+                                ? ""
+                                : Number(e.target.value)
+                            )
+                          }
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
-                {errors.services?.[index]?.unitPrice && (
-                  <p className="text-red-600">
-                    {errors.services[index].unitPrice?.message}
-                  </p>
-                )}
               </TableCell>
               <TableCell className="text-right">
                 {" "}

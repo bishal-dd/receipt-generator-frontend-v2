@@ -3,13 +3,10 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { useGenerateReceipt, useUpdateProfile } from "./data/hooks";
 import { useOrganization, useUser } from "@clerk/nextjs";
 import { Header, ReceiptInfo, ServiceInfo, Footer } from "./ui";
-import { FormEvent, useMemo } from "react";
-import { FileUpload, UpdateInput } from "@/components/utils";
+import { useMemo } from "react";
 import { Button } from "@/components/ui/button";
-import { receiptSchema, ReceiptFormData, useReceiptForm } from "./utils";
-import { useForm, useFieldArray } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-
+import { ReceiptFormData, useReceiptForm } from "./utils";
+import { Form } from "@/components/ui/form";
 export default function GenerateReceipt() {
   const { user, isLoaded: userLoaded } = useUser();
   const userId = user?.id;
@@ -27,8 +24,7 @@ export default function GenerateReceipt() {
     updateCompanySignature,
     updateCompanyTitle,
   } = useUpdateProfile(profile.id);
-  const { register, control, handleSubmit, errors, fields, append, remove } =
-    useReceiptForm();
+  const { receiptForm, fields, append, remove } = useReceiptForm();
   const organizationName = useMemo(
     () => organization?.name || "No Organization",
     [organization]
@@ -68,43 +64,42 @@ export default function GenerateReceipt() {
   }
   return (
     <div className="flex flex-col items-center justify-center min-h-screen lg:w-[80vw]">
-      <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-3xl">
-        <Card className="w-full max-w-3xl mx-auto">
-          <Header
-            organization={organizationProfile}
-            updateCompanyAddress={updateCompanyAddress}
-            updateCompanyName={updateCompanyName}
-            updateCompanyEmail={updateCompanyEmail}
-            updateCompanyPhone={updateCompanyPhone}
-          />
-          <CardContent>
-            <ReceiptInfo
-              register={register}
-              errors={errors}
-              control={control}
+      <Form {...receiptForm}>
+        <form
+          onSubmit={receiptForm.handleSubmit(onSubmit)}
+          className="w-full max-w-3xl"
+        >
+          <Card className="w-full max-w-3xl mx-auto">
+            <Header
+              organization={organizationProfile}
+              updateCompanyAddress={updateCompanyAddress}
+              updateCompanyName={updateCompanyName}
+              updateCompanyEmail={updateCompanyEmail}
+              updateCompanyPhone={updateCompanyPhone}
             />
-            <ServiceInfo
-              register={register}
-              control={control}
-              fields={fields}
-              append={append}
-              remove={remove}
-              errors={errors}
-            />
-          </CardContent>
-          <CardFooter>
-            <Footer
-              updateSignature={updateCompanySignature}
-              userId={userId!}
-              title={organizationProfile.title}
-              organizationId={organization?.id!}
-              updateTitle={updateCompanyTitle}
-              signature_image={profile.signature_image}
-            />
-          </CardFooter>
-        </Card>
-        <Button type="submit">Send</Button>
-      </form>
+            <CardContent>
+              <ReceiptInfo control={receiptForm.control} />
+              <ServiceInfo
+                control={receiptForm.control}
+                fields={fields}
+                append={append}
+                remove={remove}
+              />
+            </CardContent>
+            <CardFooter>
+              <Footer
+                updateSignature={updateCompanySignature}
+                userId={userId!}
+                title={organizationProfile.title}
+                organizationId={organization?.id!}
+                updateTitle={updateCompanyTitle}
+                signature_image={profile.signature_image}
+              />
+            </CardFooter>
+          </Card>
+          <Button type="submit">Send</Button>
+        </form>
+      </Form>
     </div>
   );
 }
