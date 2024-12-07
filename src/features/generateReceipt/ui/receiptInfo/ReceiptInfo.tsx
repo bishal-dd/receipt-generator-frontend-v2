@@ -91,8 +91,19 @@ export function ReceiptInfo({ control }: Props) {
       <div className="space-y-6">
         {/* Receipt Number */}
         <div className="space-y-1">
-          <span className="font-semibold">Receipt Number:</span>
-          <Input placeholder="Receipt Number" name="receiptNumber" />
+          <FormField
+            control={control}
+            name="receiptNumber"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Receipt Number</FormLabel>
+                <FormControl>
+                  <Input placeholder="Receipt Number" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
 
         {/* Date */}
@@ -101,7 +112,7 @@ export function ReceiptInfo({ control }: Props) {
           name="dob"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Date of Birth</FormLabel>
+              <FormLabel>Date</FormLabel>
               <DatePicker
                 selected={field.value || new Date()}
                 onSelect={(date) => field.onChange(date)}

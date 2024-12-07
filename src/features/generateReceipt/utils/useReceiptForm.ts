@@ -1,6 +1,7 @@
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { receiptSchema, ReceiptFormData } from ".";
+import { generateRandomNumbers } from "@/utils";
 
 export function useReceiptForm() {
   const receiptForm = useForm<ReceiptFormData>({
@@ -10,6 +11,7 @@ export function useReceiptForm() {
       customerPhoneNumber: "",
       customerEmail: "",
       customerAddress: "",
+      receiptNumber: "REC-" + generateRandomNumbers(6),
       paymentMethod: "",
       date: new Date(),
       paymentNote: "",

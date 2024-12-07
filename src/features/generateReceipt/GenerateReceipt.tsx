@@ -7,6 +7,7 @@ import { useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { ReceiptFormData, useReceiptForm } from "./utils";
 import { Form } from "@/components/ui/form";
+
 export default function GenerateReceipt() {
   const { user, isLoaded: userLoaded } = useUser();
   const userId = user?.id;
