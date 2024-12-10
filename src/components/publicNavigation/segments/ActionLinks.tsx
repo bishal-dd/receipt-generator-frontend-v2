@@ -1,5 +1,6 @@
 import React from "react";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import Link from "next/link";
 
 export default function ActionLinks() {
   return (
@@ -8,6 +9,7 @@ export default function ActionLinks() {
         <SignInButton />
       </SignedOut>
       <SignedIn>
+        <Link href={"/dashboard"}>Dashboard</Link>
         <UserButton />
       </SignedIn>
     </>
