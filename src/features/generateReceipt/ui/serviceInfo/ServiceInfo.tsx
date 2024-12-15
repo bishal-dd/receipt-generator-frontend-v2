@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useState } from "react";
-import { Plus, Minus } from "lucide-react";
+import { Plus, Minus, Currency } from "lucide-react";
 import {
   FieldArrayWithId,
   FieldErrors,
@@ -27,7 +27,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
+import { CurrencyInput } from "@/components/utils";
 type Props = {
   control: any; // Replace `any` with appropriate type
   fields: FieldArrayWithId<ReceiptFormData, "services", "id">[];
@@ -61,7 +61,10 @@ export function ServiceInfo({ fields, append, remove, control }: Props) {
             <TableHead>Description </TableHead>
             <TableHead className="text-right">Quantity</TableHead>
             <TableHead className="text-right">Unit Price</TableHead>
-            <TableHead className="text-right">Total</TableHead>
+            <TableHead className="text-right">
+              Total
+              <CurrencyInput />
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -142,7 +145,7 @@ export function ServiceInfo({ fields, append, remove, control }: Props) {
                       <FormControl>
                         <Input
                           type="number"
-                          className="w-50"
+                          className="w-20"
                           {...field}
                           value={field.value || ""}
                           onChange={(e) =>
