@@ -3,19 +3,27 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { useGenerateReceipt, useUpdateProfile } from "./data/hooks";
 import { useOrganization, useUser } from "@clerk/nextjs";
 import { Header, ReceiptInfo, ServiceInfo, Footer } from "./ui";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { ReceiptFormData, useReceiptForm } from "./utils";
 import { Form } from "@/components/ui/form";
+import { useCurrencyStore } from "@/store/currency";
 
 export default function GenerateReceipt() {
   const { user, isLoaded: userLoaded } = useUser();
+
   const userId = user?.id;
   const { organization, isLoaded: orgLoaded } = useOrganization({
     memberships: true,
   });
   const { profile, profileLoading, error } = useGenerateReceipt(userId!);
   console.log(profile);
+  const { currency, setCurrency } = useCurrencyStore();
+  useEffect(() => {
+    if (profile) {
+      setCurrency(profile.currency);
+    }
+  }, []);
   console.log("herrrrrr");
   const {
     updateCompanyName,
@@ -24,6 +32,7 @@ export default function GenerateReceipt() {
     updateCompanyEmail,
     updateCompanySignature,
     updateCompanyTitle,
+    updateCompanyCurrency,
   } = useUpdateProfile(profile.id);
   const { receiptForm, fields, append, remove } = useReceiptForm();
   const organizationName = useMemo(
@@ -85,6 +94,8 @@ export default function GenerateReceipt() {
                 fields={fields}
                 append={append}
                 remove={remove}
+                currency={currency}
+                onSelectCurrency={updateCompanyCurrency}
               />
             </CardContent>
             <CardFooter>

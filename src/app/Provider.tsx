@@ -7,14 +7,16 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const queryClient = new QueryClient();
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        <ClerkProvider>
-          <ClerkLoading>
-            <div>Clerk is loading...</div>
-          </ClerkLoading>
-          <ClerkLoaded>{children}</ClerkLoaded>
-        </ClerkProvider>
-      </QueryClientProvider>
+      <ClerkProvider>
+        <ClerkLoading>
+          <div>Clerk is loading...</div>
+        </ClerkLoading>
+        <ClerkLoaded>
+          <QueryClientProvider client={queryClient}>
+            {children}
+          </QueryClientProvider>
+        </ClerkLoaded>
+      </ClerkProvider>
     </>
   );
 }

@@ -33,8 +33,17 @@ type Props = {
   fields: FieldArrayWithId<ReceiptFormData, "services", "id">[];
   append: UseFieldArrayAppend<ReceiptFormData, "services">;
   remove: UseFieldArrayRemove;
+  currency: string;
+  onSelectCurrency: (currency: string) => void;
 };
-export function ServiceInfo({ fields, append, remove, control }: Props) {
+export function ServiceInfo({
+  fields,
+  append,
+  remove,
+  control,
+  currency,
+  onSelectCurrency,
+}: Props) {
   const services = useWatch({
     control,
     name: "services",
@@ -63,7 +72,10 @@ export function ServiceInfo({ fields, append, remove, control }: Props) {
             <TableHead className="text-right">Unit Price</TableHead>
             <TableHead className="text-right">
               Total
-              <CurrencyInput />
+              <CurrencyInput
+                defaultCurrency={currency}
+                onSelect={onSelectCurrency}
+              />
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -163,8 +175,7 @@ export function ServiceInfo({ fields, append, remove, control }: Props) {
                 />
               </TableCell>
               <TableCell className="text-right">
-                {" "}
-                $
+                {currency}{" "}
                 {(
                   (services?.[index]?.quantity || 0) *
                   (services?.[index]?.unitPrice || 0)
@@ -179,15 +190,21 @@ export function ServiceInfo({ fields, append, remove, control }: Props) {
         <div className="w-1/2">
           <div className="flex justify-between">
             <span>Subtotal:</span>
-            <span>${subtotal.toFixed(2)}</span>
+            <span>
+              {currency} {subtotal.toFixed(2)}
+            </span>
           </div>
           <div className="flex justify-between">
             <span>Tax (8%):</span>
-            <span>${tax.toFixed(2)}</span>
+            <span>
+              {currency} {tax.toFixed(2)}
+            </span>
           </div>
           <div className="flex justify-between font-semibold text-lg mt-2">
             <span>Total:</span>
-            <span>${total.toFixed(2)}</span>
+            <span>
+              {currency} {total.toFixed(2)}
+            </span>
           </div>
         </div>
       </div>

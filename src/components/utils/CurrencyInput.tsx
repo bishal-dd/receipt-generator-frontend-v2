@@ -19,15 +19,25 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import cc from "currency-codes";
+import { useCurrencyStore } from "@/store/currency";
 
+type Props = {
+  defaultCurrency: string;
+  onSelect: (value: string) => void;
+};
 const currencies = cc.codes().map((code) => ({
   code,
   label: `${code} - ${cc.code(code)?.currency || "Unknown"}`,
 }));
-export function CurrencyInput() {
+export function CurrencyInput({ defaultCurrency, onSelect }: Props) {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
-
+  const [value, setValue] = React.useState(defaultCurrency);
+  const { currency, setCurrency } = useCurrencyStore();
+  const onSelectCurrency = (value: string) => {
+    setCurrency(value);
+    onSelect(value);
+    setOpen(false);
+  };
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -37,8 +47,8 @@ export function CurrencyInput() {
           aria-expanded={open}
           className="w-[80px] justify-between"
         >
-          {value
-            ? currencies.find((currency) => currency.code === value)?.code
+          {currency
+            ? currencies.find((currencys) => currencys.code === currency)?.code
             : "USD"}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -49,22 +59,21 @@ export function CurrencyInput() {
           <CommandList>
             <CommandEmpty>No currency found.</CommandEmpty>
             <CommandGroup>
-              {currencies.map((currency) => (
+              {currencies.map((currencys) => (
                 <CommandItem
-                  key={currency.code}
-                  value={currency.code}
+                  key={currencys.code}
+                  value={currencys.code}
                   onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
-                    setOpen(false);
+                    onSelectCurrency(currentValue);
                   }}
                 >
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      value === currency.code ? "opacity-100" : "opacity-0"
+                      currency === currencys.code ? "opacity-100" : "opacity-0"
                     )}
                   />
-                  {currency.label}
+                  {currencys.label}
                 </CommandItem>
               ))}
             </CommandGroup>

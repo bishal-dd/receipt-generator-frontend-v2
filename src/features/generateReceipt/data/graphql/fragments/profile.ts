@@ -11,5 +11,7 @@ graphql(`
     city
     title
     signature_image
+    currency
+    tax
   }
 `);

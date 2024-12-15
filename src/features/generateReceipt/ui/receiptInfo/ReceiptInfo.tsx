@@ -17,6 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { startOfDay } from "date-fns";
 
 type Props = {
   control: any;
@@ -114,7 +115,7 @@ export function ReceiptInfo({ control }: Props) {
             <FormItem className="flex flex-col">
               <FormLabel>Date</FormLabel>
               <DatePicker
-                selected={field.value || new Date()}
+                selected={field.value || startOfDay(new Date())}
                 onSelect={(date) => field.onChange(date)}
               />
               <FormDescription>
