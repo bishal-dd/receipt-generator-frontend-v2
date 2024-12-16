@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Plus, Minus, Currency } from "lucide-react";
 import {
   FieldArrayWithId,
@@ -28,6 +28,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { CurrencyInput } from "@/components/utils";
+import { UpdateInput } from "@/components/utils";
+
 type Props = {
   control: any; // Replace `any` with appropriate type
   fields: FieldArrayWithId<ReceiptFormData, "services", "id">[];
@@ -35,6 +37,9 @@ type Props = {
   remove: UseFieldArrayRemove;
   currency: string;
   onSelectCurrency: (currency: string) => void;
+  updateCompanyTax: (taxValue: number) => void;
+  taxValue: number;
+  setTaxState: (tax: number) => void;
 };
 export function ServiceInfo({
   fields,
@@ -43,6 +48,9 @@ export function ServiceInfo({
   control,
   currency,
   onSelectCurrency,
+  updateCompanyTax,
+  taxValue,
+  setTaxState,
 }: Props) {
   const services = useWatch({
     control,
@@ -50,17 +58,19 @@ export function ServiceInfo({
   });
 
   // Calculate total based on watched services
-  const subtotal = services
-    ? services.reduce(
-        (total: number, field: { quantity: any; unitPrice: any }) =>
-          total + (field.quantity || 0) * (field.unitPrice || 0),
-        0
-      )
-    : 0;
+  const subtotal = useMemo(() => {
+    return services
+      ? services.reduce(
+          (total: number, field: { quantity: any; unitPrice: any }) =>
+            total + (field.quantity || 0) * (field.unitPrice || 0),
+          0
+        )
+      : 0;
+  }, [services]);
 
-  const taxRate = 0.08;
-  const tax = subtotal * taxRate;
-  const total = subtotal * (1 + taxRate);
+  const taxRate = useMemo(() => taxValue / 100, [taxValue]);
+  const tax = useMemo(() => subtotal * taxRate, [subtotal, taxRate]);
+  const total = useMemo(() => subtotal * (1 + taxRate), [subtotal, taxRate]);
   return (
     <>
       <Table>
@@ -194,8 +204,25 @@ export function ServiceInfo({
               {currency} {subtotal.toFixed(2)}
             </span>
           </div>
-          <div className="flex justify-between">
-            <span>Tax (8%):</span>
+          <div className="flex justify-between items-center">
+            <span className="flex items-center gap-1">
+              Tax (
+              <UpdateInput
+                value={taxValue === 0 ? "" : taxValue}
+                name="tax"
+                className="text-2xl font-bold text-center w-12"
+                placeholder="Tax"
+                onChange={(value) => {
+                  if (value === "") {
+                    value = 0;
+                  }
+                  setTaxState(value);
+                  updateCompanyTax(value);
+                }}
+                type="text"
+              />
+              %):
+            </span>
             <span>
               {currency} {tax.toFixed(2)}
             </span>

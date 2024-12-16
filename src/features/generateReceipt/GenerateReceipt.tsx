@@ -2,12 +2,13 @@
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { useGenerateReceipt, useUpdateProfile } from "./data/hooks";
 import { useOrganization, useUser } from "@clerk/nextjs";
-import { Header, ReceiptInfo, ServiceInfo, Footer } from "./ui";
+import { Header, ReceiptInfo, ServiceInfo, Footer, SubmitButton } from "./ui";
 import { useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { ReceiptFormData, useReceiptForm } from "./utils";
 import { Form } from "@/components/ui/form";
 import { useCurrencyStore } from "@/store/currency";
+import { useTaxStore } from "@/store/tax";
 
 export default function GenerateReceipt() {
   const { user, isLoaded: userLoaded } = useUser();
@@ -19,9 +20,11 @@ export default function GenerateReceipt() {
   const { profile, profileLoading, error } = useGenerateReceipt(userId!);
   console.log(profile);
   const { currency, setCurrency } = useCurrencyStore();
+  const { tax, setTax } = useTaxStore();
   useEffect(() => {
     if (profile) {
       setCurrency(profile.currency);
+      setTax(profile.tax);
     }
   }, []);
   console.log("herrrrrr");
@@ -33,6 +36,7 @@ export default function GenerateReceipt() {
     updateCompanySignature,
     updateCompanyTitle,
     updateCompanyCurrency,
+    updateCompanyTax,
   } = useUpdateProfile(profile.id);
   const { receiptForm, fields, append, remove } = useReceiptForm();
   const organizationName = useMemo(
@@ -96,6 +100,9 @@ export default function GenerateReceipt() {
                 remove={remove}
                 currency={currency}
                 onSelectCurrency={updateCompanyCurrency}
+                updateCompanyTax={updateCompanyTax}
+                taxValue={tax}
+                setTaxState={setTax}
               />
             </CardContent>
             <CardFooter>
@@ -109,7 +116,7 @@ export default function GenerateReceipt() {
               />
             </CardFooter>
           </Card>
-          <Button type="submit">Send</Button>
+          <SubmitButton />
         </form>
       </Form>
     </div>
