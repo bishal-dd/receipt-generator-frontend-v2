@@ -38,12 +38,12 @@ export function ReceiptInfo({ control }: Props) {
         <FormField
           control={control}
           name="customerName"
-          render={({ field }) => (
+          render={({ field, fieldState: { error } }) => (
             <FormItem>
               <FormControl>
                 <Input placeholder="Customer Name" {...field} />
               </FormControl>
-              <FormMessage />
+              <FormMessage>{error?.message}</FormMessage>{" "}
             </FormItem>
           )}
         />
@@ -51,12 +51,12 @@ export function ReceiptInfo({ control }: Props) {
         <FormField
           control={control}
           name="customerPhoneNumber"
-          render={({ field }) => (
+          render={({ field, fieldState: { error } }) => (
             <FormItem>
               <FormControl>
                 <Input placeholder="Customer Number" {...field} />
               </FormControl>
-              <FormMessage />
+              <FormMessage>{error?.message}</FormMessage>{" "}
             </FormItem>
           )}
         />
@@ -64,12 +64,12 @@ export function ReceiptInfo({ control }: Props) {
         <FormField
           control={control}
           name="customerEmail"
-          render={({ field }) => (
+          render={({ field, fieldState: { error } }) => (
             <FormItem>
               <FormControl>
                 <Input placeholder="Customer Email" type="email" {...field} />
               </FormControl>
-              <FormMessage />
+              <FormMessage>{error?.message}</FormMessage>{" "}
             </FormItem>
           )}
         />
@@ -77,12 +77,12 @@ export function ReceiptInfo({ control }: Props) {
         <FormField
           control={control}
           name="customerAddress"
-          render={({ field }) => (
+          render={({ field, fieldState: { error } }) => (
             <FormItem>
               <FormControl>
                 <Input placeholder="Customer Address" {...field} />
               </FormControl>
-              <FormMessage />
+              <FormMessage>{error?.message}</FormMessage>{" "}
             </FormItem>
           )}
         />

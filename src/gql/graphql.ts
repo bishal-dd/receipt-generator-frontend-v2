@@ -49,23 +49,8 @@ export type CreateReceipt = {
   recipient_address?: InputMaybe<Scalars['String']['input']>;
   recipient_email?: InputMaybe<Scalars['String']['input']>;
   recipient_name: Scalars['String']['input'];
-  recipient_phone: Scalars['String']['input'];
+  recipient_phone?: InputMaybe<Scalars['String']['input']>;
   total_amount?: InputMaybe<Scalars['Float']['input']>;
-  user_id: Scalars['ID']['input'];
-};
-
-export type CreateReceiptPdfGenerator = {
-  Services?: InputMaybe<Array<CreateBulkService>>;
-  date: Scalars['Date']['input'];
-  orginazation_id: Scalars['ID']['input'];
-  payment_method: Scalars['String']['input'];
-  payment_note?: InputMaybe<Scalars['String']['input']>;
-  receipt_name: Scalars['String']['input'];
-  receipt_no: Scalars['String']['input'];
-  recipient_address?: InputMaybe<Scalars['String']['input']>;
-  recipient_email?: InputMaybe<Scalars['String']['input']>;
-  recipient_name: Scalars['String']['input'];
-  recipient_phone: Scalars['String']['input'];
   user_id: Scalars['ID']['input'];
 };
 
@@ -140,12 +125,12 @@ export type MutationDeleteUserArgs = {
 
 
 export type MutationSendReceiptPdfToEmailArgs = {
-  input: CreateReceiptPdfGenerator;
+  input: SendReceiptPdfToEmail;
 };
 
 
 export type MutationSendReceiptPdfToWhatsAppArgs = {
-  input: CreateReceiptPdfGenerator;
+  input: SendReceiptPdfToWhatsApp;
 };
 
 
@@ -258,7 +243,7 @@ export type Receipt = {
   recipient_address?: Maybe<Scalars['String']['output']>;
   recipient_email?: Maybe<Scalars['String']['output']>;
   recipient_name: Scalars['String']['output'];
-  recipient_phone: Scalars['String']['output'];
+  recipient_phone?: Maybe<Scalars['String']['output']>;
   sub_total_amount?: Maybe<Scalars['Float']['output']>;
   tax_amount?: Maybe<Scalars['Float']['output']>;
   total_amount?: Maybe<Scalars['Float']['output']>;
@@ -277,6 +262,36 @@ export type ReceiptEdge = {
   __typename?: 'ReceiptEdge';
   cursor: Scalars['String']['output'];
   node: Receipt;
+};
+
+export type SendReceiptPdfToEmail = {
+  Services?: InputMaybe<Array<CreateBulkService>>;
+  date: Scalars['Date']['input'];
+  orginazation_id: Scalars['ID']['input'];
+  payment_method: Scalars['String']['input'];
+  payment_note?: InputMaybe<Scalars['String']['input']>;
+  receipt_name: Scalars['String']['input'];
+  receipt_no: Scalars['String']['input'];
+  recipient_address?: InputMaybe<Scalars['String']['input']>;
+  recipient_email: Scalars['String']['input'];
+  recipient_name: Scalars['String']['input'];
+  recipient_phone?: InputMaybe<Scalars['String']['input']>;
+  user_id: Scalars['ID']['input'];
+};
+
+export type SendReceiptPdfToWhatsApp = {
+  Services?: InputMaybe<Array<CreateBulkService>>;
+  date: Scalars['Date']['input'];
+  orginazation_id: Scalars['ID']['input'];
+  payment_method: Scalars['String']['input'];
+  payment_note?: InputMaybe<Scalars['String']['input']>;
+  receipt_name: Scalars['String']['input'];
+  receipt_no: Scalars['String']['input'];
+  recipient_address?: InputMaybe<Scalars['String']['input']>;
+  recipient_email?: InputMaybe<Scalars['String']['input']>;
+  recipient_name: Scalars['String']['input'];
+  recipient_phone: Scalars['String']['input'];
+  user_id: Scalars['ID']['input'];
 };
 
 export type Service = {
@@ -355,6 +370,20 @@ export type UserEdge = {
 
 export type ProfileFragmentFragment = { __typename?: 'Profile', id: any, company_name: string, logo_image?: string | null, phone_no: number, email?: string | null, address?: string | null, city?: string | null, title?: string | null, signature_image?: string | null, currency: string, tax: number } & { ' $fragmentName'?: 'ProfileFragmentFragment' };
 
+export type SendReceiptPdfToEmailMutationVariables = Exact<{
+  input: SendReceiptPdfToEmail;
+}>;
+
+
+export type SendReceiptPdfToEmailMutation = { __typename?: 'Mutation', sendReceiptPDFToEmail: boolean };
+
+export type SendReceiptPdfToWhatsAppMutationVariables = Exact<{
+  input: SendReceiptPdfToWhatsApp;
+}>;
+
+
+export type SendReceiptPdfToWhatsAppMutation = { __typename?: 'Mutation', sendReceiptPDFToWhatsApp: boolean };
+
 export type UpdateProfileMutationVariables = Exact<{
   input: UpdateProfile;
 }>;
@@ -376,5 +405,7 @@ export type UserProfileQuery = { __typename?: 'Query', profileByUserId?: (
   ) | null };
 
 export const ProfileFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ProfileFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Profile"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"company_name"}},{"kind":"Field","name":{"kind":"Name","value":"logo_image"}},{"kind":"Field","name":{"kind":"Name","value":"phone_no"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"city"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"signature_image"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"tax"}}]}}]} as unknown as DocumentNode<ProfileFragmentFragment, unknown>;
+export const SendReceiptPdfToEmailDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SendReceiptPDFToEmail"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SendReceiptPDFToEmail"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sendReceiptPDFToEmail"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}]}]}}]} as unknown as DocumentNode<SendReceiptPdfToEmailMutation, SendReceiptPdfToEmailMutationVariables>;
+export const SendReceiptPdfToWhatsAppDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SendReceiptPDFToWhatsApp"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SendReceiptPDFToWhatsApp"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sendReceiptPDFToWhatsApp"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}]}]}}]} as unknown as DocumentNode<SendReceiptPdfToWhatsAppMutation, SendReceiptPdfToWhatsAppMutationVariables>;
 export const UpdateProfileDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateProfile"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateProfile"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateProfile"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ProfileFragment"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ProfileFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Profile"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"company_name"}},{"kind":"Field","name":{"kind":"Name","value":"logo_image"}},{"kind":"Field","name":{"kind":"Name","value":"phone_no"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"city"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"signature_image"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"tax"}}]}}]} as unknown as DocumentNode<UpdateProfileMutation, UpdateProfileMutationVariables>;
 export const UserProfileDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UserProfile"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"profileByUserId"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"userId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ProfileFragment"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ProfileFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Profile"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"company_name"}},{"kind":"Field","name":{"kind":"Name","value":"logo_image"}},{"kind":"Field","name":{"kind":"Name","value":"phone_no"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"city"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"signature_image"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"tax"}}]}}]} as unknown as DocumentNode<UserProfileQuery, UserProfileQueryVariables>;

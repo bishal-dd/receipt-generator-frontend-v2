@@ -3,7 +3,7 @@ import { z } from "zod";
 // Receipt validation schema
 export const receiptSchema = z.object({
   customerName: z.string().min(1, "Customer name is required."),
-  customerPhoneNumber: z.string().min(1, "Customer phone number is required."),
+  customerPhoneNumber: z.string().optional(),
   customerEmail: z.string().optional(),
   customerAddress: z.string().optional(),
   receiptNumber: z.string().min(1, "Receipt number is required."),

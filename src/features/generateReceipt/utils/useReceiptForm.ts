@@ -19,7 +19,7 @@ export function useReceiptForm() {
       services: [{ description: "", quantity: 1, unitPrice: 0 }],
     },
   });
-  const { control } = receiptForm;
+  const { control, handleSubmit } = receiptForm;
   const { fields, append, remove } = useFieldArray({
     control,
     name: "services",
@@ -30,5 +30,6 @@ export function useReceiptForm() {
     fields,
     append,
     remove,
+    handleSubmit,
   };
 }

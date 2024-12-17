@@ -4,22 +4,36 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useReceiptForm, ReceiptFormData } from "../../utils";
 
-export function SubmitButton() {
+type Props = {
+  onSendToWhatsApp: (data: ReceiptFormData) => void;
+  onSendToEmail: (data: ReceiptFormData) => void;
+  onDownload: (data: ReceiptFormData) => void;
+  handleSubmit: (
+    onValid: (data: ReceiptFormData) => void
+  ) => (e?: React.BaseSyntheticEvent) => void;
+};
+export function SubmitButton({
+  onSendToWhatsApp,
+  onSendToEmail,
+  onDownload,
+  handleSubmit,
+}: Props) {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline">Send</Button>
+        <Button>Send</Button>
       </PopoverTrigger>
       <PopoverContent className="w-40 p-2">
         <div className="space-y-2">
-          <Button variant="outline" className="w-full">
+          <Button className="w-full" onClick={handleSubmit(onSendToWhatsApp)}>
             Send To WhatsApp
           </Button>
-          <Button variant="outline" className="w-full">
+          <Button className="w-full" onClick={handleSubmit(onSendToEmail)}>
             Send To Email
           </Button>
-          <Button variant="outline" className="w-full">
+          <Button className="w-full" onClick={handleSubmit(onDownload)}>
             Download
           </Button>
         </div>
