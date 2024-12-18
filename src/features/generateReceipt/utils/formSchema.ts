@@ -6,8 +6,11 @@ export const receiptSchema = z.object({
   customerName: z.string().min(1, "Customer name is required."),
   customerPhoneNumber: z
     .string()
-    .refine(isValidPhoneNumber, { message: "Invalid phone number" })
-    .optional(),
+    .optional()
+    .refine(
+      (val) => !val || isValidPhoneNumber(val), // Allow empty string or valid phone number
+      { message: "Invalid phone number" }
+    ),
   customerEmail: z.string().optional(),
   customerAddress: z.string().optional(),
   receiptNumber: z.string().min(1, "Receipt number is required."),
