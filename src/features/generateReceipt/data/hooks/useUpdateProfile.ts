@@ -19,5 +19,7 @@ export function useUpdateProfile(profileId: string) {
       updateField("currency", currency),
     updateCompanySignature: (key: string) =>
       updateField("signature_image", key),
+    updatePhoneNumberCountryCode: (countryCode: string) =>
+      updateField("phone_number_country_code", countryCode),
   };
 }

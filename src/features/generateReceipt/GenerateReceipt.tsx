@@ -12,8 +12,11 @@ import { useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { ReceiptFormData, useReceiptForm } from "./utils";
 import { Form } from "@/components/ui/form";
-import { useCurrencyStore } from "@/store/currency";
-import { useTaxStore } from "@/store/tax";
+import {
+  useCurrencyStore,
+  useTaxStore,
+  usePhoneNumberCountryCodeStore,
+} from "@/store";
 import { toast } from "sonner";
 import { SendReceiptPdfToWhatsApp, SendReceiptPdfToEmail } from "@/gql/graphql";
 
@@ -30,8 +33,11 @@ export default function GenerateReceipt() {
   console.log(profile);
   const { currency, setCurrency } = useCurrencyStore();
   const { tax, setTax } = useTaxStore();
+  const { phoneNumberCountryCode, setPhoneNumberCountryCode } =
+    usePhoneNumberCountryCodeStore();
   useEffect(() => {
     if (profile) {
+      setPhoneNumberCountryCode(profile.phone_number_country_code);
       setCurrency(profile.currency);
       setTax(profile.tax);
     }
@@ -46,6 +52,7 @@ export default function GenerateReceipt() {
     updateCompanyTitle,
     updateCompanyCurrency,
     updateCompanyTax,
+    updatePhoneNumberCountryCode,
   } = useUpdateProfile(profile.id);
   const { receiptForm, fields, append, remove, handleSubmit } =
     useReceiptForm();
@@ -74,6 +81,7 @@ export default function GenerateReceipt() {
   );
 
   const onSendToWhatsApp = (data: ReceiptFormData) => {
+    console.log(data.customerPhoneNumber);
     if (!data.customerPhoneNumber) {
       toast.error("Please enter customer phone number");
       return;
@@ -164,7 +172,12 @@ export default function GenerateReceipt() {
               updateCompanyPhone={updateCompanyPhone}
             />
             <CardContent>
-              <ReceiptInfo control={receiptForm.control} />
+              <ReceiptInfo
+                control={receiptForm.control}
+                updatePhoneNumberCountryCode={updatePhoneNumberCountryCode}
+                defaultPhoneNumberCountryCode={phoneNumberCountryCode}
+                setPhoneNumberCountryCodeState={setPhoneNumberCountryCode}
+              />
               <ServiceInfo
                 control={receiptForm.control}
                 fields={fields}

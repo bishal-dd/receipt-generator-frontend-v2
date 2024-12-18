@@ -1,9 +1,13 @@
 import { z } from "zod";
+import { isValidPhoneNumber } from "react-phone-number-input";
 
 // Receipt validation schema
 export const receiptSchema = z.object({
   customerName: z.string().min(1, "Customer name is required."),
-  customerPhoneNumber: z.string().optional(),
+  customerPhoneNumber: z
+    .string()
+    .refine(isValidPhoneNumber, { message: "Invalid phone number" })
+    .optional(),
   customerEmail: z.string().optional(),
   customerAddress: z.string().optional(),
   receiptNumber: z.string().min(1, "Receipt number is required."),

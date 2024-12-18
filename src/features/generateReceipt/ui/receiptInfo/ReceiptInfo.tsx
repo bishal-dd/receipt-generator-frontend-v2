@@ -8,7 +8,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { DatePicker } from "@/components/utils";
+import { DatePicker, PhoneInput } from "@/components/utils";
 import {
   Select,
   SelectContent,
@@ -18,12 +18,20 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { startOfDay } from "date-fns";
-
+import * as RPNInput from "react-phone-number-input";
 type Props = {
   control: any;
+  updatePhoneNumberCountryCode: (countryCode: string) => void;
+  setPhoneNumberCountryCodeState: (countryCode: string) => void;
+  defaultPhoneNumberCountryCode: string;
 };
 
-export function ReceiptInfo({ control }: Props) {
+export function ReceiptInfo({
+  control,
+  updatePhoneNumberCountryCode,
+  setPhoneNumberCountryCodeState,
+  defaultPhoneNumberCountryCode,
+}: Props) {
   const paymentMethod = useWatch({
     control,
     name: "paymentMethod",
@@ -54,7 +62,20 @@ export function ReceiptInfo({ control }: Props) {
           render={({ field, fieldState: { error } }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="Customer Number" {...field} />
+                <PhoneInput
+                  placeholder="Customer Number"
+                  {...field}
+                  defaultCountry={
+                    defaultPhoneNumberCountryCode as RPNInput.Country
+                  }
+                  onCountryChange={(country) => {
+                    if (country) {
+                      updatePhoneNumberCountryCode(country);
+                      setPhoneNumberCountryCodeState(country);
+                      console.log("Selected country:", country);
+                    }
+                  }}
+                />
               </FormControl>
               <FormMessage>{error?.message}</FormMessage>{" "}
             </FormItem>
