@@ -76,11 +76,15 @@ export function ServiceInfo({
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Actions</TableHead>
-            <TableHead>Description </TableHead>
-            <TableHead className="text-right">Quantity</TableHead>
-            <TableHead className="text-right">Unit Price</TableHead>
-            <TableHead className="text-right">
+            <TableHead className="w-32 px-4 py-2">Actions</TableHead>
+            <TableHead className="w-64 px-4 py-2">Description </TableHead>
+            <TableHead className="w-24 text-right px-4 py-2">
+              Quantity
+            </TableHead>
+            <TableHead className="w-24 text-right px-4 py-2">
+              Unit Price
+            </TableHead>
+            <TableHead className="w-32 text-right px-4 py-2">
               Total
               <CurrencyInput
                 defaultCurrency={currency}
@@ -91,8 +95,8 @@ export function ServiceInfo({
         </TableHeader>
         <TableBody>
           {fields.map((field, index) => (
-            <TableRow key={field.id}>
-              <TableCell>
+            <TableRow key={field.id} className="h-24">
+              <TableCell className="w-32 px-4 py-2">
                 <Button
                   variant="ghost"
                   size="icon"
@@ -118,12 +122,12 @@ export function ServiceInfo({
                   </Button>
                 )}
               </TableCell>
-              <TableCell>
+              <TableCell className="w-64 px-4 py-2">
                 <FormField
                   control={control}
                   name={`services.${index}.description`}
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="max-h-10">
                       <FormControl>
                         <Input placeholder="Description" {...field} />
                       </FormControl>
@@ -132,12 +136,12 @@ export function ServiceInfo({
                   )}
                 />
               </TableCell>
-              <TableCell className="text-right">
+              <TableCell className="w-24 text-right px-4 py-2">
                 <FormField
                   control={control}
                   name={`services.${index}.quantity`}
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="max-h-10">
                       <FormControl>
                         <Input
                           type="number"
@@ -158,12 +162,12 @@ export function ServiceInfo({
                   )}
                 />
               </TableCell>
-              <TableCell className="text-right">
+              <TableCell className="w-24 text-right px-4 py-2">
                 <FormField
                   control={control}
                   name={`services.${index}.unitPrice`}
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="max-h-10">
                       <FormControl>
                         <Input
                           type="number"
@@ -184,7 +188,7 @@ export function ServiceInfo({
                   )}
                 />
               </TableCell>
-              <TableCell className="text-right">
+              <TableCell className="w-32 text-right px-4 py-2">
                 {currency}{" "}
                 {(
                   (services?.[index]?.quantity || 0) *
