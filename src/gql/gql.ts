@@ -15,6 +15,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "\n  fragment ProfileFragment on Profile {\n    id\n    company_name\n    logo_image\n    phone_no\n    email\n    address\n    city\n    title\n    signature_image\n    currency\n    tax\n    phone_number_country_code\n  }\n": types.ProfileFragmentFragmentDoc,
+    "\n  mutation DownloadReceiptPDF($input: DownloadPDF!) {\n    downloadReceiptPDF(input: $input)\n  }\n": types.DownloadReceiptPdfDocument,
     "\n  mutation SendReceiptPDFToEmail($input: SendReceiptPDFToEmail!) {\n    sendReceiptPDFToEmail(input: $input)\n  }\n": types.SendReceiptPdfToEmailDocument,
     "\n  mutation SendReceiptPDFToWhatsApp($input: SendReceiptPDFToWhatsApp!) {\n    sendReceiptPDFToWhatsApp(input: $input)\n  }\n": types.SendReceiptPdfToWhatsAppDocument,
     "\n  mutation UpdateProfile($input: UpdateProfile!) {\n    updateProfile(input: $input) {\n      ...ProfileFragment\n    }\n  }\n": types.UpdateProfileDocument,
@@ -39,6 +40,10 @@ export function graphql(source: string): unknown;
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  fragment ProfileFragment on Profile {\n    id\n    company_name\n    logo_image\n    phone_no\n    email\n    address\n    city\n    title\n    signature_image\n    currency\n    tax\n    phone_number_country_code\n  }\n"): (typeof documents)["\n  fragment ProfileFragment on Profile {\n    id\n    company_name\n    logo_image\n    phone_no\n    email\n    address\n    city\n    title\n    signature_image\n    currency\n    tax\n    phone_number_country_code\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation DownloadReceiptPDF($input: DownloadPDF!) {\n    downloadReceiptPDF(input: $input)\n  }\n"): (typeof documents)["\n  mutation DownloadReceiptPDF($input: DownloadPDF!) {\n    downloadReceiptPDF(input: $input)\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

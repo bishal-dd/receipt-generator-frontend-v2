@@ -34,7 +34,7 @@ export function SubmitButton({
             Send To Email
           </Button>
           <Button className="w-full" onClick={handleSubmit(onDownload)}>
-            Download
+            View/Download/Print
           </Button>
         </div>
       </PopoverContent>

@@ -5,6 +5,7 @@ import {
   useUpdateProfile,
   useReceiptPDFToWhatsAppMutation,
   useReceiptPDFToEmailMutation,
+  useDownloadReceiptPDFMutation,
 } from "./data/hooks";
 import { useOrganization, useUser } from "@clerk/nextjs";
 import { Header, ReceiptInfo, ServiceInfo, Footer, SubmitButton } from "./ui";
@@ -18,11 +19,14 @@ import {
   usePhoneNumberCountryCodeStore,
 } from "@/store";
 import { toast } from "sonner";
-import { SendReceiptPdfToWhatsApp, SendReceiptPdfToEmail } from "@/gql/graphql";
+import {
+  SendReceiptPdfToWhatsApp,
+  SendReceiptPdfToEmail,
+  DownloadPdf,
+} from "@/gql/graphql";
 
 export default function GenerateReceipt() {
   const { user, isLoaded: userLoaded } = useUser();
-
   const userId = user?.id;
   const { organization, isLoaded: orgLoaded } = useOrganization({
     memberships: true,
@@ -30,6 +34,7 @@ export default function GenerateReceipt() {
   const { profile, profileLoading, error } = useGenerateReceipt(userId!);
   const { sendReceiptPDFToWhatsApp } = useReceiptPDFToWhatsAppMutation();
   const { sendReceiptPDFToEmail } = useReceiptPDFToEmailMutation();
+  const { downloadReceiptPDFAsync } = useDownloadReceiptPDFMutation();
   console.log(profile);
   const { currency, setCurrency } = useCurrencyStore();
   const { tax, setTax } = useTaxStore();
@@ -142,13 +147,42 @@ export default function GenerateReceipt() {
       Services: Services,
     };
     sendReceiptPDFToEmail(input);
-    console.log("Valid data submitted:", data);
-    alert("Receipt successfully submitted!");
+    toast.success("Receipt Successfully Send!.", {
+      description:
+        " If it doesn't arrive in 30s send it agian from the send receipts section",
+    });
   };
 
-  const onDownload = (data: ReceiptFormData) => {
-    console.log("Valid data submitted:", data);
-    alert("Receipt successfully downloaded!");
+  const onDownload = async (data: ReceiptFormData) => {
+    const Services = data.services.map((service) => {
+      return {
+        description: service.description,
+        quantity: service.quantity,
+        rate: service.unitPrice,
+        amount: service.unitPrice * service.quantity,
+      };
+    });
+    const input: DownloadPdf = {
+      receipt_name: "Test",
+      recipient_name: data.customerName,
+      recipient_phone: data.customerPhoneNumber,
+      recipient_email: data.customerEmail,
+      recipient_address: data.customerAddress,
+      receipt_no: data.receiptNumber,
+      payment_method: data.paymentMethod,
+      payment_note: data.paymentNote,
+      date: data.date,
+      user_id: userId!,
+      orginazation_id: organization?.id!,
+      Services: Services,
+    };
+    const pdfUrl = await downloadReceiptPDFAsync(input);
+    const a = document.createElement("a");
+    a.href = pdfUrl;
+    a.download = `receipt-${data.receiptNumber}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   };
 
   // Render based on loading state AFTER all hooks have been called
