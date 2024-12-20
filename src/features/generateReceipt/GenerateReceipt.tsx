@@ -8,8 +8,15 @@ import {
   useDownloadReceiptPDFMutation,
 } from "./data/hooks";
 import { useOrganization, useUser } from "@clerk/nextjs";
-import { Header, ReceiptInfo, ServiceInfo, Footer, SubmitButton } from "./ui";
-import { useEffect, useMemo } from "react";
+import {
+  Header,
+  ReceiptInfo,
+  ServiceInfo,
+  Footer,
+  SubmitButton,
+  ViewPdfModal,
+} from "./ui";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ReceiptFormData, useReceiptForm } from "./utils";
 import { Form } from "@/components/ui/form";
@@ -40,6 +47,8 @@ export default function GenerateReceipt() {
   const { tax, setTax } = useTaxStore();
   const { phoneNumberCountryCode, setPhoneNumberCountryCode } =
     usePhoneNumberCountryCodeStore();
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   useEffect(() => {
     if (profile) {
       setPhoneNumberCountryCode(profile.phone_number_country_code);
@@ -154,6 +163,8 @@ export default function GenerateReceipt() {
   };
 
   const onDownload = async (data: ReceiptFormData) => {
+    setIsModalOpen(true);
+
     const Services = data.services.map((service) => {
       return {
         description: service.description,
@@ -177,12 +188,7 @@ export default function GenerateReceipt() {
       Services: Services,
     };
     const pdfUrl = await downloadReceiptPDFAsync(input);
-    const a = document.createElement("a");
-    a.href = pdfUrl;
-    a.download = `receipt-${data.receiptNumber}.pdf`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    setPdfUrl(pdfUrl);
   };
 
   // Render based on loading state AFTER all hooks have been called
@@ -245,6 +251,11 @@ export default function GenerateReceipt() {
           </Card>
         </form>
       </Form>
+      <ViewPdfModal
+        fileUrl={pdfUrl}
+        setIsModalOpen={setIsModalOpen}
+        isModalOpen={isModalOpen}
+      />
     </div>
   );
 }
