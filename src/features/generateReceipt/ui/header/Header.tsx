@@ -1,6 +1,7 @@
 import { CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { UpdateInput } from "@/components/utils";
+import Link from "next/link";
 
 type Props = {
   organization: {
@@ -44,6 +45,7 @@ export function Header({
       >
         <CardHeader className={`${organization.hasImage ? "" : "text-center"}`}>
           <CardTitle className="text-2xl font-bold">
+            <Link href="organization-profile"> Update Name </Link>
             <UpdateInput
               value={organization.name}
               name="company_name"
@@ -51,6 +53,8 @@ export function Header({
               placeholder="Company Name"
               onChange={updateCompanyName}
               type="text"
+              isDisabled={true}
+              
             />
           </CardTitle>
           <div className="text-sm text-gray-500 space-y-2">

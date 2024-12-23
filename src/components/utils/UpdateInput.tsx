@@ -11,6 +11,7 @@ type Props = {
   type: string;
   className: string;
   onChange: (val: any) => void;
+  isDisabled?: boolean;
 };
 
 function UpdateInput(props: Props) {
@@ -49,6 +50,7 @@ function UpdateInput(props: Props) {
       className={props.className}
       onChange={handleChange}
       onKeyDown={handleKeyDown}
+      disabled={props.isDisabled || false}
     />
   );
 }
