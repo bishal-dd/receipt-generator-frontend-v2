@@ -68,7 +68,7 @@ export default function GenerateReceipt() {
     updateCompanyTax,
     updatePhoneNumberCountryCode,
   } = useUpdateProfile(profile.id);
-  const { receiptForm, fields, append, remove, handleSubmit } =
+  const { receiptForm, fields, append, remove, handleSubmit, reset } =
     useReceiptForm();
   const organizationName = useMemo(
     () => organization?.name || "No Organization",
@@ -124,8 +124,11 @@ export default function GenerateReceipt() {
       Services: Services,
     };
     sendReceiptPDFToWhatsApp(input);
-    console.log("Valid data submitted:", data);
-    alert("Receipt successfully submitted!");
+    toast.success("Receipt Successfully Send!.", {
+      description:
+        " If it doesn't arrive in 30s send it agian from the send receipts section",
+    });
+    reset();
   };
 
   const onSendToEmail = (data: ReceiptFormData) => {
@@ -160,6 +163,7 @@ export default function GenerateReceipt() {
       description:
         " If it doesn't arrive in 30s send it agian from the send receipts section",
     });
+    reset();
   };
 
   const onDownload = async (data: ReceiptFormData) => {
@@ -189,6 +193,7 @@ export default function GenerateReceipt() {
     };
     const pdfUrl = await downloadReceiptPDFAsync(input);
     setPdfUrl(pdfUrl);
+    reset();
   };
 
   // Render based on loading state AFTER all hooks have been called

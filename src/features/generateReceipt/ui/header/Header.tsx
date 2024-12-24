@@ -2,6 +2,12 @@ import { CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { UpdateInput } from "@/components/utils";
 import Link from "next/link";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 type Props = {
   organization: {
@@ -28,14 +34,16 @@ export function Header({
     <div className="flex justify-between mb-6">
       {organization.hasImage ? (
         <div className="flex items-center justify-center p-5">
-          <Image
-            src={organization.imageUrl}
-            alt="Logo"
-            width={100}
-            height={100}
-            className="rounded-md"
-            priority={true}
-          />
+          <Link href={"organization-profile"}>
+            <Image
+              src={organization.imageUrl}
+              alt="Logo"
+              width={100}
+              height={100}
+              className="rounded-md"
+              priority={true}
+            />
+          </Link>
         </div>
       ) : null}
       <div
@@ -44,18 +52,26 @@ export function Header({
         }`}
       >
         <CardHeader className={`${organization.hasImage ? "" : "text-center"}`}>
-          <CardTitle className="text-2xl font-bold">
-            <Link href="organization-profile"> Update Name </Link>
-            <UpdateInput
-              value={organization.name}
-              name="company_name"
-              className="text-2xl font-bold text-center w-auto mx-auto"
-              placeholder="Company Name"
-              onChange={updateCompanyName}
-              type="text"
-              isDisabled={true}
-              
-            />
+          <CardTitle className="text-2xl font-bold text-center">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  {" "}
+                  <UpdateInput
+                    value={organization.name}
+                    name="company_name"
+                    className="text-2xl font-bold text-center w-auto mx-auto"
+                    placeholder="Company Name"
+                    onChange={updateCompanyName}
+                    type="text"
+                    isDisabled={true}
+                  />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <Link href={"organization-profile"}>Update Company Name</Link>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </CardTitle>
           <div className="text-sm text-gray-500 space-y-2">
             <p className="flex justify-center">

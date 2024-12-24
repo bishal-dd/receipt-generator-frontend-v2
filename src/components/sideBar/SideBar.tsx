@@ -26,6 +26,11 @@ const items = [
     icon: Receipt,
   },
   {
+    title: "Receipts",
+    url: "/dashboard/view-receipts",
+    icon: Receipt,
+  },
+  {
     title: "Organization Profile",
     url: "/dashboard/organization-profile",
     icon: Building,
