@@ -21,6 +21,7 @@ const documents = {
     "\n  mutation UpdateProfile($input: UpdateProfile!) {\n    updateProfile(input: $input) {\n      ...ProfileFragment\n    }\n  }\n": types.UpdateProfileDocument,
     "\n  query UserProfile($userId: String!) {\n    profileByUserId(userId: $userId) {\n      ...ProfileFragment\n    }\n  }\n": types.UserProfileDocument,
     "\n  fragment ReceiptFragment on Receipt {\n    id\n    receipt_name\n    recipient_name\n    recipient_phone\n    recipient_email\n    recipient_address\n    receipt_no\n    user_id\n    date\n    payment_method\n    payment_note\n    total_amount\n  }\n": types.ReceiptFragmentFragmentDoc,
+    "\n  query SearchReceipts($page: Int!) {\n    searchReceipts(page: $page) {\n      totalCount\n      foundCount\n      receipts {\n        id\n        receipt_name\n        recipient_name\n        recipient_phone\n        recipient_email\n        recipient_address\n        receipt_no\n        user_id\n        date\n        total_amount\n        payment_method\n      }\n    }\n  }\n": types.SearchReceiptsDocument,
     "\n  query GetUserReceipts {\n    receipts {\n      edges {\n        node {\n          ...ReceiptFragment\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        startCursor\n        hasNextPage\n        hasPreviousPage\n      }\n    }\n  }\n": types.GetUserReceiptsDocument,
 };
 
@@ -66,6 +67,10 @@ export function graphql(source: "\n  query UserProfile($userId: String!) {\n    
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  fragment ReceiptFragment on Receipt {\n    id\n    receipt_name\n    recipient_name\n    recipient_phone\n    recipient_email\n    recipient_address\n    receipt_no\n    user_id\n    date\n    payment_method\n    payment_note\n    total_amount\n  }\n"): (typeof documents)["\n  fragment ReceiptFragment on Receipt {\n    id\n    receipt_name\n    recipient_name\n    recipient_phone\n    recipient_email\n    recipient_address\n    receipt_no\n    user_id\n    date\n    payment_method\n    payment_note\n    total_amount\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query SearchReceipts($page: Int!) {\n    searchReceipts(page: $page) {\n      totalCount\n      foundCount\n      receipts {\n        id\n        receipt_name\n        recipient_name\n        recipient_phone\n        recipient_email\n        recipient_address\n        receipt_no\n        user_id\n        date\n        total_amount\n        payment_method\n      }\n    }\n  }\n"): (typeof documents)["\n  query SearchReceipts($page: Int!) {\n    searchReceipts(page: $page) {\n      totalCount\n      foundCount\n      receipts {\n        id\n        receipt_name\n        recipient_name\n        recipient_phone\n        recipient_email\n        recipient_address\n        receipt_no\n        user_id\n        date\n        total_amount\n        payment_method\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

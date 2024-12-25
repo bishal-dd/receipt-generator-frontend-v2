@@ -204,6 +204,7 @@ export type Query = {
   profileByUserId?: Maybe<Profile>;
   receipt?: Maybe<Receipt>;
   receipts: ReceiptConnection;
+  searchReceipts: SearchReceipt;
   service?: Maybe<Service>;
   serviceByReceiptId?: Maybe<Array<Maybe<Service>>>;
   user?: Maybe<User>;
@@ -229,6 +230,11 @@ export type QueryReceiptArgs = {
 export type QueryReceiptsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QuerySearchReceiptsArgs = {
+  page: Scalars['Int']['input'];
 };
 
 
@@ -285,6 +291,13 @@ export type ReceiptEdge = {
   __typename?: 'ReceiptEdge';
   cursor: Scalars['String']['output'];
   node: Receipt;
+};
+
+export type SearchReceipt = {
+  __typename?: 'SearchReceipt';
+  foundCount: Scalars['Int']['output'];
+  receipts: Array<Receipt>;
+  totalCount: Scalars['Int']['output'];
 };
 
 export type SendReceiptPdfToEmail = {
@@ -437,6 +450,13 @@ export type UserProfileQuery = { __typename?: 'Query', profileByUserId?: (
 
 export type ReceiptFragmentFragment = { __typename?: 'Receipt', id: any, receipt_name: string, recipient_name: string, recipient_phone?: string | null, recipient_email?: string | null, recipient_address?: string | null, receipt_no: string, user_id: string, date: any, payment_method: string, payment_note?: string | null, total_amount?: number | null } & { ' $fragmentName'?: 'ReceiptFragmentFragment' };
 
+export type SearchReceiptsQueryVariables = Exact<{
+  page: Scalars['Int']['input'];
+}>;
+
+
+export type SearchReceiptsQuery = { __typename?: 'Query', searchReceipts: { __typename?: 'SearchReceipt', totalCount: number, foundCount: number, receipts: Array<{ __typename?: 'Receipt', id: any, receipt_name: string, recipient_name: string, recipient_phone?: string | null, recipient_email?: string | null, recipient_address?: string | null, receipt_no: string, user_id: string, date: any, total_amount?: number | null, payment_method: string }> } };
+
 export type GetUserReceiptsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -452,4 +472,5 @@ export const SendReceiptPdfToEmailDocument = {"kind":"Document","definitions":[{
 export const SendReceiptPdfToWhatsAppDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SendReceiptPDFToWhatsApp"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SendReceiptPDFToWhatsApp"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sendReceiptPDFToWhatsApp"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}]}]}}]} as unknown as DocumentNode<SendReceiptPdfToWhatsAppMutation, SendReceiptPdfToWhatsAppMutationVariables>;
 export const UpdateProfileDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateProfile"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateProfile"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateProfile"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ProfileFragment"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ProfileFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Profile"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"company_name"}},{"kind":"Field","name":{"kind":"Name","value":"logo_image"}},{"kind":"Field","name":{"kind":"Name","value":"phone_no"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"city"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"signature_image"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"tax"}},{"kind":"Field","name":{"kind":"Name","value":"phone_number_country_code"}}]}}]} as unknown as DocumentNode<UpdateProfileMutation, UpdateProfileMutationVariables>;
 export const UserProfileDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UserProfile"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"profileByUserId"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"userId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ProfileFragment"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ProfileFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Profile"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"company_name"}},{"kind":"Field","name":{"kind":"Name","value":"logo_image"}},{"kind":"Field","name":{"kind":"Name","value":"phone_no"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"city"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"signature_image"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"tax"}},{"kind":"Field","name":{"kind":"Name","value":"phone_number_country_code"}}]}}]} as unknown as DocumentNode<UserProfileQuery, UserProfileQueryVariables>;
+export const SearchReceiptsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchReceipts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"page"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"searchReceipts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"page"},"value":{"kind":"Variable","name":{"kind":"Name","value":"page"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"totalCount"}},{"kind":"Field","name":{"kind":"Name","value":"foundCount"}},{"kind":"Field","name":{"kind":"Name","value":"receipts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"receipt_name"}},{"kind":"Field","name":{"kind":"Name","value":"recipient_name"}},{"kind":"Field","name":{"kind":"Name","value":"recipient_phone"}},{"kind":"Field","name":{"kind":"Name","value":"recipient_email"}},{"kind":"Field","name":{"kind":"Name","value":"recipient_address"}},{"kind":"Field","name":{"kind":"Name","value":"receipt_no"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"total_amount"}},{"kind":"Field","name":{"kind":"Name","value":"payment_method"}}]}}]}}]}}]} as unknown as DocumentNode<SearchReceiptsQuery, SearchReceiptsQueryVariables>;
 export const GetUserReceiptsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserReceipts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"receipts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ReceiptFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"cursor"}}]}},{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"endCursor"}},{"kind":"Field","name":{"kind":"Name","value":"startCursor"}},{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}},{"kind":"Field","name":{"kind":"Name","value":"hasPreviousPage"}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ReceiptFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Receipt"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"receipt_name"}},{"kind":"Field","name":{"kind":"Name","value":"recipient_name"}},{"kind":"Field","name":{"kind":"Name","value":"recipient_phone"}},{"kind":"Field","name":{"kind":"Name","value":"recipient_email"}},{"kind":"Field","name":{"kind":"Name","value":"recipient_address"}},{"kind":"Field","name":{"kind":"Name","value":"receipt_no"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"payment_method"}},{"kind":"Field","name":{"kind":"Name","value":"payment_note"}},{"kind":"Field","name":{"kind":"Name","value":"total_amount"}}]}}]} as unknown as DocumentNode<GetUserReceiptsQuery, GetUserReceiptsQueryVariables>;
