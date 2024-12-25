@@ -29,7 +29,7 @@ export default function ViewReceipts() {
   console.log(currentPage);
   const { receipts, foundCount, totalCount } = useSearchReceipts(currentPage);
   const itemsPerPage = 10;
-  const totalPages = Math.ceil(totalCount / itemsPerPage);
+  const totalPages = Math.ceil(foundCount / itemsPerPage);
   useEffect(() => {
     if (!searchParams?.get("page")) {
       router.push(`?page=1`);
