@@ -14,15 +14,14 @@ import {
 } from "@/components/ui/popover";
 
 type Props = {
-  selected: Date;
+  selected: Date | null;
   onSelect: (date: Date | undefined) => void;
+  isDisabled?: boolean;
 };
-export function DatePicker({ selected, onSelect }: Props) {
-  const [date, setDate] = React.useState<Date>();
-
+export function DatePicker({ selected, onSelect, isDisabled }: Props) {
   return (
     <Popover>
-      <PopoverTrigger asChild>
+      <PopoverTrigger asChild disabled={isDisabled || false}>
         <Button
           variant={"outline"}
           className={cn(
@@ -37,7 +36,7 @@ export function DatePicker({ selected, onSelect }: Props) {
       <PopoverContent className="w-auto p-0">
         <Calendar
           mode="single"
-          selected={selected}
+          selected={selected || undefined}
           onSelect={onSelect}
           initialFocus
         />
