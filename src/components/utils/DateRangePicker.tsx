@@ -13,24 +13,42 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useState } from "react";
 
 type Props = {
-  date: DateRange | undefined;
-  setDate: (date: DateRange | undefined) => void;
   isDisabled?: boolean;
+  date: DateRange | undefined;
+  setDate: (dateRange: DateRange | undefined) => void;
+  setDateRange: (dateRange: [string, string]) => void;
+  resetDateRange: () => void;
 };
 export function DateRangePicker({
+  id,
+  isDisabled,
+  setDateRange,
   date,
   setDate,
-  isDisabled,
   className,
+  resetDateRange,
 }: React.HTMLAttributes<HTMLDivElement> & Props) {
+  const onApply = () => {
+    if (date && date.from && date.to) {
+      setDateRange([
+        format(date.from, "yyyy-MM-dd"),
+        format(date.to, "yyyy-MM-dd"),
+      ]);
+    }
+  };
+
+  const onClear = () => {
+    resetDateRange();
+  };
   return (
     <div className={cn("grid gap-2", className)}>
       <Popover>
         <PopoverTrigger asChild disabled={isDisabled || false}>
           <Button
-            id="date"
+            id={id || ""}
             variant={"outline"}
             className={cn(
               "w-[300px] justify-start text-left font-normal",
@@ -61,6 +79,24 @@ export function DateRangePicker({
             onSelect={setDate}
             numberOfMonths={2}
           />
+          <div className="flex justify-center p-4">
+            <div className="mr-2">
+              <Button
+                onClick={onApply}
+                disabled={!date?.to || !date?.from ? true : false}
+              >
+                Apply
+              </Button>
+            </div>
+            <div>
+              <Button
+                onClick={onClear}
+                disabled={!date?.to || !date?.from ? true : false}
+              >
+                Clear
+              </Button>
+            </div>
+          </div>
         </PopoverContent>
       </Popover>
     </div>

@@ -1,8 +1,18 @@
 import { graphql } from "@/gql";
 
 export const searchReceiptsQuery = graphql(`
-  query SearchReceipts($page: Int!) {
-    searchReceipts(page: $page) {
+  query SearchReceipts(
+    $page: Int!
+    $year: Int
+    $date: String
+    $dateRange: [String!]
+  ) {
+    searchReceipts(
+      page: $page
+      year: $year
+      date: $date
+      dateRange: $dateRange
+    ) {
       totalCount
       foundCount
       receipts {

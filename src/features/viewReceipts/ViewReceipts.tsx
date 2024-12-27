@@ -1,5 +1,5 @@
 "use client";
-import { format, startOfDay, addDays } from "date-fns";
+import { format, startOfDay, addDays, set } from "date-fns";
 import {
   Table,
   TableBody,
@@ -33,24 +33,83 @@ import {
 import { years } from "./utils";
 import { DatePicker, DateRangePicker } from "@/components/utils";
 import { DateRange } from "react-day-picker";
+import { Button } from "@/components/ui/button";
+import { Check, X } from "lucide-react";
 
 export default function ViewReceipts() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const currentPage = searchParams ? Number(searchParams.get("page")) || 1 : 1;
   console.log(currentPage);
+  const currentFilters = searchParams?.get("filters")?.split(",") || [];
   const [date, selectDate] = useState<Date | null>(null);
-  const [dateRange, setDateRange] = useState<DateRange | undefined>();
+  const [dateRange, setDateRange] = useState<[string, string]>();
+  const [dateRangeUI, setDateRangeUI] = useState<DateRange | undefined>();
   const [year, setYear] = useState<string | undefined>();
-  const { receipts, foundCount, totalCount } = useSearchReceipts(currentPage);
+  const { receipts, foundCount, totalCount } = useSearchReceipts(
+    currentPage,
+    Number(year),
+    date ? format(date, "yyyy-MM-dd") : null,
+    dateRange
+  );
   const itemsPerPage = 10;
   const totalPages = Math.ceil(foundCount / itemsPerPage);
   useEffect(() => {
-    if (!searchParams?.get("page")) {
-      router.push(`?page=1`);
+    if (currentFilters.length > 0) {
+      currentFilters.forEach((filter) => {
+        const [type, ...values] = filter.split(":");
+        if (type === "year") {
+          setYear(values[0]);
+        } else if (type === "date") {
+          selectDate(new Date(values[0]));
+        } else if (type === "dateRange" && values.length === 2) {
+          setDateRange([values[0], values[1]]);
+          setDateRangeUI({
+            from: new Date(values[0]),
+            to: new Date(values[1]),
+          });
+        }
+      });
     }
-  }, [searchParams, router]);
+  }, []);
+  const updateUrlWithFilters = (newFilters: string[]) => {
+    const params = new URLSearchParams();
+    params.set("page", "1"); // Reset to first page when filters change
+    if (newFilters.length > 0) {
+      params.set("filters", newFilters.join(","));
+    }
+    router.push(`?${params.toString()}`);
+  };
 
+  // Handler functions for filters
+  const onChangeYear = (value: string) => {
+    setYear(value);
+    updateUrlWithFilters([`year:${value}`]);
+  };
+
+  const onChangeDate = (date: Date | undefined) => {
+    if (date) {
+      selectDate(date);
+      updateUrlWithFilters([`date:${format(date, "yyyy-MM-dd")}`]);
+    }
+  };
+
+  const onChangeDateRange = (dateRange: [string, string]) => {
+    setDateRange(dateRange);
+    updateUrlWithFilters([`dateRange:${dateRange[0]}:${dateRange[1]}`]);
+  };
+  const resetDateRange = () => {
+    setDateRange(undefined);
+    setDateRangeUI(undefined);
+    router.push("?page=1");
+  };
+  const clearFilters = () => {
+    router.push("?page=1"); // Reset URL without filters
+    setYear(undefined);
+    selectDate(null);
+    setDateRange(undefined);
+    setDateRangeUI(undefined);
+  };
   return (
     <div className="flex flex-col items-center justify-center  lg:w-[80vw]">
       <div className="container mx-auto p-4">
@@ -61,7 +120,7 @@ export default function ViewReceipts() {
               Year
             </label>
             <Select
-              onValueChange={(value) => setYear(value)}
+              onValueChange={onChangeYear}
               disabled={dateRange || date ? true : false}
             >
               <SelectTrigger className="w-[180px]">
@@ -86,24 +145,26 @@ export default function ViewReceipts() {
             <DatePicker
               isDisabled={dateRange || year ? true : false}
               selected={date}
-              onSelect={(date) => {
-                selectDate(date ?? null);
-                console.log(date);
-              }}
+              onSelect={onChangeDate}
             />
           </div>
           <div className="flex flex-col space-y-2">
-            <label htmlFor="date" className="text-sm font-medium">
+            <label htmlFor="dateRange" className="text-sm font-medium">
               Date Range
             </label>
             <DateRangePicker
+              id="dateRange"
+              date={dateRangeUI}
+              setDate={setDateRangeUI}
               isDisabled={date || year ? true : false}
-              date={dateRange}
-              setDate={(date) => {
-                console.log(date);
-                setDateRange(date);
-              }}
+              setDateRange={onChangeDateRange}
+              resetDateRange={resetDateRange}
             />
+          </div>
+          <div className="flex flex-col space-y-2">
+            <Button onClick={clearFilters} className="mt-7">
+              Clear Filters
+            </Button>
           </div>
         </div>
         <div className="overflow-x-auto">
@@ -117,6 +178,8 @@ export default function ViewReceipts() {
                 <TableHead>Date</TableHead>
                 <TableHead>Total Amount</TableHead>
                 <TableHead>Payment Method</TableHead>
+                <TableHead>Receipt Send</TableHead>
+                <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -131,6 +194,13 @@ export default function ViewReceipts() {
                   <TableCell>{format(receipt.date, "PPP")}</TableCell>
                   <TableCell>{receipt.total_amount?.toFixed(2)}</TableCell>
                   <TableCell>{receipt.payment_method}</TableCell>
+                  <TableCell>
+                    <Check color="green" />
+                    <X color="red" />
+                  </TableCell>
+                  <TableCell>
+                    <Button>Details</Button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
