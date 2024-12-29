@@ -195,8 +195,11 @@ export default function ViewReceipts() {
                   <TableCell>{receipt.total_amount?.toFixed(2)}</TableCell>
                   <TableCell>{receipt.payment_method}</TableCell>
                   <TableCell>
-                    <Check color="green" />
-                    <X color="red" />
+                    {receipt.is_receipt_send ? (
+                      <Check color="green" />
+                    ) : (
+                      <X color="red" />
+                    )}
                   </TableCell>
                   <TableCell>
                     <Button>Details</Button>

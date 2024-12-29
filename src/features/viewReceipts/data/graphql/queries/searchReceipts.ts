@@ -27,6 +27,7 @@ export const searchReceiptsQuery = graphql(`
         date
         total_amount
         payment_method
+        is_receipt_send
       }
     }
   }

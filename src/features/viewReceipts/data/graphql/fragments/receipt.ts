@@ -14,5 +14,6 @@ graphql(`
     payment_method
     payment_note
     total_amount
+    is_receipt_send
   }
 `);
