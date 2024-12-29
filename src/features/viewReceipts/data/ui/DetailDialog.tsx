@@ -13,6 +13,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { PdfViewer } from "@/components/utils";
+import { useReceipt } from "../hooks";
 
 type Props = {
   receiptId: string;
@@ -25,6 +26,8 @@ export function DetailDialog({
   isModalOpen,
   setIsModalOpen,
 }: Props) {
+  const { receipt } = useReceipt(receiptId);
+  console.log(receipt);
   const handleClose = () => {
     setIsModalOpen(false);
   };
@@ -34,6 +37,7 @@ export function DetailDialog({
         <DialogHeader>
           <DialogTitle>Details</DialogTitle>
         </DialogHeader>
+        <div>jhjkhkjhk</div>
         <DialogFooter className="sm:justify-start">
           <DialogClose asChild>
             <Button type="button" variant="secondary" onClick={handleClose}>
