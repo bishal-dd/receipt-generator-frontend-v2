@@ -48,6 +48,9 @@ export default function ViewReceipts() {
   const [dateRangeUI, setDateRangeUI] = useState<DateRange | undefined>();
   const [year, setYear] = useState<string | undefined>();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedReceiptId, setSelectedReceiptId] = useState<string | null>(
+    null
+  );
 
   const { receipts, foundCount, totalCount } = useSearchReceipts(
     currentPage,
@@ -178,7 +181,6 @@ export default function ViewReceipts() {
                   <TableHead>Sl.No</TableHead>
                   <TableHead className="w-[150px]">Receipt No</TableHead>
                   <TableHead>Recipient Name</TableHead>
-                  <TableHead>Receipt No</TableHead>
                   <TableHead>Date</TableHead>
                   <TableHead>Total Amount</TableHead>
                   <TableHead>Payment Method</TableHead>
@@ -194,7 +196,6 @@ export default function ViewReceipts() {
                       {receipt.receipt_no}
                     </TableCell>
                     <TableCell>{receipt.recipient_name}</TableCell>
-                    <TableCell>{receipt.recipient_phone}</TableCell>
                     <TableCell>{format(receipt.date, "PPP")}</TableCell>
                     <TableCell>{receipt.total_amount?.toFixed(2)}</TableCell>
                     <TableCell>{receipt.payment_method}</TableCell>
@@ -208,16 +209,12 @@ export default function ViewReceipts() {
                     <TableCell>
                       <Button
                         onClick={() => {
+                          setSelectedReceiptId(receipt.id);
                           setIsModalOpen(true);
                         }}
                       >
                         Details
                       </Button>
-                      <DetailDialog
-                        isModalOpen={isModalOpen}
-                        setIsModalOpen={setIsModalOpen}
-                        receiptId={receipt.id}
-                      />
                     </TableCell>
                   </TableRow>
                 ))}
@@ -291,6 +288,13 @@ export default function ViewReceipts() {
           </Pagination>
         </div>
         Showing {receipts.length} of {foundCount}
+        {selectedReceiptId && (
+          <DetailDialog
+            isModalOpen={isModalOpen}
+            setIsModalOpen={setIsModalOpen}
+            receiptId={selectedReceiptId}
+          />
+        )}
       </div>
     </>
   );

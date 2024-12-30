@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { requestAPI } from "@/utils";
 import { receiptQuery } from "../graphql/queries/receipt";
-import { ReceiptQuery } from "@/gql/graphql";
+import { ReceiptQuery, Receipt } from "@/gql/graphql";
 export function useReceipt(id: string) {
   const {
     data,
@@ -17,7 +17,7 @@ export function useReceipt(id: string) {
     },
   });
   return {
-    receipt: data.receipt,
+    receipt: data.receipt as Receipt,
     receiptLoading,
     error,
   };

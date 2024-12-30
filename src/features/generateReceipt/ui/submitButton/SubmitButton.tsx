@@ -36,6 +36,9 @@ export function SubmitButton({
           <Button className="w-full" onClick={handleSubmit(onDownload)}>
             View/Download/Print
           </Button>
+          <Button className="w-full" onClick={handleSubmit(onDownload)}>
+            Save
+          </Button>
         </div>
       </PopoverContent>
     </Popover>
