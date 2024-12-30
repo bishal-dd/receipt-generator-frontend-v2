@@ -6,6 +6,7 @@ import {
   useReceiptPDFToWhatsAppMutation,
   useReceiptPDFToEmailMutation,
   useDownloadReceiptPDFMutation,
+  useSaveReceipt,
 } from "./data/hooks";
 import { useOrganization, useUser } from "@clerk/nextjs";
 import {
@@ -42,6 +43,11 @@ export default function GenerateReceipt() {
   const { sendReceiptPDFToWhatsApp } = useReceiptPDFToWhatsAppMutation();
   const { sendReceiptPDFToEmail } = useReceiptPDFToEmailMutation();
   const { downloadReceiptPDFAsync } = useDownloadReceiptPDFMutation();
+  const {
+    saveReceipt,
+    saveReceiptAsync,
+    error: saveReceiptError,
+  } = useSaveReceipt();
   console.log(profile);
   const { currency, setCurrency } = useCurrencyStore();
   const { tax, setTax } = useTaxStore();
@@ -200,6 +206,42 @@ export default function GenerateReceipt() {
     reset();
   };
 
+  const onSave = async (data: ReceiptFormData) => {
+    const Services = data.services.map((service) => {
+      return {
+        description: service.description,
+        quantity: service.quantity,
+        rate: service.unitPrice,
+        amount: service.unitPrice * service.quantity,
+      };
+    });
+    const input: DownloadPdf = {
+      receipt_name: "Test",
+      recipient_name: data.customerName,
+      recipient_phone: data.customerPhoneNumber,
+      recipient_email: data.customerEmail,
+      recipient_address: data.customerAddress,
+      receipt_no: data.receiptNumber,
+      payment_method: data.paymentMethod,
+      payment_note: data.paymentNote,
+      date: data.date,
+      is_receipt_send: false,
+      user_id: userId!,
+      orginazation_id: organization?.id!,
+      Services: Services,
+    };
+    await saveReceiptAsync(input);
+    if (saveReceiptError) {
+      toast.error("Receipt Was Not Saved!.", {
+        description: "You can check in try again",
+      });
+    }
+    toast.success("Receipt Was Saved!.", {
+      description: "You can check in the receipts",
+    });
+    reset();
+  };
+
   // Render based on loading state AFTER all hooks have been called
   if (!userLoaded || !orgLoaded || profileLoading) {
     return <div>Loading...</div>;
@@ -254,6 +296,7 @@ export default function GenerateReceipt() {
                 onSendToWhatsApp={onSendToWhatsApp}
                 onSendToEmail={onSendToEmail}
                 onDownload={onDownload}
+                onSave={onSave}
                 handleSubmit={handleSubmit}
               />
             </CardFooter>

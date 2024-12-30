@@ -10,6 +10,7 @@ type Props = {
   onSendToWhatsApp: (data: ReceiptFormData) => void;
   onSendToEmail: (data: ReceiptFormData) => void;
   onDownload: (data: ReceiptFormData) => void;
+  onSave: (data: ReceiptFormData) => void;
   handleSubmit: (
     onValid: (data: ReceiptFormData) => void
   ) => (e?: React.BaseSyntheticEvent) => void;
@@ -19,6 +20,7 @@ export function SubmitButton({
   onSendToEmail,
   onDownload,
   handleSubmit,
+  onSave,
 }: Props) {
   return (
     <Popover>
@@ -36,7 +38,7 @@ export function SubmitButton({
           <Button className="w-full" onClick={handleSubmit(onDownload)}>
             View/Download/Print
           </Button>
-          <Button className="w-full" onClick={handleSubmit(onDownload)}>
+          <Button className="w-full" onClick={handleSubmit(onSave)}>
             Save
           </Button>
         </div>
