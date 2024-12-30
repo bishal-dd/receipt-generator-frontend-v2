@@ -207,6 +207,7 @@ export default function ViewReceipts() {
                       )}
                     </TableCell>
                     <TableCell>
+                      <Button>Send</Button>
                       <Button
                         onClick={() => {
                           setSelectedReceiptId(receipt.id);
