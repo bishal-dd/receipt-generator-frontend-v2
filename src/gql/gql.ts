@@ -22,6 +22,9 @@ const documents = {
     "\n  mutation UpdateProfile($input: UpdateProfile!) {\n    updateProfile(input: $input) {\n      ...ProfileFragment\n    }\n  }\n": types.UpdateProfileDocument,
     "\n  query UserProfile($userId: String!) {\n    profileByUserId(userId: $userId) {\n      ...ProfileFragment\n    }\n  }\n": types.UserProfileDocument,
     "\n  fragment ReceiptFragment on Receipt {\n    id\n    receipt_name\n    recipient_name\n    recipient_phone\n    recipient_email\n    recipient_address\n    receipt_no\n    user_id\n    date\n    payment_method\n    payment_note\n    total_amount\n    is_receipt_send\n  }\n": types.ReceiptFragmentFragmentDoc,
+    "\n  mutation DownloadReceiptPDFWithReceiptId(\n    $receiptId: String!\n    $orginazationId: String!\n  ) {\n    downloadReceiptPDFWithReceiptId(\n      receiptId: $receiptId\n      orginazationId: $orginazationId\n    )\n  }\n": types.DownloadReceiptPdfWithReceiptIdDocument,
+    "\n  mutation SendReceiptPDFToEmailWithReceiptId(\n    $receiptId: String!\n    $orginazationId: String!\n  ) {\n    sendReceiptPDFToEmailWithReceiptId(\n      receiptId: $receiptId\n      orginazationId: $orginazationId\n    )\n  }\n": types.SendReceiptPdfToEmailWithReceiptIdDocument,
+    "\n  mutation SendReceiptPDFToWhatsAppWithReceiptId(\n    $receiptId: String!\n    $orginazationId: String!\n  ) {\n    sendReceiptPDFToWhatsAppWithReceiptId(\n      receiptId: $receiptId\n      orginazationId: $orginazationId\n    )\n  }\n": types.SendReceiptPdfToWhatsAppWithReceiptIdDocument,
     "\n  query Receipt($id: ID!) {\n    receipt(id: $id) {\n      ...ReceiptFragment\n      sub_total_amount\n      tax_amount\n      Services {\n        id\n        description\n        rate\n        quantity\n        amount\n      }\n    }\n  }\n": types.ReceiptDocument,
     "\n  query SearchReceipts(\n    $page: Int!\n    $year: Int\n    $date: String\n    $dateRange: [String!]\n  ) {\n    searchReceipts(\n      page: $page\n      year: $year\n      date: $date\n      dateRange: $dateRange\n    ) {\n      totalCount\n      foundCount\n      receipts {\n        id\n        receipt_name\n        recipient_name\n        recipient_phone\n        recipient_email\n        recipient_address\n        receipt_no\n        user_id\n        date\n        total_amount\n        payment_method\n        is_receipt_send\n      }\n    }\n  }\n": types.SearchReceiptsDocument,
     "\n  query GetUserReceipts {\n    receipts {\n      edges {\n        node {\n          ...ReceiptFragment\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        startCursor\n        hasNextPage\n        hasPreviousPage\n      }\n    }\n  }\n": types.GetUserReceiptsDocument,
@@ -73,6 +76,18 @@ export function graphql(source: "\n  query UserProfile($userId: String!) {\n    
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  fragment ReceiptFragment on Receipt {\n    id\n    receipt_name\n    recipient_name\n    recipient_phone\n    recipient_email\n    recipient_address\n    receipt_no\n    user_id\n    date\n    payment_method\n    payment_note\n    total_amount\n    is_receipt_send\n  }\n"): (typeof documents)["\n  fragment ReceiptFragment on Receipt {\n    id\n    receipt_name\n    recipient_name\n    recipient_phone\n    recipient_email\n    recipient_address\n    receipt_no\n    user_id\n    date\n    payment_method\n    payment_note\n    total_amount\n    is_receipt_send\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation DownloadReceiptPDFWithReceiptId(\n    $receiptId: String!\n    $orginazationId: String!\n  ) {\n    downloadReceiptPDFWithReceiptId(\n      receiptId: $receiptId\n      orginazationId: $orginazationId\n    )\n  }\n"): (typeof documents)["\n  mutation DownloadReceiptPDFWithReceiptId(\n    $receiptId: String!\n    $orginazationId: String!\n  ) {\n    downloadReceiptPDFWithReceiptId(\n      receiptId: $receiptId\n      orginazationId: $orginazationId\n    )\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation SendReceiptPDFToEmailWithReceiptId(\n    $receiptId: String!\n    $orginazationId: String!\n  ) {\n    sendReceiptPDFToEmailWithReceiptId(\n      receiptId: $receiptId\n      orginazationId: $orginazationId\n    )\n  }\n"): (typeof documents)["\n  mutation SendReceiptPDFToEmailWithReceiptId(\n    $receiptId: String!\n    $orginazationId: String!\n  ) {\n    sendReceiptPDFToEmailWithReceiptId(\n      receiptId: $receiptId\n      orginazationId: $orginazationId\n    )\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation SendReceiptPDFToWhatsAppWithReceiptId(\n    $receiptId: String!\n    $orginazationId: String!\n  ) {\n    sendReceiptPDFToWhatsAppWithReceiptId(\n      receiptId: $receiptId\n      orginazationId: $orginazationId\n    )\n  }\n"): (typeof documents)["\n  mutation SendReceiptPDFToWhatsAppWithReceiptId(\n    $receiptId: String!\n    $orginazationId: String!\n  ) {\n    sendReceiptPDFToWhatsAppWithReceiptId(\n      receiptId: $receiptId\n      orginazationId: $orginazationId\n    )\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -1,5 +1,5 @@
 "use client";
-import { format, startOfDay, addDays, set } from "date-fns";
+import { format } from "date-fns";
 import {
   Table,
   TableBody,
@@ -8,7 +8,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useSearchReceipts } from "./data/hooks";
+import {
+  useDownloadReceiptPDFWithReceiptId,
+  useSearchReceipts,
+  useSendReceiptToEmailWithReceiptId,
+  useSendReceiptToWhatsAppWithReceiptId,
+} from "./data/hooks";
 import { ReceiptFragmentFragment } from "@/gql/graphql";
 import {
   Pagination,
@@ -34,25 +39,37 @@ import { years } from "./utils";
 import { DatePicker, DateRangePicker } from "@/components/utils";
 import { DateRange } from "react-day-picker";
 import { Button } from "@/components/ui/button";
-import { Check, X } from "lucide-react";
-import { DetailDialog } from "./data/ui";
+import { Check, Filter, X } from "lucide-react";
+import { DetailDialog, SubmitButton } from "./ui";
+import { useOrganization } from "@clerk/nextjs";
+import { toast } from "sonner";
+import { ViewPdfModal } from "../generateReceipt/ui";
 
 export default function ViewReceipts() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const currentPage = searchParams ? Number(searchParams.get("page")) || 1 : 1;
-  console.log(currentPage);
   const currentFilters = searchParams?.get("filters")?.split(",") || [];
   const [date, selectDate] = useState<Date | null>(null);
   const [dateRange, setDateRange] = useState<[string, string]>();
   const [dateRangeUI, setDateRangeUI] = useState<DateRange | undefined>();
   const [year, setYear] = useState<string | undefined>();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPDFModalOpen, setIsPDFModalOpen] = useState(false);
   const [selectedReceiptId, setSelectedReceiptId] = useState<string | null>(
     null
   );
-
-  const { receipts, foundCount, totalCount } = useSearchReceipts(
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+  const { organization, isLoaded: orgLoaded } = useOrganization({
+    memberships: true,
+  });
+  const { sendReceiptToEmailWithReceiptId } =
+    useSendReceiptToEmailWithReceiptId();
+  const { sendReceiptToWhatsAppWithReceiptId } =
+    useSendReceiptToWhatsAppWithReceiptId();
+  const { downloadReceiptPDFWithReceiptIdAsync } =
+    useDownloadReceiptPDFWithReceiptId();
+  const { receipts, foundCount } = useSearchReceipts(
     currentPage,
     Number(year),
     date ? format(date, "yyyy-MM-dd") : null,
@@ -115,6 +132,36 @@ export default function ViewReceipts() {
     selectDate(null);
     setDateRange(undefined);
     setDateRangeUI(undefined);
+  };
+
+  const onSendToWhatsApp = (receiptId: string, organizationId: string) => {
+    sendReceiptToWhatsAppWithReceiptId(receiptId, organizationId);
+    toast.success("Receipt Successfully Send!.", {
+      description:
+        " If it doesn't arrive in 30s send it agian from the send receipts section",
+    });
+    console.log(receiptId, organizationId);
+  };
+
+  const onSendToEmail = (receiptId: string, organizationId: string) => {
+    sendReceiptToEmailWithReceiptId(receiptId, organizationId);
+    toast.success("Receipt Successfully Send!.", {
+      description:
+        " If it doesn't arrive in 30s send it agian from the send receipts section",
+    });
+    console.log(receiptId, organizationId);
+  };
+
+  const onDownloadReceipt = async (
+    receiptId: string,
+    organizationId: string
+  ) => {
+    setIsPDFModalOpen(true);
+    const url = await downloadReceiptPDFWithReceiptIdAsync(
+      receiptId,
+      organizationId
+    );
+    setPdfUrl(url);
   };
   return (
     <>
@@ -207,15 +254,24 @@ export default function ViewReceipts() {
                       )}
                     </TableCell>
                     <TableCell>
-                      <Button>Send</Button>
-                      <Button
-                        onClick={() => {
-                          setSelectedReceiptId(receipt.id);
-                          setIsModalOpen(true);
-                        }}
-                      >
-                        Details
-                      </Button>
+                      <div className="flex flex-row gap-2">
+                        <Button
+                          onClick={() =>
+                            onDownloadReceipt(receipt.id, organization?.id!)
+                          }
+                        >
+                          Download
+                        </Button>
+
+                        <Button
+                          onClick={() => {
+                            setSelectedReceiptId(receipt.id);
+                            setIsModalOpen(true);
+                          }}
+                        >
+                          Details
+                        </Button>
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -296,6 +352,11 @@ export default function ViewReceipts() {
             receiptId={selectedReceiptId}
           />
         )}
+        <ViewPdfModal
+          fileUrl={pdfUrl}
+          isModalOpen={isPDFModalOpen}
+          setIsModalOpen={setIsPDFModalOpen}
+        />
       </div>
     </>
   );

@@ -5,3 +5,4 @@ export * from "./CurrencyInput";
 export * from "./PhoneInput";
 export * from "./PdfViewer";
 export * from "./DateRangePicker";
+export * from "./Loader";

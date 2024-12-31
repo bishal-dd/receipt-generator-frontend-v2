@@ -31,6 +31,7 @@ import {
   SendReceiptPdfToEmail,
   DownloadPdf,
 } from "@/gql/graphql";
+import { Loader } from "@/components/utils";
 
 export default function GenerateReceipt() {
   const { user, isLoaded: userLoaded } = useUser();
@@ -243,7 +244,7 @@ export default function GenerateReceipt() {
 
   // Render based on loading state AFTER all hooks have been called
   if (!userLoaded || !orgLoaded || profileLoading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   if (error) {

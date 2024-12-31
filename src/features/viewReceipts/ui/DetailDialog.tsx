@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { useReceipt } from "../hooks";
+import { useReceipt } from "../data/hooks";
 import { Loader2 } from "lucide-react";
 import { formatDate } from "date-fns";
 import {
