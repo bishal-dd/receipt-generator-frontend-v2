@@ -2,12 +2,17 @@ import { useMutation } from "@tanstack/react-query";
 import { UpdateProfile } from "@/gql/graphql";
 import { updateProfileMutation } from "../graphql/mutations/updateProfileMutation";
 import { requestAPI } from "@/utils";
+import { useAuth } from "@clerk/nextjs";
 
 export function useProfileMutation() {
+  const { getToken } = useAuth();
+
   const mutation = useMutation({
     mutationFn: async (input: UpdateProfile) => {
       try {
-        return await requestAPI(updateProfileMutation, { input });
+        const token = await getToken();
+
+        return await requestAPI(updateProfileMutation, token, { input });
       } catch (error) {
         console.error("API request failed:", error);
         throw error;

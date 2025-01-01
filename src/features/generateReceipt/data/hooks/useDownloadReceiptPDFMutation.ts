@@ -2,16 +2,21 @@ import { useMutation } from "@tanstack/react-query";
 import { DownloadPdf } from "@/gql/graphql";
 import { downloadReceiptPDFMutation } from "../graphql/mutations/downloadReceiptPDFMutation";
 import { requestAPI } from "@/utils";
+import { useAuth } from "@clerk/nextjs";
 
 export function useDownloadReceiptPDFMutation() {
+  const { getToken } = useAuth();
+
   const mutation = useMutation({
     mutationFn: async (input: DownloadPdf) => {
       try {
-        const res = await requestAPI(downloadReceiptPDFMutation, { input });
-        console.log("API request successful:", res);
+        const token = await getToken();
+
+        const res = await requestAPI(downloadReceiptPDFMutation, token, {
+          input,
+        });
         return res;
       } catch (error) {
-        console.error("API request failed:", error);
         throw error;
       }
     },

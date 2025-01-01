@@ -2,7 +2,10 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { requestAPI } from "@/utils";
 import { userReceiptsQuery } from "../graphql/queries/userReceipts";
 import { GetUserReceiptsQuery, ReceiptFragmentFragment } from "@/gql/graphql";
+import { useAuth } from "@clerk/nextjs";
 export function useReceipts() {
+  const { getToken } = useAuth();
+
   const {
     data,
     isLoading: receiptLoading,
@@ -10,8 +13,11 @@ export function useReceipts() {
   } = useSuspenseQuery<GetUserReceiptsQuery, Error>({
     queryKey: ["userReceipts"],
     queryFn: async () => {
+      const token = await getToken();
+
       const response = await requestAPI<GetUserReceiptsQuery>(
-        userReceiptsQuery
+        userReceiptsQuery,
+        token
       );
       return response;
     },
