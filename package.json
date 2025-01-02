@@ -46,6 +46,7 @@
     "react-pdf-viewer": "^0.1.0",
     "react-phone-number-input": "^3.4.10",
     "sonner": "^1.7.1",
+    "svix": "^1.44.0",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
     "use-debounce": "^10.0.4",
