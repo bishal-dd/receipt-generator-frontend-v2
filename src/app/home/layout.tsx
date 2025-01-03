@@ -1,3 +1,4 @@
+import { Footer } from "@/components/footer";
 import { PublicNavigation } from "@/components/publicNavigation";
 export default function HomeLayout({
   children,
@@ -5,10 +6,11 @@ export default function HomeLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white relative overflow-hidden">
+    <div>
       <PublicNavigation />
 
       {children}
+      <Footer />
     </div>
   );
 }

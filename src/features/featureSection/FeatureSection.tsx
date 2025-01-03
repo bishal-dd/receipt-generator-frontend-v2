@@ -1,30 +1,67 @@
-import { Button } from "@/components/ui/button";
-import { features } from "./data";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { BarChart, Users, Zap, Shield, Bell, Smartphone } from "lucide-react";
+
+const features = [
+  {
+    title: "Saves Money",
+    description: "You don't have to buy printers or paper",
+    icon: BarChart,
+  },
+  {
+    title: "Easy management",
+    description: "You don't have to be afraid of loosing the paper",
+    icon: Users,
+  },
+  {
+    title: "Saves Time",
+    description: "You don't have to waste time managing your paperwork",
+    icon: Zap,
+  },
+  {
+    title: "Enterprise-grade Security",
+    description: "Keep your data safe with our robust security measures.",
+    icon: Shield,
+  },
+  {
+    title: "Smart Notifications",
+    description: "Stay informed with customizable, real-time notifications.",
+    icon: Bell,
+  },
+  {
+    title: "Mobile Accessibility",
+    description: "Access your work from anywhere.",
+    icon: Smartphone,
+  },
+];
 
 export default function FeatureSection() {
   return (
-    <main className="container relative mx-auto px-4 py-16">
-      <h1 className="text-4xl font-bold text-center mb-12">Our Features</h1>
+    <div className="container mx-auto px-4 py-16 ">
+      <h1 className="text-4xl font-bold text-center mb-12">
+        Powerful Features
+      </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {features.map((feature, index) => (
-          <div
+          <Card
             key={index}
-            className="bg-gray-800 rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow duration-300"
+            className="transition-all duration-300 hover:shadow-lg"
           >
-            <feature.icon className="h-12 w-12 text-blue-400 mb-4" />
-            <h2 className="text-xl font-semibold mb-2">{feature.title}</h2>
-            <p className="text-gray-300">{feature.description}</p>
-          </div>
+            <CardHeader>
+              <feature.icon className="h-10 w-10 text-primary mb-4" />
+              <CardTitle>{feature.title}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CardDescription>{feature.description}</CardDescription>
+            </CardContent>
+          </Card>
         ))}
       </div>
-      <div className="mt-16 text-center">
-        <h2 className="text-2xl font-bold mb-4">
-          Ready to streamline your paperwork?
-        </h2>
-        <Button size="lg" className="text-lg">
-          Get Started Now
-        </Button>
-      </div>
-    </main>
+    </div>
   );
 }

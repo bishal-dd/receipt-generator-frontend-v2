@@ -25,5 +25,9 @@ export default function CreateOrganizationPage() {
     return <Loader />;
   }
 
-  return <CreateOrganization afterCreateOrganizationUrl="/dashboard" />;
+  return (
+    <div className="flex items-center justify-center min-h-screen">
+      <CreateOrganization afterCreateOrganizationUrl="/dashboard" />
+    </div>
+  );
 }
