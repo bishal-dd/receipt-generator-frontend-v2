@@ -3,6 +3,7 @@ import { CreateOrganization } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useClerk } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
+import { Loader } from "@/components/utils";
 
 export default function CreateOrganizationPage() {
   const { user } = useClerk();
@@ -21,8 +22,8 @@ export default function CreateOrganizationPage() {
   }, [user, router]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
-  return <CreateOrganization path="/create-organization" />;
+  return <CreateOrganization afterCreateOrganizationUrl="/dashboard" />;
 }

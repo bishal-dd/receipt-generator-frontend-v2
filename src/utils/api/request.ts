@@ -1,13 +1,11 @@
 import request from "graphql-request";
 import { TypedDocumentNode } from "@graphql-typed-document-node/core";
-import { useAuth } from "@clerk/nextjs";
 
 export async function requestAPI<T>(
   query: TypedDocumentNode<T, any>,
   token: string | null,
   variables?: any
 ): Promise<T> {
-  console.log(token);
   try {
     const headers = {
       authorization: token ? `Bearer ${token}` : "",

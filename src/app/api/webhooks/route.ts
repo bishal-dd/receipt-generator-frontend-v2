@@ -2,6 +2,8 @@ import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent, OrganizationJSON } from "@clerk/nextjs/server";
 
+const NEXT_PUBLIC_APP_BACKEND_URI =
+  process.env.NEXT_PUBLIC_APP_BACKEND_URI || "http://localhost:8080";
 export async function POST(req: Request) {
   const SIGNING_SECRET = process.env.SIGNING_SECRET;
 
@@ -41,19 +43,34 @@ export async function POST(req: Request) {
       "svix-signature": svix_signature,
     }) as WebhookEvent;
   } catch (err) {
-    console.error("Error: Could not verify webhook:", err);
     return new Response("Error: Verification error", {
       status: 400,
     });
   }
 
-  // Do something with payload
-  // For this guide, log payload to console
-  const { id } = evt.data;
-  const eventType = evt.type;
   const organization = evt.data as OrganizationJSON;
-  console.log(`Received webhook with ID ${id} and event type of ${eventType}`);
-  console.log("Webhook payload:", body);
 
-  return new Response("Webhook received", { status: 200 });
+  try {
+    const response = await fetch(`${NEXT_PUBLIC_APP_BACKEND_URI}/profile`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: organization.created_by,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+  } catch (error) {
+    return new Response("Error: Failed to create profile", {
+      status: 500,
+    });
+  }
+
+  return new Response("Webhook processed successfully", { status: 200 });
 }
