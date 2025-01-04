@@ -6,45 +6,59 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook } from "lucide-react";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Linkedin,
+  Twitter,
+  Facebook,
+  Instagram,
+  Music2,
+} from "lucide-react";
 import Link from "next/link";
 
 const contactInfo = [
   {
     icon: Mail,
     title: "Email",
-    content: "support@yoursaas.com",
-    href: "mailto:support@yoursaas.com",
+    content: "contact@lightwebx.com",
+    href: "mailto:contact@lightwebx.com",
   },
   {
     icon: Phone,
-    title: "Phone",
-    content: "+1 (555) 123-4567",
-    href: "tel:+15551234567",
+    title: "WhatsApp",
+    content: "+975 - 17959259",
+    href: "https://api.whatsapp.com/send?phone=17959259",
   },
   {
     icon: MapPin,
     title: "Address",
-    content: "123 SaaS Street, Tech City, TC 12345",
-    href: "https://maps.google.com/?q=123+SaaS+Street,+Tech+City,+TC+12345",
+    content: "Thimphu, Bhutan",
+    href: "https://maps.app.goo.gl/NfsQRVcuRcMqQtV26",
   },
 ];
 
 const socialLinks = [
-  { icon: Linkedin, href: "https://www.linkedin.com/company/yoursaas" },
-  { icon: Twitter, href: "https://twitter.com/yoursaas" },
-  { icon: Facebook, href: "https://www.facebook.com/yoursaas" },
+  { icon: Facebook, href: "https://www.facebook.com/lightwebx" },
+  { icon: Instagram, href: "https://www.instagram.com/lightwebx" },
+  { icon: Music2, href: "https://www.tiktok.com/@lightwebx" },
+  { icon: Linkedin, href: "https://www.linkedin.com/company/light-webx" },
 ];
 
 export default function ContactSection() {
   return (
-    <div className="container mx-auto px-4 py-16">
-      <h1 className="text-4xl font-bold text-center mb-12">Get in Touch</h1>
-      <div className="max-w-3xl mx-auto">
-        <Card>
+    <div className="container mx-auto px-4 py-16 min-h-screen">
+      <h1 className="text-4xl font-bold text-center mb-12 text-neutral-300">
+        Get in Touch
+      </h1>
+      <div className="max-w-3xl mx-auto ">
+        <Card className=" bg-black/[0.96] antialiased bg-grid-white/[0.02] ">
           <CardHeader>
-            <CardTitle className="text-2xl">Contact Information</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-2xl text-neutral-300">
+              Contact Information
+            </CardTitle>
+            <CardDescription className="text-neutral-300">
               Reach out to us through any of the following methods:
             </CardDescription>
           </CardHeader>
@@ -55,13 +69,15 @@ export default function ContactSection() {
                   key={index}
                   className="flex flex-col items-center text-center"
                 >
-                  <div className="mb-4 p-3 rounded-full bg-primary/10">
-                    <item.icon className="h-6 w-6 text-primary" />
+                  <div className="mb-4 p-3 rounded-full bg-white/10">
+                    <item.icon className="h-6 w-6 text-white" />
                   </div>
-                  <h3 className="font-semibold mb-1">{item.title}</h3>
+                  <h3 className="font-semibold mb-1 text-neutral-300">
+                    {item.title}
+                  </h3>
                   <Link
                     href={item.href}
-                    className="text-muted-foreground hover:text-primary transition-colors"
+                    className="text-muted-foreground hover:text-white transition-colors text-neutral-300"
                   >
                     {item.content}
                   </Link>
@@ -71,10 +87,12 @@ export default function ContactSection() {
           </CardContent>
         </Card>
 
-        <Card className="mt-8">
+        <Card className="mt-8  bg-black/[0.96] antialiased bg-grid-white/[0.02] ">
           <CardHeader>
-            <CardTitle className="text-2xl">Connect With Us</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-2xl text-neutral-300">
+              Connect With Us
+            </CardTitle>
+            <CardDescription className="text-neutral-300">
               Follow us on social media for the latest updates and news.
             </CardDescription>
           </CardHeader>
@@ -87,7 +105,7 @@ export default function ContactSection() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <link.icon className="h-5 w-5" />
+                    <link.icon className="h-5 w-5 " />
                     <span className="sr-only">{link.icon.name}</span>
                   </Link>
                 </Button>
@@ -95,19 +113,6 @@ export default function ContactSection() {
             </div>
           </CardContent>
         </Card>
-
-        <div className="mt-12 text-center">
-          <h2 className="text-2xl font-semibold mb-4">
-            Need More Information?
-          </h2>
-          <p className="text-muted-foreground mb-6">
-            If you have any questions or need additional information, our
-            support team is always here to help.
-          </p>
-          <Button asChild>
-            <Link href="mailto:support@yoursaas.com">Contact Support</Link>
-          </Button>
-        </div>
       </div>
     </div>
   );

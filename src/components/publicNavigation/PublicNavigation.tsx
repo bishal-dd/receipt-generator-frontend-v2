@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import { navItems } from "./segments";
+import { ActionLinks, navItems } from "./segments";
 
 const links = [
   { href: "/", label: "Home" },
@@ -38,19 +38,14 @@ export default function PublicNavigation() {
                   href={link.link}
                   className={`px-3 py-2 text-sm font-medium rounded-md ${
                     pathname === link.link
-                      ? "text-black bg-primary"
-                      : "text-muted-foreground hover:text-primary hover:bg-accent"
+                      ? "text-black outline outline-1 outline-black"
+                      : "text-black  font-bold hover:text-primary hover:bg-accent"
                   }`}
                 >
                   {link.name}
                 </Link>
               ))}
-              <Link
-                href="/home/sign-in"
-                className="px-4 py-2 text-sm font-medium text-black bg-primary rounded-md shadow hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-              >
-                Sign In
-              </Link>
+              <ActionLinks />
             </div>
           </div>
           <div className="flex md:hidden">
@@ -85,12 +80,7 @@ export default function PublicNavigation() {
                 {link.name}
               </Link>
             ))}
-            <Link
-              href="/home/sign-in"
-              className="px-4 py-2 text-sm font-medium text-black bg-primary rounded-md shadow hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-            >
-              Sign In
-            </Link>
+            <ActionLinks />
           </div>
         </div>
       )}
