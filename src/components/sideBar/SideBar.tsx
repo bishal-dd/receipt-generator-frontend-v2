@@ -1,4 +1,4 @@
-import { Home, Building, Receipt } from "lucide-react";
+import { Building, Receipt, List } from "lucide-react";
 import { UserButton } from "@clerk/nextjs";
 import {
   Sidebar,
@@ -16,19 +16,14 @@ import Link from "next/link";
 // Menu items.
 const items = [
   {
-    title: "Home",
-    url: "/dashboard",
-    icon: Home,
-  },
-  {
     title: "Receipt",
     url: "/dashboard/generate-receipt",
     icon: Receipt,
   },
   {
-    title: "Receipts",
+    title: "Receipts List",
     url: "/dashboard/view-receipts",
-    icon: Receipt,
+    icon: List,
   },
   {
     title: "Organization Profile",

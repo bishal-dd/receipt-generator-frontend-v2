@@ -14,7 +14,7 @@ export default function CreateOrganizationPage() {
     if (user) {
       const hasOrganization = user.organizationMemberships.length > 0;
       if (hasOrganization) {
-        router.push("/dashboard");
+        router.push("/dashboard/generate-receipt");
       } else {
         setLoading(false); // Allow rendering only if no redirect is needed
       }
@@ -27,7 +27,7 @@ export default function CreateOrganizationPage() {
 
   return (
     <div className="flex items-center justify-center min-h-screen">
-      <CreateOrganization afterCreateOrganizationUrl="/dashboard" />
+      <CreateOrganization afterCreateOrganizationUrl="/dashboard/generate-receipt" />
     </div>
   );
 }

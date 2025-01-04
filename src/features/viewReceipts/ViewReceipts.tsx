@@ -44,6 +44,7 @@ import { DetailDialog, SubmitButton } from "./ui";
 import { useOrganization } from "@clerk/nextjs";
 import { toast } from "sonner";
 import { ViewPdfModal } from "../generateReceipt/ui";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 export default function ViewReceipts() {
   const searchParams = useSearchParams();
@@ -165,10 +166,10 @@ export default function ViewReceipts() {
   };
   return (
     <>
-      <div className="flex flex-col items-center justify-center  lg:w-[80vw]">
-        <div className="container mx-auto p-4">
+      <div className="flex flex-col items-center justify-center lg:w-[80vw]">
+        <div className="container mx-auto p-4 w-full">
           <h1 className="text-2xl font-bold mb-4">Receipts</h1>
-          <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4 mb-4">
+          <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0 mb-4">
             <div className="flex flex-col space-y-2">
               <label htmlFor="year" className="text-sm font-medium">
                 Year
@@ -215,13 +216,13 @@ export default function ViewReceipts() {
                 resetDateRange={resetDateRange}
               />
             </div>
-            <div className="flex flex-col space-y-2">
+            <div>
               <Button onClick={clearFilters} className="mt-7">
                 Clear Filters
               </Button>
             </div>
           </div>
-          <div className="overflow-x-auto">
+          <ScrollArea className="sm:w-96 lg:w-full whitespace-nowrap rounded-md border">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -277,7 +278,9 @@ export default function ViewReceipts() {
                 ))}
               </TableBody>
             </Table>
-          </div>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
+
           <Pagination className="mt-4">
             <PaginationContent>
               <PaginationItem>

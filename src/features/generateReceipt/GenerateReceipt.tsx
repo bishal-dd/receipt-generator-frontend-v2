@@ -32,6 +32,7 @@ import {
   DownloadPdf,
 } from "@/gql/graphql";
 import { Loader } from "@/components/utils";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 export default function GenerateReceipt() {
   const { user, isLoaded: userLoaded } = useUser();
@@ -251,63 +252,66 @@ export default function GenerateReceipt() {
     return <div>Error: {error.message}</div>;
   }
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen lg:w-[80vw]">
-      <Form {...receiptForm}>
-        <form className="w-full max-w-3xl">
-          <Card className="w-full max-w-3xl mx-auto">
-            <Header
-              organization={organizationProfile}
-              updateCompanyAddress={updateCompanyAddress}
-              updateCompanyName={updateCompanyName}
-              updateCompanyEmail={updateCompanyEmail}
-              updateCompanyPhone={updateCompanyPhone}
-            />
-            <CardContent>
-              <ReceiptInfo
-                control={receiptForm.control}
-                updatePhoneNumberCountryCode={updatePhoneNumberCountryCode}
-                defaultPhoneNumberCountryCode={phoneNumberCountryCode}
-                setPhoneNumberCountryCodeState={setPhoneNumberCountryCode}
+    <ScrollArea className="lg:w-[80vw]  md:w-[70vw] whitespace-nowrap ">
+      <div className="flex flex-col items-center justify-center min-h-screen lg:w-[80vw]">
+        <Form {...receiptForm}>
+          <form className="w-full max-w-3xl">
+            <Card className="w-full max-w-3xl mx-auto">
+              <Header
+                organization={organizationProfile}
+                updateCompanyAddress={updateCompanyAddress}
+                updateCompanyName={updateCompanyName}
+                updateCompanyEmail={updateCompanyEmail}
+                updateCompanyPhone={updateCompanyPhone}
               />
-              <ServiceInfo
-                control={receiptForm.control}
-                fields={fields}
-                append={append}
-                remove={remove}
-                currency={currency}
-                onSelectCurrency={updateCompanyCurrency}
-                updateCompanyTax={updateCompanyTax}
-                taxValue={tax}
-                setTaxState={setTax}
-              />
-            </CardContent>
-            <CardFooter>
-              <Footer
-                updateSignature={updateCompanySignature}
-                userId={userId!}
-                title={organizationProfile.title}
-                organizationId={organization?.id!}
-                updateTitle={updateCompanyTitle}
-                signature_image={profile.signature_image}
-              />
-            </CardFooter>
-            <CardFooter className="flex justify-center">
-              <SubmitButton
-                onSendToWhatsApp={onSendToWhatsApp}
-                onSendToEmail={onSendToEmail}
-                onDownload={onDownload}
-                onSave={onSave}
-                handleSubmit={handleSubmit}
-              />
-            </CardFooter>
-          </Card>
-        </form>
-      </Form>
-      <ViewPdfModal
-        fileUrl={pdfUrl}
-        setIsModalOpen={setIsModalOpen}
-        isModalOpen={isModalOpen}
-      />
-    </div>
+              <CardContent>
+                <ReceiptInfo
+                  control={receiptForm.control}
+                  updatePhoneNumberCountryCode={updatePhoneNumberCountryCode}
+                  defaultPhoneNumberCountryCode={phoneNumberCountryCode}
+                  setPhoneNumberCountryCodeState={setPhoneNumberCountryCode}
+                />
+                <ServiceInfo
+                  control={receiptForm.control}
+                  fields={fields}
+                  append={append}
+                  remove={remove}
+                  currency={currency}
+                  onSelectCurrency={updateCompanyCurrency}
+                  updateCompanyTax={updateCompanyTax}
+                  taxValue={tax}
+                  setTaxState={setTax}
+                />
+              </CardContent>
+              <CardFooter>
+                <Footer
+                  updateSignature={updateCompanySignature}
+                  userId={userId!}
+                  title={organizationProfile.title}
+                  organizationId={organization?.id!}
+                  updateTitle={updateCompanyTitle}
+                  signature_image={profile.signature_image}
+                />
+              </CardFooter>
+              <CardFooter className="flex justify-center">
+                <SubmitButton
+                  onSendToWhatsApp={onSendToWhatsApp}
+                  onSendToEmail={onSendToEmail}
+                  onDownload={onDownload}
+                  onSave={onSave}
+                  handleSubmit={handleSubmit}
+                />
+              </CardFooter>
+            </Card>
+          </form>
+        </Form>
+        <ViewPdfModal
+          fileUrl={pdfUrl}
+          setIsModalOpen={setIsModalOpen}
+          isModalOpen={isModalOpen}
+        />
+      </div>
+      <ScrollBar orientation="horizontal" />
+    </ScrollArea>
   );
 }
