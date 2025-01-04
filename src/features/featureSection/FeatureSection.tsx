@@ -5,33 +5,40 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { BarChart, Users, Zap, Shield, Bell, Smartphone } from "lucide-react";
+import {
+  Smartphone,
+  HandCoins,
+  FolderKanban,
+  Timer,
+  ShieldOff,
+  Lock,
+} from "lucide-react";
 
 const features = [
   {
     title: "Saves Money",
     description: "You don't have to buy printers or paper",
-    icon: BarChart,
+    icon: HandCoins,
   },
   {
     title: "Easy management",
     description: "You don't have to be afraid of loosing the paper",
-    icon: Users,
+    icon: FolderKanban,
   },
   {
     title: "Saves Time",
     description: "You don't have to waste time managing your paperwork",
-    icon: Zap,
+    icon: Timer,
   },
   {
-    title: "Enterprise-grade Security",
-    description: "Keep your data safe with our robust security measures.",
-    icon: Shield,
+    title: "Less Errors",
+    description: "You don't have to worry about errors.",
+    icon: ShieldOff,
   },
   {
-    title: "Smart Notifications",
-    description: "Stay informed with customizable, real-time notifications.",
-    icon: Bell,
+    title: "Secure",
+    description: "You don't have to worry about security.",
+    icon: Lock,
   },
   {
     title: "Mobile Accessibility",
