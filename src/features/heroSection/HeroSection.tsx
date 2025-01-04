@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, CheckCircle, SquarePlay } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Spotlight } from "@/components/ui/Spotlight";
+import DemoVideo from "./DemoVideo";
 export default function HeroSection() {
   return (
     <>
@@ -27,12 +28,7 @@ export default function HeroSection() {
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
-            <Button variant="outline" size="lg" asChild>
-              <Link href="#">
-                <SquarePlay className="ml-2 h-4 w-4" />
-                Watch Demo
-              </Link>
-            </Button>
+            <DemoVideo />
           </div>
         </div>
       </div>
