@@ -1,4 +1,4 @@
-import Pricing from "@/pages/pricing/Pricing";
+import Pricing from '@/pages/pricing/Pricing';
 
 export default function page() {
   return <Pricing />;

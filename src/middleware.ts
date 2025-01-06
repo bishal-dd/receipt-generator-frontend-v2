@@ -1,18 +1,18 @@
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 
-const isPublicRoute = createRouteMatcher([
-  "/(.*)",
-  "/home/sign-in(.*)",
-  "/home/sign-up(.*)",
-  "/home/contact(.*)",
-  "/home/pricing(.*)",
-  "/home/feature(.*)",
-  "/home(.*)",
-]);
+// const isPublicRoute = createRouteMatcher([
+//   "/(.*)",
+//   "/home/sign-in(.*)",
+//   "/home/sign-up(.*)",
+//   "/home/contact(.*)",
+//   "/home/pricing(.*)",
+//   "/home/feature(.*)",
+//   "/home(.*)",
+// ]);
 
 const isPrivateRoute = createRouteMatcher([
-  "/dashboard(.*)",
-  "/dashboard/generate-receipt(.*)",
+  '/dashboard(.*)',
+  '/dashboard/generate-receipt(.*)',
 ]);
 
 export default clerkMiddleware(async (auth, request) => {
@@ -24,8 +24,8 @@ export default clerkMiddleware(async (auth, request) => {
 export const config = {
   matcher: [
     // Skip Next.js internals and all static files, unless found in search params
-    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
     // Always run for API routes
-    "/(api|trpc)(.*)",
+    '/(api|trpc)(.*)',
   ],
 };

@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 interface PhoneNumberCountryCodeState {
   phoneNumberCountryCode: string;
@@ -7,7 +7,7 @@ interface PhoneNumberCountryCodeState {
 
 export const usePhoneNumberCountryCodeStore =
   create<PhoneNumberCountryCodeState>()((set) => ({
-    phoneNumberCountryCode: "US",
+    phoneNumberCountryCode: 'US',
     setPhoneNumberCountryCode: (phoneNumberCountryCode: string) =>
       set({ phoneNumberCountryCode: phoneNumberCountryCode }),
   }));

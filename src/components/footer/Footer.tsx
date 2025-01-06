@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from 'next/link';
 
 export function Footer() {
   return (
@@ -49,10 +49,10 @@ export function Footer() {
             {/* Add your social media links here */}
           </div>
           <p className="mt-8 text-base text-neutral-300 md:mt-0 md:order-1">
-            &copy; {new Date().getFullYear()}{" "}
+            &copy; {new Date().getFullYear()}{' '}
             <a href="https://www.lightwebx.com/" target="_blank">
               <u>Light Webx</u>
-            </a>{" "}
+            </a>{' '}
             All rights reserved.
           </p>
         </div>

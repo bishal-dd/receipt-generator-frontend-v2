@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { SquarePlay } from "lucide-react";
+import { Button } from '@/components/ui/button';
+import { SquarePlay } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { useState } from "react";
+} from '@/components/ui/dialog';
+import { useState } from 'react';
 export default function DemoVideo() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 

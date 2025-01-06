@@ -1,5 +1,5 @@
-"use client";
-import { format } from "date-fns";
+'use client';
+import { format } from 'date-fns';
 import {
   Table,
   TableBody,
@@ -7,14 +7,14 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from '@/components/ui/table';
 import {
   useDownloadReceiptPDFWithReceiptId,
   useSearchReceipts,
   useSendReceiptToEmailWithReceiptId,
   useSendReceiptToWhatsAppWithReceiptId,
-} from "./data/hooks";
-import { ReceiptFragmentFragment } from "@/gql/graphql";
+} from './data/hooks';
+import { ReceiptFragmentFragment } from '@/gql/graphql';
 import {
   Pagination,
   PaginationContent,
@@ -23,9 +23,9 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+} from '@/components/ui/pagination';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import {
   Select,
   SelectContent,
@@ -34,23 +34,23 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { years } from "./utils";
-import { DatePicker, DateRangePicker } from "@/components/utils";
-import { DateRange } from "react-day-picker";
-import { Button } from "@/components/ui/button";
-import { Check, Filter, X } from "lucide-react";
-import { DetailDialog, SubmitButton } from "./ui";
-import { useOrganization } from "@clerk/nextjs";
-import { toast } from "sonner";
-import { ViewPdfModal } from "../generateReceipt/ui";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+} from '@/components/ui/select';
+import { years } from './utils';
+import { DatePicker, DateRangePicker } from '@/components/utils';
+import { DateRange } from 'react-day-picker';
+import { Button } from '@/components/ui/button';
+import { Check, X } from 'lucide-react';
+import { DetailDialog } from './ui';
+import { useOrganization } from '@clerk/nextjs';
+import { toast } from 'sonner';
+import { ViewPdfModal } from '../generateReceipt/ui';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 export default function ViewReceipts() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const currentPage = searchParams ? Number(searchParams.get("page")) || 1 : 1;
-  const currentFilters = searchParams?.get("filters")?.split(",") || [];
+  const currentPage = searchParams ? Number(searchParams.get('page')) || 1 : 1;
+  const currentFilters = searchParams?.get('filters')?.split(',') || [];
   const [date, selectDate] = useState<Date | null>(null);
   const [dateRange, setDateRange] = useState<[string, string]>();
   const [dateRangeUI, setDateRangeUI] = useState<DateRange | undefined>();
@@ -61,7 +61,7 @@ export default function ViewReceipts() {
     null
   );
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
-  const { organization, isLoaded: orgLoaded } = useOrganization({
+  const { organization } = useOrganization({
     memberships: true,
   });
   const { sendReceiptToEmailWithReceiptId } =
@@ -73,7 +73,7 @@ export default function ViewReceipts() {
   const { receipts, foundCount } = useSearchReceipts(
     currentPage,
     Number(year),
-    date ? format(date, "yyyy-MM-dd") : null,
+    date ? format(date, 'yyyy-MM-dd') : null,
     dateRange
   );
   const itemsPerPage = 10;
@@ -81,12 +81,12 @@ export default function ViewReceipts() {
   useEffect(() => {
     if (currentFilters.length > 0) {
       currentFilters.forEach((filter) => {
-        const [type, ...values] = filter.split(":");
-        if (type === "year") {
+        const [type, ...values] = filter.split(':');
+        if (type === 'year') {
           setYear(values[0]);
-        } else if (type === "date") {
+        } else if (type === 'date') {
           selectDate(new Date(values[0]));
-        } else if (type === "dateRange" && values.length === 2) {
+        } else if (type === 'dateRange' && values.length === 2) {
           setDateRange([values[0], values[1]]);
           setDateRangeUI({
             from: new Date(values[0]),
@@ -95,12 +95,12 @@ export default function ViewReceipts() {
         }
       });
     }
-  }, []);
+  }, [currentFilters]);
   const updateUrlWithFilters = (newFilters: string[]) => {
     const params = new URLSearchParams();
-    params.set("page", "1"); // Reset to first page when filters change
+    params.set('page', '1'); // Reset to first page when filters change
     if (newFilters.length > 0) {
-      params.set("filters", newFilters.join(","));
+      params.set('filters', newFilters.join(','));
     }
     router.push(`?${params.toString()}`);
   };
@@ -114,7 +114,7 @@ export default function ViewReceipts() {
   const onChangeDate = (date: Date | undefined) => {
     if (date) {
       selectDate(date);
-      updateUrlWithFilters([`date:${format(date, "yyyy-MM-dd")}`]);
+      updateUrlWithFilters([`date:${format(date, 'yyyy-MM-dd')}`]);
     }
   };
 
@@ -125,33 +125,33 @@ export default function ViewReceipts() {
   const resetDateRange = () => {
     setDateRange(undefined);
     setDateRangeUI(undefined);
-    router.push("?page=1");
+    router.push('?page=1');
   };
   const clearFilters = () => {
-    router.push("?page=1"); // Reset URL without filters
+    router.push('?page=1'); // Reset URL without filters
     setYear(undefined);
     selectDate(null);
     setDateRange(undefined);
     setDateRangeUI(undefined);
   };
 
-  const onSendToWhatsApp = (receiptId: string, organizationId: string) => {
-    sendReceiptToWhatsAppWithReceiptId(receiptId, organizationId);
-    toast.success("Receipt Successfully Send!.", {
-      description:
-        " If it doesn't arrive in 30s send it agian from the send receipts section",
-    });
-    console.log(receiptId, organizationId);
-  };
+  // const onSendToWhatsApp = (receiptId: string, organizationId: string) => {
+  //   sendReceiptToWhatsAppWithReceiptId(receiptId, organizationId);
+  //   toast.success("Receipt Successfully Send!.", {
+  //     description:
+  //       " If it doesn't arrive in 30s send it agian from the send receipts section",
+  //   });
+  //   console.log(receiptId, organizationId);
+  // };
 
-  const onSendToEmail = (receiptId: string, organizationId: string) => {
-    sendReceiptToEmailWithReceiptId(receiptId, organizationId);
-    toast.success("Receipt Successfully Send!.", {
-      description:
-        " If it doesn't arrive in 30s send it agian from the send receipts section",
-    });
-    console.log(receiptId, organizationId);
-  };
+  // const onSendToEmail = (receiptId: string, organizationId: string) => {
+  //   sendReceiptToEmailWithReceiptId(receiptId, organizationId);
+  //   toast.success("Receipt Successfully Send!.", {
+  //     description:
+  //       " If it doesn't arrive in 30s send it agian from the send receipts section",
+  //   });
+  //   console.log(receiptId, organizationId);
+  // };
 
   const onDownloadReceipt = async (
     receiptId: string,
@@ -244,7 +244,7 @@ export default function ViewReceipts() {
                       {receipt.receipt_no}
                     </TableCell>
                     <TableCell>{receipt.recipient_name}</TableCell>
-                    <TableCell>{format(receipt.date, "PPP")}</TableCell>
+                    <TableCell>{format(receipt.date, 'PPP')}</TableCell>
                     <TableCell>{receipt.total_amount?.toFixed(2)}</TableCell>
                     <TableCell>{receipt.payment_method}</TableCell>
                     <TableCell>

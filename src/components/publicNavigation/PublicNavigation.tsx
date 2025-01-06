@@ -1,18 +1,10 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
-import { ActionLinks, navItems } from "./segments";
-
-const links = [
-  { href: "/", label: "Home" },
-  { href: "/features", label: "Features" },
-  { href: "/pricing", label: "Pricing" },
-  { href: "/contact", label: "Contact" },
-];
+import { useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { Menu, X } from 'lucide-react';
+import { ActionLinks, navItems } from './segments';
 
 export default function PublicNavigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -38,8 +30,8 @@ export default function PublicNavigation() {
                   href={link.link}
                   className={`px-3 py-2 text-sm font-medium rounded-md ${
                     pathname === link.link
-                      ? "text-black outline outline-1 outline-black"
-                      : "text-black  font-bold hover:text-primary hover:bg-accent"
+                      ? 'text-black outline outline-1 outline-black'
+                      : 'text-black  font-bold hover:text-primary hover:bg-accent'
                   }`}
                 >
                   {link.name}
@@ -72,8 +64,8 @@ export default function PublicNavigation() {
                 href={link.link}
                 className={`block px-3 py-2 text-base font-medium rounded-md ${
                   pathname === link.link
-                    ? "text-white bg-primary"
-                    : "text-muted-foreground hover:text-primary hover:bg-accent"
+                    ? 'text-white bg-primary'
+                    : 'text-muted-foreground hover:text-primary hover:bg-accent'
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >

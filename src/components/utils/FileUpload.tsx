@@ -1,10 +1,11 @@
-"use client";
+'use client';
 
-import { useState, useRef, useEffect } from "react";
-import { Upload, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress"; // Import ShadCN Progress
-import { getPresignedUrl } from "@/utils";
+import { useState, useRef, useEffect } from 'react';
+import { Upload, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress'; // Import ShadCN Progress
+import { getPresignedUrl } from '@/utils';
+import Image from 'next/image';
 
 interface FileUploadProps {
   width?: number | string;
@@ -47,7 +48,7 @@ export function FileUpload({
       if (selectedFile.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
         setError(`File size exceeds the limit of ${MAX_FILE_SIZE_MB} MB.`);
         if (fileInputRef.current) {
-          fileInputRef.current.value = "";
+          fileInputRef.current.value = '';
         }
         return;
       }
@@ -64,8 +65,8 @@ export function FileUpload({
         );
 
         const xhr = new XMLHttpRequest();
-        xhr.open("PUT", presignedUrl, true);
-        xhr.setRequestHeader("Content-Type", selectedFile.type);
+        xhr.open('PUT', presignedUrl, true);
+        xhr.setRequestHeader('Content-Type', selectedFile.type);
 
         xhr.upload.onprogress = (event) => {
           if (event.lengthComputable) {
@@ -80,19 +81,19 @@ export function FileUpload({
             const imageUrl = URL.createObjectURL(selectedFile);
             setPreviewUrl(imageUrl);
           } else {
-            console.error("Upload failed", xhr.responseText);
+            console.error('Upload failed', xhr.responseText);
           }
           setIsUploading(false);
         };
 
         xhr.onerror = () => {
-          console.error("Upload error", xhr.responseText);
+          console.error('Upload error', xhr.responseText);
           setIsUploading(false);
         };
 
         xhr.send(selectedFile);
       } catch (error) {
-        console.error("Error uploading file:", error);
+        console.error('Error uploading file:', error);
         setIsUploading(false);
       }
     }
@@ -117,11 +118,11 @@ export function FileUpload({
 
   const handleRemove = (e: React.MouseEvent) => {
     e.stopPropagation();
-    onUpload("");
+    onUpload('');
     setPreviewUrl(null);
     setError(null);
     if (fileInputRef.current) {
-      fileInputRef.current.value = "";
+      fileInputRef.current.value = '';
     }
   };
 
@@ -144,7 +145,7 @@ export function FileUpload({
         />
         {previewUrl ? (
           <div className="relative w-full h-full">
-            <img
+            <Image
               src={previewUrl}
               alt="File preview"
               className="w-full h-full object-contain rounded-lg"
@@ -165,7 +166,7 @@ export function FileUpload({
           <div className="flex flex-col items-center justify-center h-full">
             <Upload className="h-12 w-12 text-gray-400" />
             <p className="mt-2 text-sm text-gray-600">
-              {uploadText || "Drag and drop or click to upload"}
+              {uploadText || 'Drag and drop or click to upload'}
             </p>
           </div>
         )}

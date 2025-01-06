@@ -1,4 +1,4 @@
-import { graphql } from "@/gql";
+import { graphql } from '@/gql';
 
 export const receiptQuery = graphql(`
   query Receipt($id: ID!) {

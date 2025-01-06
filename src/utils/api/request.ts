@@ -1,5 +1,5 @@
-import request from "graphql-request";
-import { TypedDocumentNode } from "@graphql-typed-document-node/core";
+import request from 'graphql-request';
+import { TypedDocumentNode } from '@graphql-typed-document-node/core';
 
 export async function requestAPI<T>(
   query: TypedDocumentNode<T, any>,
@@ -8,7 +8,7 @@ export async function requestAPI<T>(
 ): Promise<T> {
   try {
     const headers = {
-      authorization: token ? `Bearer ${token}` : "",
+      authorization: token ? `Bearer ${token}` : '',
     };
 
     const data = await request<T>(

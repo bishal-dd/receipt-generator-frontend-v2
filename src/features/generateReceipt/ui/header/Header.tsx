@@ -1,13 +1,13 @@
-import { CardHeader, CardTitle } from "@/components/ui/card";
-import Image from "next/image";
-import { UpdateInput } from "@/components/utils";
-import Link from "next/link";
+import { CardHeader, CardTitle } from '@/components/ui/card';
+import Image from 'next/image';
+import { UpdateInput } from '@/components/utils';
+import Link from 'next/link';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
+} from '@/components/ui/tooltip';
 
 type Props = {
   organization: {
@@ -34,7 +34,7 @@ export function Header({
     <div className="flex justify-between mb-6">
       {organization.hasImage ? (
         <div className="flex items-center justify-center p-5">
-          <Link href={"organization-profile"}>
+          <Link href={'organization-profile'}>
             <Image
               src={organization.imageUrl}
               alt="Logo"
@@ -48,15 +48,15 @@ export function Header({
       ) : null}
       <div
         className={`p-5 flex flex-col ${
-          organization.hasImage ? "w-auto" : "w-full items-center"
+          organization.hasImage ? 'w-auto' : 'w-full items-center'
         }`}
       >
-        <CardHeader className={`${organization.hasImage ? "" : "text-center"}`}>
+        <CardHeader className={`${organization.hasImage ? '' : 'text-center'}`}>
           <CardTitle className="text-2xl font-bold text-center">
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
-                  {" "}
+                  {' '}
                   <UpdateInput
                     value={organization.name}
                     name="company_name"
@@ -68,7 +68,7 @@ export function Header({
                   />
                 </TooltipTrigger>
                 <TooltipContent>
-                  <Link href={"organization-profile"}>Update Company Name</Link>
+                  <Link href={'organization-profile'}>Update Company Name</Link>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>

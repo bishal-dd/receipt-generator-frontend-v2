@@ -1,2 +1,2 @@
-export * from "./DetailDialog";
-export * from "./submitButton";
+export * from './DetailDialog';
+export * from './submitButton';

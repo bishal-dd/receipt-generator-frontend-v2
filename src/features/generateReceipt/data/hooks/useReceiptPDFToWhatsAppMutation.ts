@@ -1,8 +1,8 @@
-import { useMutation } from "@tanstack/react-query";
-import { SendReceiptPdfToWhatsApp } from "@/gql/graphql";
-import { sendReceiptPDFToWhatsAppMutation } from "../graphql/mutations/sendReceiptPDFToWhatsAppMutation";
-import { requestAPI } from "@/utils";
-import { useAuth } from "@clerk/nextjs";
+import { useMutation } from '@tanstack/react-query';
+import { SendReceiptPdfToWhatsApp } from '@/gql/graphql';
+import { sendReceiptPDFToWhatsAppMutation } from '../graphql/mutations/sendReceiptPDFToWhatsAppMutation';
+import { requestAPI } from '@/utils';
+import { useAuth } from '@clerk/nextjs';
 
 export function useReceiptPDFToWhatsAppMutation() {
   const { getToken } = useAuth();
@@ -16,7 +16,7 @@ export function useReceiptPDFToWhatsAppMutation() {
           input,
         });
       } catch (error) {
-        console.error("API request failed:", error);
+        console.error('API request failed:', error);
         throw error;
       }
     },
@@ -31,10 +31,10 @@ export function useReceiptPDFToWhatsAppMutation() {
   ) => {
     try {
       const response = await mutation.mutateAsync(input);
-      console.log("Profile updated successfully:", response);
+      console.log('Profile updated successfully:', response);
       return response;
     } catch (error) {
-      console.error("Error updating profile:", error);
+      console.error('Error updating profile:', error);
       throw error;
     }
   };

@@ -1,5 +1,5 @@
-"use client";
-import { Input } from "@/components/ui/input";
+'use client';
+import { Input } from '@/components/ui/input';
 import {
   Table,
   TableBody,
@@ -7,33 +7,30 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { useMemo, useState } from "react";
-import { Plus, Minus, Currency } from "lucide-react";
+} from '@/components/ui/table';
+import { useMemo } from 'react';
+import { Plus, Minus } from 'lucide-react';
 import {
   FieldArrayWithId,
-  FieldErrors,
   UseFieldArrayAppend,
   UseFieldArrayRemove,
   useWatch,
-} from "react-hook-form";
-import { ReceiptFormData } from "../../utils";
-import { Button } from "@/components/ui/button";
+} from 'react-hook-form';
+import { ReceiptFormData } from '../../utils';
+import { Button } from '@/components/ui/button';
 import {
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { CurrencyInput } from "@/components/utils";
-import { UpdateInput } from "@/components/utils";
+} from '@/components/ui/form';
+import { CurrencyInput } from '@/components/utils';
+import { UpdateInput } from '@/components/utils';
 
 type Props = {
   control: any; // Replace `any` with appropriate type
-  fields: FieldArrayWithId<ReceiptFormData, "services", "id">[];
-  append: UseFieldArrayAppend<ReceiptFormData, "services">;
+  fields: FieldArrayWithId<ReceiptFormData, 'services', 'id'>[];
+  append: UseFieldArrayAppend<ReceiptFormData, 'services'>;
   remove: UseFieldArrayRemove;
   currency: string;
   onSelectCurrency: (currency: string) => void;
@@ -54,7 +51,7 @@ export function ServiceInfo({
 }: Props) {
   const services = useWatch({
     control,
-    name: "services",
+    name: 'services',
   });
 
   // Calculate total based on watched services
@@ -103,7 +100,7 @@ export function ServiceInfo({
                   className="h-6 w-6 text-green-700 hover:bg-black/10 hover:text-green-700"
                   onClick={(e) => {
                     e.preventDefault();
-                    append({ description: "", quantity: 1, unitPrice: 0 });
+                    append({ description: '', quantity: 1, unitPrice: 0 });
                   }}
                 >
                   <Plus className="h-4 w-4" />
@@ -147,11 +144,11 @@ export function ServiceInfo({
                           type="number"
                           className="w-20"
                           {...field}
-                          value={field.value || ""}
+                          value={field.value || ''}
                           onChange={(e) =>
                             field.onChange(
-                              e.target.value === ""
-                                ? ""
+                              e.target.value === ''
+                                ? ''
                                 : Number(e.target.value)
                             )
                           }
@@ -173,11 +170,11 @@ export function ServiceInfo({
                           type="number"
                           className="w-20"
                           {...field}
-                          value={field.value || ""}
+                          value={field.value || ''}
                           onChange={(e) =>
                             field.onChange(
-                              e.target.value === ""
-                                ? ""
+                              e.target.value === ''
+                                ? ''
                                 : Number(e.target.value)
                             )
                           }
@@ -189,11 +186,11 @@ export function ServiceInfo({
                 />
               </TableCell>
               <TableCell className="w-32 text-right px-4 py-2">
-                {currency}{" "}
+                {currency}{' '}
                 {(
                   (services?.[index]?.quantity || 0) *
                   (services?.[index]?.unitPrice || 0)
-                ).toFixed(2)}{" "}
+                ).toFixed(2)}{' '}
               </TableCell>
             </TableRow>
           ))}
@@ -212,12 +209,12 @@ export function ServiceInfo({
             <span className="flex items-center gap-1">
               Tax (
               <UpdateInput
-                value={taxValue === 0 ? "" : taxValue}
+                value={taxValue === 0 ? '' : taxValue}
                 name="tax"
                 className="text-2xl font-bold text-center w-12"
                 placeholder="Tax"
                 onChange={(value) => {
-                  if (value === "") {
+                  if (value === '') {
                     value = 0;
                   }
                   setTaxState(value);

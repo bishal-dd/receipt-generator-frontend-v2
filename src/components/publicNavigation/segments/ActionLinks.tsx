@@ -1,8 +1,8 @@
-import React from "react";
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, User } from "lucide-react";
+import React from 'react';
+import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { ArrowRight, User } from 'lucide-react';
 
 export default function ActionLinks() {
   return (

@@ -1,8 +1,8 @@
-import { useMutation } from "@tanstack/react-query";
-import { DownloadPdf } from "@/gql/graphql";
-import { saveReceiptMutation } from "../graphql/mutations/saveReceiptMutation";
-import { requestAPI } from "@/utils";
-import { useAuth } from "@clerk/nextjs";
+import { useMutation } from '@tanstack/react-query';
+import { DownloadPdf } from '@/gql/graphql';
+import { saveReceiptMutation } from '../graphql/mutations/saveReceiptMutation';
+import { requestAPI } from '@/utils';
+import { useAuth } from '@clerk/nextjs';
 
 export function useSaveReceipt() {
   const { getToken } = useAuth();

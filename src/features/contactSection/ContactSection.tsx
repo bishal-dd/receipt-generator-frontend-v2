@@ -4,46 +4,45 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import {
   Mail,
   Phone,
   MapPin,
   Linkedin,
-  Twitter,
   Facebook,
   Instagram,
   Music2,
-} from "lucide-react";
-import Link from "next/link";
+} from 'lucide-react';
+import Link from 'next/link';
 
 const contactInfo = [
   {
     icon: Mail,
-    title: "Email",
-    content: "contact@lightwebx.com",
-    href: "mailto:contact@lightwebx.com",
+    title: 'Email',
+    content: 'contact@lightwebx.com',
+    href: 'mailto:contact@lightwebx.com',
   },
   {
     icon: Phone,
-    title: "WhatsApp",
-    content: "+975 - 17959259",
-    href: "https://api.whatsapp.com/send?phone=17959259",
+    title: 'WhatsApp',
+    content: '+975 - 17959259',
+    href: 'https://api.whatsapp.com/send?phone=17959259',
   },
   {
     icon: MapPin,
-    title: "Address",
-    content: "Thimphu, Bhutan",
-    href: "https://maps.app.goo.gl/NfsQRVcuRcMqQtV26",
+    title: 'Address',
+    content: 'Thimphu, Bhutan',
+    href: 'https://maps.app.goo.gl/NfsQRVcuRcMqQtV26',
   },
 ];
 
 const socialLinks = [
-  { icon: Facebook, href: "https://www.facebook.com/lightwebx" },
-  { icon: Instagram, href: "https://www.instagram.com/lightwebx" },
-  { icon: Music2, href: "https://www.tiktok.com/@lightwebx" },
-  { icon: Linkedin, href: "https://www.linkedin.com/company/light-webx" },
+  { icon: Facebook, href: 'https://www.facebook.com/lightwebx' },
+  { icon: Instagram, href: 'https://www.instagram.com/lightwebx' },
+  { icon: Music2, href: 'https://www.tiktok.com/@lightwebx' },
+  { icon: Linkedin, href: 'https://www.linkedin.com/company/light-webx' },
 ];
 
 export default function ContactSection() {

@@ -1,8 +1,8 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { requestAPI } from "@/utils";
-import { userReceiptsQuery } from "../graphql/queries/userReceipts";
-import { GetUserReceiptsQuery, ReceiptFragmentFragment } from "@/gql/graphql";
-import { useAuth } from "@clerk/nextjs";
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { requestAPI } from '@/utils';
+import { userReceiptsQuery } from '../graphql/queries/userReceipts';
+import { GetUserReceiptsQuery, ReceiptFragmentFragment } from '@/gql/graphql';
+import { useAuth } from '@clerk/nextjs';
 export function useReceipts() {
   const { getToken } = useAuth();
 
@@ -11,7 +11,7 @@ export function useReceipts() {
     isLoading: receiptLoading,
     error,
   } = useSuspenseQuery<GetUserReceiptsQuery, Error>({
-    queryKey: ["userReceipts"],
+    queryKey: ['userReceipts'],
     queryFn: async () => {
       const token = await getToken();
 

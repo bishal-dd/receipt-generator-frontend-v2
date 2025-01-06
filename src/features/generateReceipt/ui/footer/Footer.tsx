@@ -1,4 +1,4 @@
-import { FileUpload, UpdateInput } from "@/components/utils";
+import { FileUpload, UpdateInput } from '@/components/utils';
 
 type Props = {
   userId: string;
@@ -22,7 +22,7 @@ export function Footer({
         width={200}
         height={150}
         defaultPreview={
-          !signature_image || signature_image === "" ? null : signature_image
+          !signature_image || signature_image === '' ? null : signature_image
         }
         uploadText="Seal or Signature"
         userId={userId!}

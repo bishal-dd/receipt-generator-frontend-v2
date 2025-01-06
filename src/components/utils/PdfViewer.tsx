@@ -3,14 +3,14 @@ import {
   Worker,
   ViewerProps,
   CharacterMap,
-} from "@react-pdf-viewer/core";
-import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
+} from '@react-pdf-viewer/core';
+import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 
-import "@react-pdf-viewer/core/lib/styles/index.css";
-import "@react-pdf-viewer/default-layout/lib/styles/index.css";
-import packageJson from "../../../package.json";
+import '@react-pdf-viewer/core/lib/styles/index.css';
+import '@react-pdf-viewer/default-layout/lib/styles/index.css';
+import packageJson from '../../../package.json';
 type Props = ViewerProps;
-const version = packageJson.dependencies["pdfjs-dist"];
+const version = packageJson.dependencies['pdfjs-dist'];
 
 const characterMap: CharacterMap = {
   isCompressed: true,
@@ -24,7 +24,7 @@ export const PdfViewer: React.FC<Props> = (props) => {
     <Worker
       workerUrl={`https://unpkg.com/pdfjs-dist@${version}/build/pdf.worker.js`}
     >
-      <div style={{ height: "750px", width: "100%" }}>
+      <div style={{ height: '750px', width: '100%' }}>
         <Viewer
           characterMap={characterMap}
           fileUrl={props.fileUrl}

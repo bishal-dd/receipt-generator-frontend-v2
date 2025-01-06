@@ -1,8 +1,8 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
-import { Spotlight } from "@/components/ui/Spotlight";
-import DemoVideo from "./DemoVideo";
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { ArrowRight } from 'lucide-react';
+import { Spotlight } from '@/components/ui/Spotlight';
+import DemoVideo from './DemoVideo';
 export default function HeroSection() {
   return (
     <>
@@ -17,7 +17,7 @@ export default function HeroSection() {
           </h1>
           <p className="mt-4 font-normal text-base text-neutral-300 max-w-lg text-center mx-auto">
             Enhance your service by instantly delivering payment receipts
-            directly to your customers' WhatsApp or email. This efficient
+            directly to your customers&apos; WhatsApp or email. This efficient
             solution simplifies your workflow, saves time, and provides a
             seamless experience for both you and your customers.
           </p>

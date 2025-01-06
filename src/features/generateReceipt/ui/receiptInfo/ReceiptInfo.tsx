@@ -1,4 +1,4 @@
-import { useWatch } from "react-hook-form";
+import { useWatch } from 'react-hook-form';
 import {
   FormControl,
   FormDescription,
@@ -6,9 +6,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { DatePicker, PhoneInput } from "@/components/utils";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { DatePicker, PhoneInput } from '@/components/utils';
 import {
   Select,
   SelectContent,
@@ -16,9 +16,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { startOfDay } from "date-fns";
-import * as RPNInput from "react-phone-number-input";
+} from '@/components/ui/select';
+import { startOfDay } from 'date-fns';
+import * as RPNInput from 'react-phone-number-input';
 type Props = {
   control: any;
   updatePhoneNumberCountryCode: (countryCode: string) => void;
@@ -34,7 +34,7 @@ export function ReceiptInfo({
 }: Props) {
   const paymentMethod = useWatch({
     control,
-    name: "paymentMethod",
+    name: 'paymentMethod',
   });
 
   return (
@@ -51,7 +51,7 @@ export function ReceiptInfo({
               <FormControl>
                 <Input placeholder="Customer Name" {...field} />
               </FormControl>
-              <FormMessage>{error?.message}</FormMessage>{" "}
+              <FormMessage>{error?.message}</FormMessage>{' '}
             </FormItem>
           )}
         />
@@ -72,12 +72,12 @@ export function ReceiptInfo({
                     if (country) {
                       updatePhoneNumberCountryCode(country);
                       setPhoneNumberCountryCodeState(country);
-                      console.log("Selected country:", country);
+                      console.log('Selected country:', country);
                     }
                   }}
                 />
               </FormControl>
-              <FormMessage>{error?.message}</FormMessage>{" "}
+              <FormMessage>{error?.message}</FormMessage>{' '}
             </FormItem>
           )}
         />
@@ -90,7 +90,7 @@ export function ReceiptInfo({
               <FormControl>
                 <Input placeholder="Customer Email" type="email" {...field} />
               </FormControl>
-              <FormMessage>{error?.message}</FormMessage>{" "}
+              <FormMessage>{error?.message}</FormMessage>{' '}
             </FormItem>
           )}
         />
@@ -103,7 +103,7 @@ export function ReceiptInfo({
               <FormControl>
                 <Input placeholder="Customer Address" {...field} />
               </FormControl>
-              <FormMessage>{error?.message}</FormMessage>{" "}
+              <FormMessage>{error?.message}</FormMessage>{' '}
             </FormItem>
           )}
         />
@@ -175,7 +175,7 @@ export function ReceiptInfo({
           )}
         />
 
-        {paymentMethod === "BankTransfer" && (
+        {paymentMethod === 'BankTransfer' && (
           <FormField
             control={control}
             name="paymentNote"

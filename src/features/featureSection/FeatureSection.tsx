@@ -4,7 +4,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from '@/components/ui/card';
 import {
   Smartphone,
   HandCoins,
@@ -12,37 +12,37 @@ import {
   Timer,
   ShieldOff,
   Lock,
-} from "lucide-react";
+} from 'lucide-react';
 
 const features = [
   {
-    title: "Saves Money",
+    title: 'Saves Money',
     description: "You don't have to buy printers or paper",
     icon: HandCoins,
   },
   {
-    title: "Easy management",
+    title: 'Easy management',
     description: "You don't have to be afraid of loosing the paper",
     icon: FolderKanban,
   },
   {
-    title: "Saves Time",
+    title: 'Saves Time',
     description: "You don't have to waste time managing your paperwork",
     icon: Timer,
   },
   {
-    title: "Less Errors",
+    title: 'Less Errors',
     description: "You don't have to worry about errors.",
     icon: ShieldOff,
   },
   {
-    title: "Secure",
+    title: 'Secure',
     description: "You don't have to worry about security.",
     icon: Lock,
   },
   {
-    title: "Mobile Accessibility",
-    description: "Access your work from anywhere.",
+    title: 'Mobile Accessibility',
+    description: 'Access your work from anywhere.',
     icon: Smartphone,
   },
 ];

@@ -1,1 +1,1 @@
-export * from "./ViewPdfModal";
+export * from './ViewPdfModal';

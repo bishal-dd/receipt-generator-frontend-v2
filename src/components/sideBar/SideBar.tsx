@@ -1,5 +1,5 @@
-import { Building, Receipt, List } from "lucide-react";
-import { UserButton } from "@clerk/nextjs";
+import { Building, Receipt, List } from 'lucide-react';
+import { UserButton } from '@clerk/nextjs';
 import {
   Sidebar,
   SidebarContent,
@@ -10,24 +10,24 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar";
-import Link from "next/link";
+} from '@/components/ui/sidebar';
+import Link from 'next/link';
 
 // Menu items.
 const items = [
   {
-    title: "Receipt",
-    url: "/dashboard/generate-receipt",
+    title: 'Receipt',
+    url: '/dashboard/generate-receipt',
     icon: Receipt,
   },
   {
-    title: "Receipts List",
-    url: "/dashboard/view-receipts",
+    title: 'Receipts List',
+    url: '/dashboard/view-receipts',
     icon: List,
   },
   {
-    title: "Organization Profile",
-    url: "/dashboard/organization-profile",
+    title: 'Organization Profile',
+    url: '/dashboard/organization-profile',
     icon: Building,
   },
 ];

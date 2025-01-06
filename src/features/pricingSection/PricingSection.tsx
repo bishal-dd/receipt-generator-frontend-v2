@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -6,30 +6,15 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Check } from "lucide-react";
-
-const plans = [
-  {
-    name: "Pro",
-    price: "$79",
-    description: "Ideal for growing businesses",
-    features: [
-      "Up to 20 team members",
-      "50GB storage",
-      "Advanced analytics",
-      "Priority support",
-      "Custom integrations",
-    ],
-  },
-];
+} from '@/components/ui/card';
+import { Check } from 'lucide-react';
 
 const features = [
-  "Send unlimted receipts on WhatsApp",
-  "Send unlimted receipts on Email",
-  "Keep track of your receipts",
-  "Have unlimited users",
-  "Have access to future features like invoices and quotations",
+  'Send unlimted receipts on WhatsApp',
+  'Send unlimted receipts on Email',
+  'Keep track of your receipts',
+  'Have unlimited users',
+  'Have access to future features like invoices and quotations',
 ];
 
 export default function PricingSection() {
@@ -106,8 +91,8 @@ export default function PricingSection() {
             </ul>
           </CardContent>
           <CardFooter>
-            <Button className="w-full" variant={"outline"}>
-              {"Get Started"}
+            <Button className="w-full" variant={'outline'}>
+              {'Get Started'}
             </Button>
           </CardFooter>
         </Card>

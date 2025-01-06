@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import { useReceiptForm, ReceiptFormData } from "../../utils";
+} from '@/components/ui/popover';
+import { ReceiptFormData } from '../../utils';
 
 type Props = {
   onSendToWhatsApp: (data: ReceiptFormData) => void;

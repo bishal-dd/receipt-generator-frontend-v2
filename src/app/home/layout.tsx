@@ -1,6 +1,5 @@
-import { Background } from "@/components/background";
-import { Footer } from "@/components/footer";
-import { PublicNavigation } from "@/components/publicNavigation";
+import { Footer } from '@/components/footer';
+import { PublicNavigation } from '@/components/publicNavigation';
 export default function HomeLayout({
   children,
 }: {

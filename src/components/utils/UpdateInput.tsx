@@ -1,8 +1,8 @@
-"use client";
-import { Input } from "@/components/ui/input";
-import React from "react";
-import { useCallback, useEffect, useState } from "react";
-import { useDebouncedCallback } from "use-debounce";
+'use client';
+import { Input } from '@/components/ui/input';
+import React from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { useDebouncedCallback } from 'use-debounce';
 
 type Props = {
   value: any;
@@ -39,7 +39,7 @@ function UpdateInput(props: Props) {
   );
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
-    if (e.code === "Enter") e.preventDefault();
+    if (e.code === 'Enter') e.preventDefault();
   }, []);
 
   return (

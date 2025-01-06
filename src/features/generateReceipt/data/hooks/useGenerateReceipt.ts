@@ -1,8 +1,8 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { requestAPI } from "@/utils";
-import { userProfileQuery } from "../graphql/queries/userProfile";
-import { UserProfileQuery, ProfileFragmentFragment } from "@/gql/graphql";
-import { useAuth } from "@clerk/nextjs";
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { requestAPI } from '@/utils';
+import { userProfileQuery } from '../graphql/queries/userProfile';
+import { UserProfileQuery, ProfileFragmentFragment } from '@/gql/graphql';
+import { useAuth } from '@clerk/nextjs';
 export function useGenerateReceipt(userId: string) {
   const { getToken } = useAuth();
 
@@ -11,7 +11,7 @@ export function useGenerateReceipt(userId: string) {
     isLoading: profileLoading,
     error,
   } = useSuspenseQuery<UserProfileQuery, Error>({
-    queryKey: ["userProfile", userId],
+    queryKey: ['userProfile', userId],
     queryFn: async () => {
       const token = await getToken();
 

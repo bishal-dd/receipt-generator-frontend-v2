@@ -1,4 +1,4 @@
-import FeatureSection from "@/features/featureSection/FeatureSection";
+import FeatureSection from '@/features/featureSection/FeatureSection';
 
 export default function Feature() {
   return <FeatureSection />;

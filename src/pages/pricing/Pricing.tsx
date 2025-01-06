@@ -1,4 +1,4 @@
-import PricingSection from "@/features/pricingSection/PricingSection";
+import PricingSection from '@/features/pricingSection/PricingSection';
 
 export default function Pricing() {
   return (

@@ -1,8 +1,8 @@
-import { useMutation } from "@tanstack/react-query";
-import { DownloadPdf } from "@/gql/graphql";
-import { downloadReceiptPDFMutation } from "../graphql/mutations/downloadReceiptPDFMutation";
-import { requestAPI } from "@/utils";
-import { useAuth } from "@clerk/nextjs";
+import { useMutation } from '@tanstack/react-query';
+import { DownloadPdf } from '@/gql/graphql';
+import { downloadReceiptPDFMutation } from '../graphql/mutations/downloadReceiptPDFMutation';
+import { requestAPI } from '@/utils';
+import { useAuth } from '@clerk/nextjs';
 
 export function useDownloadReceiptPDFMutation() {
   const { getToken } = useAuth();
@@ -30,10 +30,10 @@ export function useDownloadReceiptPDFMutation() {
   const downloadReceiptPDFAsync = async (input: DownloadPdf) => {
     try {
       const response = await mutation.mutateAsync(input);
-      console.log("Profile updated successfully:", response);
+      console.log('Profile updated successfully:', response);
       return response.downloadReceiptPDF;
     } catch (error) {
-      console.error("Error updating profile:", error);
+      console.error('Error updating profile:', error);
       throw error;
     }
   };

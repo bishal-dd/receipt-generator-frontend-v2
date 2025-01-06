@@ -1,5 +1,5 @@
-"use client";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+'use client';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import {
   useGenerateReceipt,
   useUpdateProfile,
@@ -7,8 +7,8 @@ import {
   useReceiptPDFToEmailMutation,
   useDownloadReceiptPDFMutation,
   useSaveReceipt,
-} from "./data/hooks";
-import { useOrganization, useUser } from "@clerk/nextjs";
+} from './data/hooks';
+import { useOrganization, useUser } from '@clerk/nextjs';
 import {
   Header,
   ReceiptInfo,
@@ -16,23 +16,23 @@ import {
   Footer,
   SubmitButton,
   ViewPdfModal,
-} from "./ui";
-import { useEffect, useMemo, useState } from "react";
-import { ReceiptFormData, useReceiptForm } from "./utils";
-import { Form } from "@/components/ui/form";
+} from './ui';
+import { useEffect, useMemo, useState } from 'react';
+import { ReceiptFormData, useReceiptForm } from './utils';
+import { Form } from '@/components/ui/form';
 import {
   useCurrencyStore,
   useTaxStore,
   usePhoneNumberCountryCodeStore,
-} from "@/store";
-import { toast } from "sonner";
+} from '@/store';
+import { toast } from 'sonner';
 import {
   SendReceiptPdfToWhatsApp,
   SendReceiptPdfToEmail,
   DownloadPdf,
-} from "@/gql/graphql";
-import { Loader } from "@/components/utils";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+} from '@/gql/graphql';
+import { Loader } from '@/components/utils';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 export default function GenerateReceipt() {
   const { user, isLoaded: userLoaded } = useUser();
@@ -44,12 +44,7 @@ export default function GenerateReceipt() {
   const { sendReceiptPDFToWhatsApp } = useReceiptPDFToWhatsAppMutation();
   const { sendReceiptPDFToEmail } = useReceiptPDFToEmailMutation();
   const { downloadReceiptPDFAsync } = useDownloadReceiptPDFMutation();
-  const {
-    saveReceipt,
-    saveReceiptAsync,
-    error: saveReceiptError,
-  } = useSaveReceipt();
-  console.log(profile);
+  const { saveReceiptAsync, error: saveReceiptError } = useSaveReceipt();
   const { currency, setCurrency } = useCurrencyStore();
   const { tax, setTax } = useTaxStore();
   const { phoneNumberCountryCode, setPhoneNumberCountryCode } =
@@ -62,8 +57,7 @@ export default function GenerateReceipt() {
       setCurrency(profile.currency);
       setTax(profile.tax);
     }
-  }, []);
-  console.log("herrrrrr");
+  }, [setPhoneNumberCountryCode, setCurrency, setTax, profile]);
   const {
     updateCompanyName,
     updateCompanyAddress,
@@ -78,11 +72,11 @@ export default function GenerateReceipt() {
   const { receiptForm, fields, append, remove, handleSubmit, reset } =
     useReceiptForm();
   const organizationName = useMemo(
-    () => organization?.name || "No Organization",
+    () => organization?.name || 'No Organization',
     [organization]
   );
   const organizationImageUrl = useMemo(
-    () => organization?.imageUrl || "",
+    () => organization?.imageUrl || '',
     [organization]
   );
   const orgHasImage = useMemo(() => organization?.hasImage, [organization]);
@@ -91,10 +85,10 @@ export default function GenerateReceipt() {
   const organizationProfile = useMemo(
     () => ({
       name: organizationName,
-      email: profile?.email || "",
-      phone: profile?.phone_no || "",
-      address: profile?.address || "",
-      title: profile?.title || "",
+      email: profile?.email || '',
+      phone: profile?.phone_no || '',
+      address: profile?.address || '',
+      title: profile?.title || '',
       imageUrl: organizationImageUrl,
       hasImage: orgHasImage,
     }),
@@ -104,7 +98,7 @@ export default function GenerateReceipt() {
   const onSendToWhatsApp = (data: ReceiptFormData) => {
     console.log(data.customerPhoneNumber);
     if (!data.customerPhoneNumber) {
-      toast.error("Please enter customer phone number");
+      toast.error('Please enter customer phone number');
       return;
     }
 
@@ -117,7 +111,7 @@ export default function GenerateReceipt() {
       };
     });
     const input: SendReceiptPdfToWhatsApp = {
-      receipt_name: "Test",
+      receipt_name: 'Test',
       recipient_name: data.customerName,
       recipient_phone: data.customerPhoneNumber,
       recipient_email: data.customerEmail,
@@ -132,7 +126,7 @@ export default function GenerateReceipt() {
       Services: Services,
     };
     sendReceiptPDFToWhatsApp(input);
-    toast.success("Receipt Successfully Send!.", {
+    toast.success('Receipt Successfully Send!.', {
       description:
         " If it doesn't arrive in 30s send it agian from the send receipts section",
     });
@@ -141,7 +135,7 @@ export default function GenerateReceipt() {
 
   const onSendToEmail = (data: ReceiptFormData) => {
     if (!data.customerEmail) {
-      toast.error("Please enter customer Email");
+      toast.error('Please enter customer Email');
       return;
     }
     const Services = data.services.map((service) => {
@@ -153,7 +147,7 @@ export default function GenerateReceipt() {
       };
     });
     const input: SendReceiptPdfToEmail = {
-      receipt_name: "Test",
+      receipt_name: 'Test',
       recipient_name: data.customerName,
       recipient_phone: data.customerPhoneNumber,
       recipient_email: data.customerEmail,
@@ -169,7 +163,7 @@ export default function GenerateReceipt() {
       Services: Services,
     };
     sendReceiptPDFToEmail(input);
-    toast.success("Receipt Successfully Send!.", {
+    toast.success('Receipt Successfully Send!.', {
       description:
         " If it doesn't arrive in 30s send it agian from the send receipts section",
     });
@@ -188,7 +182,7 @@ export default function GenerateReceipt() {
       };
     });
     const input: DownloadPdf = {
-      receipt_name: "Test",
+      receipt_name: 'Test',
       recipient_name: data.customerName,
       recipient_phone: data.customerPhoneNumber,
       recipient_email: data.customerEmail,
@@ -217,7 +211,7 @@ export default function GenerateReceipt() {
       };
     });
     const input: DownloadPdf = {
-      receipt_name: "Test",
+      receipt_name: 'Test',
       recipient_name: data.customerName,
       recipient_phone: data.customerPhoneNumber,
       recipient_email: data.customerEmail,
@@ -233,12 +227,12 @@ export default function GenerateReceipt() {
     };
     await saveReceiptAsync(input);
     if (saveReceiptError) {
-      toast.error("Receipt Was Not Saved!.", {
-        description: "You can check in try again",
+      toast.error('Receipt Was Not Saved!.', {
+        description: 'You can check in try again',
       });
     }
-    toast.success("Receipt Was Saved!.", {
-      description: "You can check in the receipts",
+    toast.success('Receipt Was Saved!.', {
+      description: 'You can check in the receipts',
     });
     reset();
   };

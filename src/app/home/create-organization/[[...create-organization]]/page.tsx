@@ -1,9 +1,9 @@
-"use client";
-import { CreateOrganization } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
-import { useClerk } from "@clerk/nextjs";
-import { useEffect, useState } from "react";
-import { Loader } from "@/components/utils";
+'use client';
+import { CreateOrganization } from '@clerk/nextjs';
+import { useRouter } from 'next/navigation';
+import { useClerk } from '@clerk/nextjs';
+import { useEffect, useState } from 'react';
+import { Loader } from '@/components/utils';
 
 export default function CreateOrganizationPage() {
   const { user } = useClerk();
@@ -14,7 +14,7 @@ export default function CreateOrganizationPage() {
     if (user) {
       const hasOrganization = user.organizationMemberships.length > 0;
       if (hasOrganization) {
-        router.push("/dashboard/generate-receipt");
+        router.push('/dashboard/generate-receipt');
       } else {
         setLoading(false); // Allow rendering only if no redirect is needed
       }

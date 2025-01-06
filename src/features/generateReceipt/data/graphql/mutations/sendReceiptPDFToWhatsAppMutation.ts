@@ -1,4 +1,4 @@
-import { graphql } from "@/gql";
+import { graphql } from '@/gql';
 
 export const sendReceiptPDFToWhatsAppMutation = graphql(`
   mutation SendReceiptPDFToWhatsApp($input: SendReceiptPDFToWhatsApp!) {

@@ -1,1 +1,1 @@
-export * from "./ReceiptInfo";
+export * from './ReceiptInfo';

@@ -1,8 +1,8 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { requestAPI } from "@/utils";
-import { searchReceiptsQuery } from "../graphql/queries/searchReceipts";
-import { SearchReceiptsQuery, ReceiptFragmentFragment } from "@/gql/graphql";
-import { useAuth } from "@clerk/nextjs";
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { requestAPI } from '@/utils';
+import { searchReceiptsQuery } from '../graphql/queries/searchReceipts';
+import { SearchReceiptsQuery, ReceiptFragmentFragment } from '@/gql/graphql';
+import { useAuth } from '@clerk/nextjs';
 export function useSearchReceipts(
   page: number,
   year?: number | undefined,
@@ -21,7 +21,7 @@ export function useSearchReceipts(
     isLoading: receiptLoading,
     error,
   } = useSuspenseQuery<SearchReceiptsQuery, Error>({
-    queryKey: ["searchReceipts", page, year, date, dateRange],
+    queryKey: ['searchReceipts', page, year, date, dateRange],
     queryFn: async () => {
       const token = await getToken();
       const response = await requestAPI<SearchReceiptsQuery>(

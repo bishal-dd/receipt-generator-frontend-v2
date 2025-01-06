@@ -1,1 +1,1 @@
-export * from "./useCurrencyStore";
+export * from './useCurrencyStore';

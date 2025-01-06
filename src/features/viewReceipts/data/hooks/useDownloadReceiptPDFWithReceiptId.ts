@@ -1,7 +1,7 @@
-import { useMutation } from "@tanstack/react-query";
-import { downloadReceiptPDFWithReceiptIdMutation } from "../graphql/mutations/downloadReceiptPDFWithReceiptIdMutation";
-import { requestAPI } from "@/utils";
-import { useAuth } from "@clerk/nextjs";
+import { useMutation } from '@tanstack/react-query';
+import { downloadReceiptPDFWithReceiptIdMutation } from '../graphql/mutations/downloadReceiptPDFWithReceiptIdMutation';
+import { requestAPI } from '@/utils';
+import { useAuth } from '@clerk/nextjs';
 
 // Define the mutation variables type
 type MutationVariables = {

@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuList,
-} from "@/components/ui/navigation-menu";
-import { navItems } from "./navItems";
-import Link from "next/link";
+} from '@/components/ui/navigation-menu';
+import { navItems } from './navItems';
+import Link from 'next/link';
 
 export default function NavLinks() {
   return (

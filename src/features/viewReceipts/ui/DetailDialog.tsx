@@ -1,5 +1,5 @@
-import { Dispatch, SetStateAction, Suspense } from "react";
-import { Button } from "@/components/ui/button";
+import { Dispatch, SetStateAction, Suspense } from 'react';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogClose,
@@ -8,10 +8,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "@/components/ui/dialog";
-import { useReceipt } from "../data/hooks";
-import { Loader2 } from "lucide-react";
-import { formatDate } from "date-fns";
+} from '@/components/ui/dialog';
+import { useReceipt } from '../data/hooks';
+import { Loader2 } from 'lucide-react';
+import { formatDate } from 'date-fns';
 import {
   Table,
   TableBody,
@@ -19,7 +19,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from '@/components/ui/table';
 
 type Props = {
   receiptId: string;
@@ -43,19 +43,19 @@ function ReceiptDetails({ receiptId }: { receiptId: string }) {
         </div>
         <div>
           <h4 className="font-semibold">Recipient Phone</h4>
-          <p>{receipt.recipient_phone || "-"}</p>
+          <p>{receipt.recipient_phone || '-'}</p>
         </div>
         <div>
           <h4 className="font-semibold">Recipient Email</h4>
-          <p>{receipt.recipient_email || "-"}</p>
+          <p>{receipt.recipient_email || '-'}</p>
         </div>
         <div>
           <h4 className="font-semibold">Recipient Address</h4>
-          <p>{receipt.recipient_address || "-"}</p>
+          <p>{receipt.recipient_address || '-'}</p>
         </div>
         <div>
           <h4 className="font-semibold">Date</h4>
-          <p>{formatDate(receipt.date, "PPP") || "-"}</p>
+          <p>{formatDate(receipt.date, 'PPP') || '-'}</p>
         </div>
         <div>
           <h4 className="font-semibold">Payment Method</h4>
@@ -63,15 +63,15 @@ function ReceiptDetails({ receiptId }: { receiptId: string }) {
         </div>
         <div>
           <h4 className="font-semibold">Payment Note</h4>
-          <p>{receipt.payment_note || "-"}</p>
+          <p>{receipt.payment_note || '-'}</p>
         </div>
         <div>
           <h4 className="font-semibold">Sub Total</h4>
-          <p>{receipt.sub_total_amount?.toFixed(2) || "-"}</p>
+          <p>{receipt.sub_total_amount?.toFixed(2) || '-'}</p>
         </div>
         <div>
           <h4 className="font-semibold">Tax Amount</h4>
-          <p>{receipt.tax_amount?.toFixed(2) || "-"}</p>
+          <p>{receipt.tax_amount?.toFixed(2) || '-'}</p>
         </div>
         <div>
           <h4 className="font-semibold">Total Amount</h4>

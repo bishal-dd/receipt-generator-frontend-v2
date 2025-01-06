@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 interface CurrencyState {
   currency: string;
@@ -6,6 +6,6 @@ interface CurrencyState {
 }
 
 export const useCurrencyStore = create<CurrencyState>()((set) => ({
-  currency: "USD",
+  currency: 'USD',
   setCurrency: (currency: string) => set({ currency: currency }),
 }));
