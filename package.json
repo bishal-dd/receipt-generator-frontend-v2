@@ -10,6 +10,9 @@
     "format": "prettier --write .",
     "codegen": "graphql-codegen --config codegen.ts"
   },
+  "engines": {
+    "node": "20.x"
+  },
   "dependencies": {
     "@clerk/nextjs": "^6.9.2",
     "@hookform/resolvers": "^3.9.1",
