@@ -103,7 +103,7 @@ function ReceiptDetails({ receiptId }: { receiptId: string }) {
                   {service?.rate?.toFixed(2)}
                 </TableCell>
                 <TableCell className="text-right">
-                  {(service?.quantity! * (service?.rate || 0)).toFixed(2)}
+                  {((service?.quantity ?? 0) * (service?.rate || 0)).toFixed(2)}
                 </TableCell>
               </TableRow>
             ))}

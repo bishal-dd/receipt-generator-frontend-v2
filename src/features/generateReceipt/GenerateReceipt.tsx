@@ -40,6 +40,11 @@ export default function GenerateReceipt() {
   const { organization, isLoaded: orgLoaded } = useOrganization({
     memberships: true,
   });
+  if (!organization?.id) {
+    throw new Error('Organization ID is undefined');
+  }
+  const orgId = organization.id;
+
   const { profile, profileLoading, error } = useGenerateReceipt(userId!);
   const { sendReceiptPDFToWhatsApp } = useReceiptPDFToWhatsAppMutation();
   const { sendReceiptPDFToEmail } = useReceiptPDFToEmailMutation();
@@ -122,7 +127,7 @@ export default function GenerateReceipt() {
       is_receipt_send: false,
       date: data.date,
       user_id: userId!,
-      orginazation_id: organization?.id!,
+      orginazation_id: orgId,
       Services: Services,
     };
     sendReceiptPDFToWhatsApp(input);
@@ -159,7 +164,7 @@ export default function GenerateReceipt() {
       is_receipt_send: false,
 
       user_id: userId!,
-      orginazation_id: organization?.id!,
+      orginazation_id: orgId,
       Services: Services,
     };
     sendReceiptPDFToEmail(input);
@@ -193,7 +198,7 @@ export default function GenerateReceipt() {
       date: data.date,
       is_receipt_send: false,
       user_id: userId!,
-      orginazation_id: organization?.id!,
+      orginazation_id: orgId,
       Services: Services,
     };
     const pdfUrl = await downloadReceiptPDFAsync(input);
@@ -222,7 +227,7 @@ export default function GenerateReceipt() {
       date: data.date,
       is_receipt_send: false,
       user_id: userId!,
-      orginazation_id: organization?.id!,
+      orginazation_id: orgId,
       Services: Services,
     };
     await saveReceiptAsync(input);
@@ -282,7 +287,7 @@ export default function GenerateReceipt() {
                   updateSignature={updateCompanySignature}
                   userId={userId!}
                   title={organizationProfile.title}
-                  organizationId={organization?.id!}
+                  organizationId={orgId}
                   updateTitle={updateCompanyTitle}
                   signature_image={profile.signature_image}
                 />

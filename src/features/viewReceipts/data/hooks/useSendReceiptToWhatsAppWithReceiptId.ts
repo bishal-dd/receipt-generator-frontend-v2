@@ -14,20 +14,16 @@ export function useSendReceiptToWhatsAppWithReceiptId() {
 
   const mutation = useMutation({
     mutationFn: async (variables: MutationVariables) => {
-      try {
-        const token = await getToken();
+      const token = await getToken();
 
-        return await requestAPI(
-          sendReceiptToWhatsAppWithReceiptIdMutation,
-          token,
-          {
-            receiptId: variables.receiptId,
-            orginazationId: variables.orginazationId,
-          }
-        );
-      } catch (error) {
-        throw error;
-      }
+      return await requestAPI(
+        sendReceiptToWhatsAppWithReceiptIdMutation,
+        token,
+        {
+          receiptId: variables.receiptId,
+          orginazationId: variables.orginazationId,
+        }
+      );
     },
   });
 
@@ -42,15 +38,11 @@ export function useSendReceiptToWhatsAppWithReceiptId() {
     receiptId: string,
     orginazationId: string
   ) => {
-    try {
-      const response = await mutation.mutateAsync({
-        receiptId,
-        orginazationId,
-      });
-      return response;
-    } catch (error) {
-      throw error;
-    }
+    const response = await mutation.mutateAsync({
+      receiptId,
+      orginazationId,
+    });
+    return response;
   };
 
   return {

@@ -213,12 +213,12 @@ export function ServiceInfo({
                 name="tax"
                 className="text-2xl font-bold text-center w-12"
                 placeholder="Tax"
-                onChange={(value) => {
+                onChange={(value: string | number) => {
                   if (value === '') {
                     value = 0;
                   }
-                  setTaxState(value);
-                  updateCompanyTax(value);
+                  setTaxState(Number(value));
+                  updateCompanyTax(Number(value));
                 }}
                 type="text"
               />

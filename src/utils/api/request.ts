@@ -6,20 +6,14 @@ export async function requestAPI<T>(
   token: string | null,
   variables?: any
 ): Promise<T> {
-  try {
-    const headers = {
-      authorization: token ? `Bearer ${token}` : '',
-    };
+  const headers = {
+    authorization: token ? `Bearer ${token}` : '',
+  };
 
-    const data = await request<T>(
-      process.env.NEXT_PUBLIC_API_URL!,
-      query,
-      variables,
-      headers
-    );
-
-    return data;
-  } catch (error) {
-    throw error;
-  }
+  return await request<T>(
+    process.env.NEXT_PUBLIC_API_URL!,
+    query,
+    variables,
+    headers
+  );
 }

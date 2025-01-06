@@ -11,8 +11,6 @@ import {
 import {
   useDownloadReceiptPDFWithReceiptId,
   useSearchReceipts,
-  useSendReceiptToEmailWithReceiptId,
-  useSendReceiptToWhatsAppWithReceiptId,
 } from './data/hooks';
 import { ReceiptFragmentFragment } from '@/gql/graphql';
 import {
@@ -42,7 +40,6 @@ import { Button } from '@/components/ui/button';
 import { Check, X } from 'lucide-react';
 import { DetailDialog } from './ui';
 import { useOrganization } from '@clerk/nextjs';
-import { toast } from 'sonner';
 import { ViewPdfModal } from '../generateReceipt/ui';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
@@ -50,7 +47,6 @@ export default function ViewReceipts() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const currentPage = searchParams ? Number(searchParams.get('page')) || 1 : 1;
-  const currentFilters = searchParams?.get('filters')?.split(',') || [];
   const [date, selectDate] = useState<Date | null>(null);
   const [dateRange, setDateRange] = useState<[string, string]>();
   const [dateRangeUI, setDateRangeUI] = useState<DateRange | undefined>();
@@ -64,10 +60,6 @@ export default function ViewReceipts() {
   const { organization } = useOrganization({
     memberships: true,
   });
-  const { sendReceiptToEmailWithReceiptId } =
-    useSendReceiptToEmailWithReceiptId();
-  const { sendReceiptToWhatsAppWithReceiptId } =
-    useSendReceiptToWhatsAppWithReceiptId();
   const { downloadReceiptPDFWithReceiptIdAsync } =
     useDownloadReceiptPDFWithReceiptId();
   const { receipts, foundCount } = useSearchReceipts(
@@ -79,8 +71,9 @@ export default function ViewReceipts() {
   const itemsPerPage = 10;
   const totalPages = Math.ceil(foundCount / itemsPerPage);
   useEffect(() => {
-    if (currentFilters.length > 0) {
-      currentFilters.forEach((filter) => {
+    const filters = searchParams?.get('filters')?.split(',') || [];
+    if (filters.length > 0) {
+      filters.forEach((filter) => {
         const [type, ...values] = filter.split(':');
         if (type === 'year') {
           setYear(values[0]);
@@ -95,7 +88,8 @@ export default function ViewReceipts() {
         }
       });
     }
-  }, [currentFilters]);
+  }, [searchParams]); // Replace `currentFilters` with `searchParams`
+
   const updateUrlWithFilters = (newFilters: string[]) => {
     const params = new URLSearchParams();
     params.set('page', '1'); // Reset to first page when filters change
@@ -258,8 +252,12 @@ export default function ViewReceipts() {
                       <div className="flex flex-row gap-2">
                         <Button
                           onClick={() =>
-                            onDownloadReceipt(receipt.id, organization?.id!)
+                            onDownloadReceipt(
+                              receipt.id,
+                              organization?.id || ''
+                            )
                           }
+                          disabled={!organization?.id}
                         >
                           Download
                         </Button>

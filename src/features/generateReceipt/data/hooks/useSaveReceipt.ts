@@ -9,14 +9,10 @@ export function useSaveReceipt() {
 
   const mutation = useMutation({
     mutationFn: async (input: DownloadPdf) => {
-      try {
-        const token = await getToken();
+      const token = await getToken();
 
-        const res = await requestAPI(saveReceiptMutation, token, { input });
-        return res;
-      } catch (error) {
-        throw error;
-      }
+      const res = await requestAPI(saveReceiptMutation, token, { input });
+      return res;
     },
   });
 
@@ -26,12 +22,8 @@ export function useSaveReceipt() {
   };
 
   const saveReceiptAsync = async (input: DownloadPdf) => {
-    try {
-      const response = await mutation.mutateAsync(input);
-      return response.saveReceipt;
-    } catch (error) {
-      throw error;
-    }
+    const response = await mutation.mutateAsync(input);
+    return response.saveReceipt;
   };
 
   return {

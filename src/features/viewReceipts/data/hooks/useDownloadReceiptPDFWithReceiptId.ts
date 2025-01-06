@@ -14,19 +14,15 @@ export function useDownloadReceiptPDFWithReceiptId() {
   const mutation = useMutation({
     mutationFn: async (variables: MutationVariables) => {
       const token = await getToken();
-      try {
-        const res = await requestAPI(
-          downloadReceiptPDFWithReceiptIdMutation,
-          token,
-          {
-            receiptId: variables.receiptId,
-            orginazationId: variables.orginazationId,
-          }
-        );
-        return res;
-      } catch (error) {
-        throw error;
-      }
+      const res = await requestAPI(
+        downloadReceiptPDFWithReceiptIdMutation,
+        token,
+        {
+          receiptId: variables.receiptId,
+          orginazationId: variables.orginazationId,
+        }
+      );
+      return res;
     },
   });
 
@@ -42,15 +38,11 @@ export function useDownloadReceiptPDFWithReceiptId() {
     receiptId: string,
     orginazationId: string
   ) => {
-    try {
-      const response = await mutation.mutateAsync({
-        receiptId,
-        orginazationId,
-      });
-      return response.downloadReceiptPDFWithReceiptId;
-    } catch (error) {
-      throw error;
-    }
+    const response = await mutation.mutateAsync({
+      receiptId,
+      orginazationId,
+    });
+    return response.downloadReceiptPDFWithReceiptId;
   };
 
   return {
