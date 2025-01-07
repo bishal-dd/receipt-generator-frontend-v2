@@ -117,7 +117,7 @@ export default function Page() {
 
             <section className="space-y-4">
               <h2 className="text-2xl font-semibold text-white">
-                Children's Information
+                Children&apos;s Information
               </h2>
               <p className="text-neutral-300">
                 2QuickPaper does not knowingly collect any Personal Identifiable

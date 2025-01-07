@@ -118,7 +118,7 @@ export default function Page() {
                 liability of the Company and any of its suppliers under any
                 provision of these Terms and Your exclusive remedy for all of
                 the foregoing shall be limited to the amount actually paid by
-                you through the Service or 100 USD if you haven't purchased
+                you through the Service or 100 USD if you haven&apos;t purchased
                 anything through the Service.
               </p>
             </section>
