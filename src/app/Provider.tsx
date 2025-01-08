@@ -18,7 +18,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const queryClient = new QueryClient();
   return (
     <>
-      <ClerkProvider>
+      <ClerkProvider afterSignOutUrl="/home">
         <ClerkLoading>
           <Loader />
         </ClerkLoading>

@@ -41,10 +41,8 @@ export default function GenerateReceipt() {
   const { organization, isLoaded: orgLoaded } = useOrganization({
     memberships: true,
   });
-  if (!organization?.id) {
-    throw new Error('Organization ID is undefined');
-  }
-  const orgId = organization.id;
+
+  const orgId = organization?.id || '';
 
   const { profile, profileLoading, error } = useGenerateReceipt(userId!);
   const { sendReceiptPDFToWhatsApp } = useReceiptPDFToWhatsAppMutation();
