@@ -33,6 +33,7 @@ import {
 } from '@/gql/graphql';
 import { Loader } from '@/components/utils';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import { formatISO } from 'date-fns';
 
 export default function GenerateReceipt() {
   const { user, isLoaded: userLoaded } = useUser();
@@ -101,7 +102,6 @@ export default function GenerateReceipt() {
   );
 
   const onSendToWhatsApp = (data: ReceiptFormData) => {
-    console.log(data.customerPhoneNumber);
     if (!data.customerPhoneNumber) {
       toast.error('Please enter customer phone number');
       return;
@@ -115,6 +115,7 @@ export default function GenerateReceipt() {
         amount: service.unitPrice * service.quantity,
       };
     });
+    const formattedDate = formatISO(new Date(data.date));
     const input: SendReceiptPdfToWhatsApp = {
       receipt_name: 'Test',
       recipient_name: data.customerName,
@@ -125,7 +126,7 @@ export default function GenerateReceipt() {
       payment_method: data.paymentMethod,
       payment_note: data.paymentNote,
       is_receipt_send: false,
-      date: data.date,
+      date: formattedDate,
       user_id: userId!,
       orginazation_id: orgId,
       Services: Services,
@@ -151,6 +152,8 @@ export default function GenerateReceipt() {
         amount: service.unitPrice * service.quantity,
       };
     });
+    const formattedDate = formatISO(new Date(data.date));
+
     const input: SendReceiptPdfToEmail = {
       receipt_name: 'Test',
       recipient_name: data.customerName,
@@ -160,9 +163,8 @@ export default function GenerateReceipt() {
       receipt_no: data.receiptNumber,
       payment_method: data.paymentMethod,
       payment_note: data.paymentNote,
-      date: data.date,
+      date: formattedDate,
       is_receipt_send: false,
-
       user_id: userId!,
       orginazation_id: orgId,
       Services: Services,
@@ -186,6 +188,8 @@ export default function GenerateReceipt() {
         amount: service.unitPrice * service.quantity,
       };
     });
+    const formattedDate = formatISO(new Date(data.date));
+
     const input: DownloadPdf = {
       receipt_name: 'Test',
       recipient_name: data.customerName,
@@ -195,7 +199,7 @@ export default function GenerateReceipt() {
       receipt_no: data.receiptNumber,
       payment_method: data.paymentMethod,
       payment_note: data.paymentNote,
-      date: data.date,
+      date: formattedDate,
       is_receipt_send: false,
       user_id: userId!,
       orginazation_id: orgId,
@@ -215,6 +219,8 @@ export default function GenerateReceipt() {
         amount: service.unitPrice * service.quantity,
       };
     });
+    const formattedDate = formatISO(new Date(data.date));
+
     const input: DownloadPdf = {
       receipt_name: 'Test',
       recipient_name: data.customerName,
@@ -224,7 +230,7 @@ export default function GenerateReceipt() {
       receipt_no: data.receiptNumber,
       payment_method: data.paymentMethod,
       payment_note: data.paymentNote,
-      date: data.date,
+      date: formattedDate,
       is_receipt_send: false,
       user_id: userId!,
       orginazation_id: orgId,
