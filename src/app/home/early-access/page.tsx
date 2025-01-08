@@ -3,30 +3,28 @@ import React from 'react';
 import { BackgroundBeams } from '../../../components/ui/background-beams';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Resend } from 'resend';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import { Form } from '@/components/ui/form';
 
 export default function Page() {
-  const resend = new Resend('re_123456789');
   const router = useRouter();
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(e.currentTarget.email.value);
     try {
-      resend.contacts.create({
-        email: e.currentTarget.email.value,
-        unsubscribed: false,
-        audienceId: 'e9ccfea8-841a-45b3-87b9-61be55e0cbc3',
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        body: JSON.stringify({ email: e.currentTarget.email.value }),
+        headers: { 'Content-Type': 'application/json' },
       });
-
+      if (!res.ok) throw new Error();
       toast.success('Your Email was added');
       router.push('/home/pricing');
     } catch (error) {
-      console.log(error);
-      throw new Error("could't add email");
+      toast.error("Couldn't add email");
     }
   };
+
   return (
     <div className="h-[40rem] w-full rounded-md bg-neutral-950 relative flex flex-col items-center justify-center antialiased min-h-screen">
       <div className="max-w-2xl mx-auto p-4">
@@ -41,18 +39,24 @@ export default function Page() {
           2quickpaper unlimited at $4.99 per month. You can pay now to solodify
           your spot.
         </p>
-        <div className="flex flex-col items-center relative z-10">
-          <form onSubmit={onSubmit}>
+        <div className="flex flex-col items-center relative z-10 ">
+          <form onSubmit={onSubmit} className=" p-0 m-0 w-full ">
             <Input
               required
               name="email"
               type="email"
               placeholder="example@gmail.com"
-              className="rounded-lg border text-white border-neutral-800 focus:ring-2 focus:ring-teal-500  w-full relative z-10 mt-4  bg-neutral-950 placeholder:text-neutral-500"
+              className="rounded-lg border text-white p-5 border-neutral-800 focus:ring-2 focus:ring-teal-500  w-full relative z-10 mt-4  bg-neutral-950 placeholder:text-neutral-500"
             />
-            <Button className="mt-4" type="submit">
-              Apply
-            </Button>
+            <div className="flex flex-col items-center">
+              <Button
+                className="mt-4 px-8 py-2 text-lg"
+                variant={'outline'}
+                type="submit"
+              >
+                Apply
+              </Button>
+            </div>
           </form>
         </div>
       </div>
