@@ -1,18 +1,15 @@
 import { useMutation } from '@tanstack/react-query';
 import { SendReceiptPdfToWhatsApp } from '@/gql/graphql';
 import { sendReceiptPDFToWhatsAppMutation } from '../graphql/mutations/sendReceiptPDFToWhatsAppMutation';
-import { requestAPI } from '@/utils';
-import { useAuth } from '@clerk/nextjs';
+import { useRequestAPI } from '@/utils';
 
 export function useReceiptPDFToWhatsAppMutation() {
-  const { getToken } = useAuth();
+  const requestAPI = useRequestAPI();
 
   const mutation = useMutation({
     mutationFn: async (input: SendReceiptPdfToWhatsApp) => {
       try {
-        const token = await getToken();
-
-        return await requestAPI(sendReceiptPDFToWhatsAppMutation, token, {
+        return await requestAPI(sendReceiptPDFToWhatsAppMutation, {
           input,
         });
       } catch (error) {

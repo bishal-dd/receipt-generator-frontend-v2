@@ -1,10 +1,9 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { requestAPI } from '@/utils';
+import { useRequestAPI } from '@/utils';
 import { userProfileQuery } from '../graphql/queries/userProfile';
 import { UserProfileQuery, ProfileFragmentFragment } from '@/gql/graphql';
-import { useAuth } from '@clerk/nextjs';
 export function useGenerateReceipt(userId: string) {
-  const { getToken } = useAuth();
+  const requestAPI = useRequestAPI();
 
   const {
     data,
@@ -13,15 +12,9 @@ export function useGenerateReceipt(userId: string) {
   } = useSuspenseQuery<UserProfileQuery, Error>({
     queryKey: ['userProfile', userId],
     queryFn: async () => {
-      const token = await getToken();
-
-      const response = await requestAPI<UserProfileQuery>(
-        userProfileQuery,
-        token,
-        {
-          userId,
-        }
-      );
+      const response = await requestAPI<UserProfileQuery>(userProfileQuery, {
+        userId,
+      });
       return response;
     },
   });

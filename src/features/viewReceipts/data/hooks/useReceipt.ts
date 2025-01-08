@@ -1,11 +1,9 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { requestAPI } from '@/utils';
+import { useRequestAPI } from '@/utils';
 import { receiptQuery } from '../graphql/queries/receipt';
 import { ReceiptQuery, Receipt } from '@/gql/graphql';
-import { useAuth } from '@clerk/nextjs';
 export function useReceipt(id: string) {
-  const { getToken } = useAuth();
-
+  const requestAPI = useRequestAPI();
   const {
     data,
     isLoading: receiptLoading,
@@ -13,9 +11,7 @@ export function useReceipt(id: string) {
   } = useSuspenseQuery<ReceiptQuery, Error>({
     queryKey: ['receipt', id],
     queryFn: async () => {
-      const token = await getToken();
-
-      const response = await requestAPI<ReceiptQuery>(receiptQuery, token, {
+      const response = await requestAPI<ReceiptQuery>(receiptQuery, {
         id,
       });
       return response;

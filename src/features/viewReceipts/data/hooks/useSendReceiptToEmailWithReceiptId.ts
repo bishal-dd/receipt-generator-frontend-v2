@@ -1,7 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { sendReceiptToEmailWithReceiptIdMutation } from '../graphql/mutations/sendReceiptToEmailWithReceiptIdMutation';
-import { requestAPI } from '@/utils';
-import { useAuth } from '@clerk/nextjs';
+import { useRequestAPI } from '@/utils';
 
 // Define the mutation variables type
 type MutationVariables = {
@@ -10,13 +9,10 @@ type MutationVariables = {
 };
 
 export function useSendReceiptToEmailWithReceiptId() {
-  const { getToken } = useAuth();
-
+  const requestAPI = useRequestAPI();
   const mutation = useMutation({
     mutationFn: async (variables: MutationVariables) => {
-      const token = await getToken();
-
-      return await requestAPI(sendReceiptToEmailWithReceiptIdMutation, token, {
+      return await requestAPI(sendReceiptToEmailWithReceiptIdMutation, {
         receiptId: variables.receiptId,
         orginazationId: variables.orginazationId,
       });

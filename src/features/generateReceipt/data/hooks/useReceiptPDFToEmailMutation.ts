@@ -1,24 +1,16 @@
 import { useMutation } from '@tanstack/react-query';
 import { SendReceiptPdfToEmail } from '@/gql/graphql';
 import { sendReceiptPDFToEmailMutation } from '../graphql/mutations/sendReceiptPDFToEmailMutation';
-import { requestAPI } from '@/utils';
-import { useAuth } from '@clerk/nextjs';
+import { useRequestAPI } from '@/utils';
 
 export function useReceiptPDFToEmailMutation() {
-  const { getToken } = useAuth();
+  const requestAPI = useRequestAPI();
 
   const mutation = useMutation({
     mutationFn: async (input: SendReceiptPdfToEmail) => {
-      try {
-        const token = await getToken();
-
-        return await requestAPI(sendReceiptPDFToEmailMutation, token, {
-          input,
-        });
-      } catch (error) {
-        console.error('API request failed:', error);
-        throw error;
-      }
+      return await requestAPI(sendReceiptPDFToEmailMutation, {
+        input,
+      });
     },
   });
 
@@ -27,14 +19,8 @@ export function useReceiptPDFToEmailMutation() {
   };
 
   const sendReceiptPDFToEmailAsync = async (input: SendReceiptPdfToEmail) => {
-    try {
-      const response = await mutation.mutateAsync(input);
-      console.log('Profile updated successfully:', response);
-      return response;
-    } catch (error) {
-      console.error('Error updating profile:', error);
-      throw error;
-    }
+    const response = await mutation.mutateAsync(input);
+    return response;
   };
 
   return {

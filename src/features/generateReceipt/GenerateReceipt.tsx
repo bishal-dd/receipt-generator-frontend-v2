@@ -254,7 +254,7 @@ export default function GenerateReceipt() {
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    throw new Error(error.message);
   }
   return (
     <ScrollArea className="lg:w-[80vw]  md:w-[70vw] whitespace-nowrap ">
