@@ -37,7 +37,7 @@ export function SideBar() {
     <Sidebar collapsible="icon" variant="floating">
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
+          <SidebarGroupLabel>2QuickPaper</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
