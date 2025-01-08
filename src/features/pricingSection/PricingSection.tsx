@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Check } from 'lucide-react';
+import Link from 'next/link';
 
 const features = [
   'Send unlimted receipts on WhatsApp',
@@ -91,8 +92,15 @@ export default function PricingSection() {
             </ul>
           </CardContent>
           <CardFooter>
-            <Button className="w-full" variant={'outline'}>
-              {'Get Started'}
+            <Button className="w-full" variant="outline" asChild>
+              <Link
+                href={
+                  'https://2quickpaper.lemonsqueezy.com/buy/db5dd766-3507-4853-94cf-81a6aa3871d1'
+                }
+                target="_blank"
+              >
+                Get Started
+              </Link>
             </Button>
           </CardFooter>
         </Card>
