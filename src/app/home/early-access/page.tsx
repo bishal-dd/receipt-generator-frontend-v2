@@ -5,7 +5,6 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
-import { Form } from '@/components/ui/form';
 
 export default function Page() {
   const router = useRouter();
@@ -22,6 +21,7 @@ export default function Page() {
       router.push('/home/pricing');
     } catch (error) {
       toast.error("Couldn't add email");
+      console.log(error);
     }
   };
 
