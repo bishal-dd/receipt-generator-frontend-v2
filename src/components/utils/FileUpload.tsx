@@ -149,6 +149,8 @@ export function FileUpload({
               src={previewUrl}
               alt="File preview"
               className="w-full h-full object-contain rounded-lg"
+              width={Number(width)}
+              height={Number(height)}
             />
             <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
               <Button

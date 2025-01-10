@@ -11,7 +11,7 @@ const nextConfig = {
     ];
   },
   images: {
-    domains: ['img.clerk.com'], // Add the domain here
+    domains: ['img.clerk.com', 'd181lxzl3rji6p.cloudfront.net'], // Add the domain here
   },
 };
 

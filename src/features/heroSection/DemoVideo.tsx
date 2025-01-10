@@ -9,11 +9,20 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { useState } from 'react';
+import { Loader } from '@/components/utils';
+
 export default function DemoVideo() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isVideoLoading, setIsVideoLoading] = useState(true);
 
-  const handleDialogOpen = () => setIsDialogOpen(true);
-  const handleDialogClose = () => setIsDialogOpen(false);
+  const handleDialogOpen = () => {
+    setIsDialogOpen(true);
+    setIsVideoLoading(true); // Reset loading state when the dialog opens
+  };
+
+  const handleDialogClose = () => {
+    setIsDialogOpen(false);
+  };
 
   return (
     <>
@@ -31,7 +40,13 @@ export default function DemoVideo() {
           <DialogHeader>
             <DialogTitle>Watch Demo</DialogTitle>
           </DialogHeader>
-          <div className="w-full h-full md:h-96">
+          <div className="relative w-full h-full md:h-96">
+            {isVideoLoading && (
+              <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
+                <div className="loader" />
+                <Loader />
+              </div>
+            )}
             <iframe
               width="100%"
               height="100%"
@@ -39,6 +54,7 @@ export default function DemoVideo() {
               title="YouTube video"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
+              onLoad={() => setIsVideoLoading(false)} // Hide loading state when the video loads
             ></iframe>
           </div>
           <Button
