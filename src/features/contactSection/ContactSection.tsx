@@ -27,7 +27,7 @@ const contactInfo = [
   {
     icon: Phone,
     title: 'WhatsApp',
-    content: '+975 - 17959259',
+    content: 'Message',
     href: 'https://api.whatsapp.com/send?phone=17959259',
   },
   {
