@@ -41,6 +41,30 @@ export function Footer() {
                   Contact
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/home/privacy-policy"
+                  className="text-base text-neutral-300 hover:text-primary"
+                >
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/home/refund-policy"
+                  className="text-base text-neutral-300 hover:text-primary"
+                >
+                  Refund Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/home/refund-policy"
+                  className="text-base text-neutral-300 hover:text-primary"
+                >
+                  Terms and Conditions
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
