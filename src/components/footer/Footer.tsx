@@ -51,10 +51,10 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/home/refund-policy"
+                  href="/home/terms-and-conditions"
                   className="text-base text-neutral-300 hover:text-primary"
                 >
-                  Refund Policy
+                  Terms and Conditions
                 </Link>
               </li>
               <li>
@@ -62,7 +62,7 @@ export function Footer() {
                   href="/home/refund-policy"
                   className="text-base text-neutral-300 hover:text-primary"
                 >
-                  Terms and Conditions
+                  Refund Policy
                 </Link>
               </li>
             </ul>
