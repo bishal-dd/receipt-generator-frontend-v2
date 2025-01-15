@@ -130,9 +130,8 @@ export default function GenerateReceipt() {
       Services: Services,
     };
     sendReceiptPDFToWhatsApp(input);
-    toast.success('Receipt Successfully Send!.', {
-      description:
-        " If it doesn't arrive in 30s send it agian from the send receipts section",
+    toast.success('Sending Receipt in progress!.', {
+      description: " If it doesn't arrive in 30s check the  receipts list",
     });
     reset();
   };
@@ -168,9 +167,8 @@ export default function GenerateReceipt() {
       Services: Services,
     };
     sendReceiptPDFToEmail(input);
-    toast.success('Receipt Successfully Send!.', {
-      description:
-        " If it doesn't arrive in 30s send it agian from the send receipts section",
+    toast.success('Sending Receipt in progress!.', {
+      description: " If it doesn't arrive in 30s check the  receipts list",
     });
     reset();
   };

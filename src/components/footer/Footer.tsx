@@ -13,7 +13,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/home/feature"
-                  className="text-base text-neutral-300 hover:text-primary"
+                  className="text-base text-neutral-300 hover:text-neutral-100"
                 >
                   Features
                 </Link>
@@ -21,7 +21,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/home/pricing"
-                  className="text-base text-neutral-300 hover:text-primary"
+                  className="text-base text-neutral-300 hover:text-neutral-100"
                 >
                   Pricing
                 </Link>
@@ -36,7 +36,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/home/contact"
-                  className="text-base text-neutral-300 hover:text-primary"
+                  className="text-base text-neutral-300 hover:text-neutral-100"
                 >
                   Contact
                 </Link>
@@ -44,7 +44,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/home/privacy-policy"
-                  className="text-base text-neutral-300 hover:text-primary"
+                  className="text-base text-neutral-300 hover:text-neutral-100"
                 >
                   Privacy Policy
                 </Link>
@@ -52,7 +52,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/home/terms-and-conditions"
-                  className="text-base text-neutral-300 hover:text-primary"
+                  className="text-base text-neutral-300 hover:text-neutral-100"
                 >
                   Terms and Conditions
                 </Link>
@@ -60,7 +60,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/home/refund-policy"
-                  className="text-base text-neutral-300 hover:text-primary"
+                  className="text-base text-neutral-300 hover:text-neutral-100"
                 >
                   Refund Policy
                 </Link>
