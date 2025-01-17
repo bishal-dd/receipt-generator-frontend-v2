@@ -51,6 +51,7 @@ export function ReceiptInfo({
               <FormControl>
                 <Input placeholder="Customer Name" {...field} />
               </FormControl>
+              <FormDescription>Required the customer's name.</FormDescription>
               <FormMessage>{error?.message}</FormMessage>{' '}
             </FormItem>
           )}

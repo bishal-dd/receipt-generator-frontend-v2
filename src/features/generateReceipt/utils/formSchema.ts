@@ -3,7 +3,7 @@ import { isValidPhoneNumber } from 'react-phone-number-input';
 
 // Receipt validation schema
 export const receiptSchema = z.object({
-  customerName: z.string().min(1, 'Customer name is required.'),
+  customerName: z.string().optional(),
   customerPhoneNumber: z
     .string()
     .optional()
