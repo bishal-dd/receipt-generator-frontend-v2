@@ -170,7 +170,7 @@ export function ReceiptInfo({
                     <SelectGroup>
                       <SelectItem value="Card">Card</SelectItem>
                       <SelectItem value="Cash">Cash</SelectItem>
-                      <SelectItem value="BankTransfer">
+                      <SelectItem value="Bank Transfer">
                         Bank Transfer
                       </SelectItem>
                     </SelectGroup>
@@ -183,7 +183,7 @@ export function ReceiptInfo({
           )}
         />
 
-        {paymentMethod === 'BankTransfer' && (
+        {paymentMethod === 'Bank Transfer' && (
           <FormField
             control={control}
             name="paymentNote"
