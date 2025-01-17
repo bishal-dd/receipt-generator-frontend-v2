@@ -51,7 +51,7 @@ export function ReceiptInfo({
               <FormControl>
                 <Input placeholder="Customer Name" {...field} />
               </FormControl>
-              <FormDescription>Required the customer's name.</FormDescription>
+              <FormDescription>Customer Name is not Required</FormDescription>
               <FormMessage>{error?.message}</FormMessage>{' '}
             </FormItem>
           )}
@@ -78,6 +78,9 @@ export function ReceiptInfo({
                   }}
                 />
               </FormControl>
+              <FormDescription>
+                Required if you want to send receipt to WhatsApp
+              </FormDescription>
               <FormMessage>{error?.message}</FormMessage>{' '}
             </FormItem>
           )}
@@ -91,6 +94,9 @@ export function ReceiptInfo({
               <FormControl>
                 <Input placeholder="Customer Email" type="email" {...field} />
               </FormControl>
+              <FormDescription>
+                Required if you want to send receipt to Email
+              </FormDescription>
               <FormMessage>{error?.message}</FormMessage>{' '}
             </FormItem>
           )}
@@ -104,6 +110,7 @@ export function ReceiptInfo({
               <FormControl>
                 <Input placeholder="Customer Address" {...field} />
               </FormControl>
+              <FormDescription>Address is not required</FormDescription>
               <FormMessage>{error?.message}</FormMessage>{' '}
             </FormItem>
           )}
@@ -123,6 +130,7 @@ export function ReceiptInfo({
                 <FormControl>
                   <Input placeholder="Receipt Number" {...field} />
                 </FormControl>
+                <FormDescription>Unique Id for the receipt</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -140,9 +148,7 @@ export function ReceiptInfo({
                 selected={field.value || startOfDay(new Date())}
                 onSelect={(date) => field.onChange(date)}
               />
-              <FormDescription>
-                Date is required and must be a valid date.
-              </FormDescription>
+              <FormDescription>Date is required</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -171,6 +177,7 @@ export function ReceiptInfo({
                   </SelectContent>
                 </Select>
               </FormControl>
+              <FormDescription>Payment Method is required</FormDescription>
               <FormMessage />
             </FormItem>
           )}
