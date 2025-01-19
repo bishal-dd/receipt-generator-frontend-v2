@@ -78,8 +78,8 @@ export function Header({
               <UpdateInput
                 value={organization.address}
                 name="address"
-                className="w-full max-w-md text-center"
-                placeholder="Company Address"
+                className="w-full max-w-md text-center text-black"
+                placeholder="Address(Eg: 165 Flanders Road, Westborough, USA)"
                 onChange={updateCompanyAddress}
                 type="text"
               />
@@ -88,16 +88,16 @@ export function Header({
               <UpdateInput
                 value={organization.phone}
                 name="phone"
-                className="w-auto max-w-xs"
-                placeholder="Company Phone"
+                className="w-auto max-w-xs text-black"
+                placeholder="Phone No"
                 onChange={updateCompanyPhone}
-                type="number"
+                type="text"
               />
               |
               <UpdateInput
                 value={organization.email}
                 name="email"
-                className="w-auto max-w-xs"
+                className="w-auto max-w-xs text-black"
                 placeholder="Company Email"
                 onChange={updateCompanyEmail}
                 type="text"

@@ -186,7 +186,6 @@ export function ServiceInfo({
                 />
               </TableCell>
               <TableCell className="w-32 text-right px-4 py-2">
-                {currency}{' '}
                 {(
                   (services?.[index]?.quantity || 0) *
                   (services?.[index]?.unitPrice || 0)
@@ -202,7 +201,7 @@ export function ServiceInfo({
           <div className="flex justify-between">
             <span>Subtotal:</span>
             <span>
-              {currency} {subtotal.toFixed(2)}
+              {subtotal.toFixed(2)} {currency}
             </span>
           </div>
           <div className="flex justify-between items-center">
@@ -225,13 +224,13 @@ export function ServiceInfo({
               %):
             </span>
             <span>
-              {currency} {tax.toFixed(2)}
+              {tax.toFixed(2)} {currency}
             </span>
           </div>
           <div className="flex justify-between font-semibold text-lg mt-2">
             <span>Total:</span>
             <span>
-              {currency} {total.toFixed(2)}
+              {total.toFixed(2)} {currency}
             </span>
           </div>
         </div>

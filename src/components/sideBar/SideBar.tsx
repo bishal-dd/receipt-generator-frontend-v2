@@ -21,7 +21,7 @@ const items = [
     icon: Receipt,
   },
   {
-    title: 'Receipts List',
+    title: 'Sales List',
     url: '/dashboard/view-receipts',
     icon: List,
   },

@@ -131,7 +131,7 @@ export default function GenerateReceipt() {
     };
     sendReceiptPDFToWhatsApp(input);
     toast.success('Sending Receipt in progress!.', {
-      description: " If it doesn't arrive in 30s check the  receipts list",
+      description: " If it doesn't arrive in 30s check the  Sales List",
     });
     reset();
   };
@@ -168,7 +168,7 @@ export default function GenerateReceipt() {
     };
     sendReceiptPDFToEmail(input);
     toast.success('Sending Receipt in progress!.', {
-      description: " If it doesn't arrive in 30s check the  receipts list",
+      description: " If it doesn't arrive in 30s check the  Sales List",
     });
     reset();
   };
@@ -239,7 +239,7 @@ export default function GenerateReceipt() {
       });
     }
     toast.success('Receipt Was Saved!.', {
-      description: 'You can check in the receipts',
+      description: 'You can check in the Sales List',
     });
     reset();
   };
