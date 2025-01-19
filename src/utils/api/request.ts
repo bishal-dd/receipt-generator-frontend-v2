@@ -1,17 +1,18 @@
 import request from 'graphql-request';
 import { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import { useAuth } from '@clerk/nextjs'; // Import Clerk's useAuth hook
+import { useRouter } from 'next/router';
 
 export function useRequestAPI() {
   const { getToken } = useAuth();
-
+  const router = useRouter();
   return async function requestAPI<T>(
     query: TypedDocumentNode<T, any>,
     variables?: any
   ): Promise<T> {
     const token = await getToken();
     if (!token) {
-      throw new Error('Token is required for the request');
+      router.push('/home');
     }
 
     const headers = {
