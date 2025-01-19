@@ -1,7 +1,7 @@
 import request from 'graphql-request';
 import { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import { useAuth } from '@clerk/nextjs'; // Import Clerk's useAuth hook
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 export function useRequestAPI() {
   const { getToken } = useAuth();
