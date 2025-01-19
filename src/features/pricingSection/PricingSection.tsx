@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Check } from 'lucide-react';
+import { Check, MessageSquareText } from 'lucide-react';
 import Link from 'next/link';
 
 const features = [
@@ -72,6 +72,19 @@ export default function PricingSection() {
               The first 100 people who sign up will get to use this site at
               $4.99 forever. Even when new features are added and the prices
               change. The first 100 users will get it at $4.99.
+            </CardDescription>
+            <CardDescription className=" text-base text-neutral-300">
+              If a payment method you can use is not available or you want to
+              pay directly, contact us here:
+              <Button
+                className="mt-2 bg-white text-black hover:bg-white-[0.9] "
+                asChild
+              >
+                <Link href={'https://api.whatsapp.com/send?phone=17959259'}>
+                  <MessageSquareText />
+                  WhatsApp
+                </Link>
+              </Button>
             </CardDescription>
           </CardHeader>
           <CardContent className="flex-grow">
