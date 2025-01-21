@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Menu } from 'lucide-react';
 import { navItems } from './navItems';
-import ActionLinks from './ActionLinks';
+import ActionLinks from './ActionLinks/ActionLinks';
 import Link from 'next/link';
 
 export default function MobileNavigation() {

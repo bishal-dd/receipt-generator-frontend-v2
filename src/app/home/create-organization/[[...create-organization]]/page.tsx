@@ -27,7 +27,10 @@ export default function CreateOrganizationPage() {
 
   return (
     <div className="flex items-center justify-center min-h-screen">
-      <CreateOrganization skipInvitationScreen />
+      <CreateOrganization
+        skipInvitationScreen
+        afterCreateOrganizationUrl={'/dashboard/generate-receipt'}
+      />
     </div>
   );
 }
