@@ -9,7 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { PdfViewer } from '@/components/utils';
+import { Loader, PdfViewer } from '@/components/utils';
 
 type Props = {
   fileUrl: string | null;
@@ -23,11 +23,11 @@ export function ViewPdfModal({ fileUrl, isModalOpen, setIsModalOpen }: Props) {
   };
   return (
     <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-      <DialogContent>
+      <DialogContent className="h-[700px] md:w-[700px]">
         <DialogHeader>
           <DialogTitle>Receipt</DialogTitle>
         </DialogHeader>
-        <div>{fileUrl ? <PdfViewer fileUrl={fileUrl} /> : 'Loading.....'}</div>
+        <div>{fileUrl ? <PdfViewer fileUrl={fileUrl} /> : <Loader />}</div>
         <DialogFooter className="sm:justify-start">
           <DialogClose asChild>
             <Button type="button" variant="secondary" onClick={handleClose}>
