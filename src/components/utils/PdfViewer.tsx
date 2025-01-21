@@ -24,7 +24,7 @@ export const PdfViewer: React.FC<Props> = (props) => {
     <Worker
       workerUrl={`https://unpkg.com/pdfjs-dist@${version}/build/pdf.worker.js`}
     >
-      <div className="h-[550px] w-[330px] md:w-[480px]">
+      <div className="h-[550px] w-[330px] md:w-[480px] lg:w-[480px] xl:w-[480px]">
         <Viewer
           characterMap={characterMap}
           fileUrl={props.fileUrl}
