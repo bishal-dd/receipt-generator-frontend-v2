@@ -160,10 +160,10 @@ export default function ViewReceipts() {
   };
   return (
     <>
-      <div className="flex flex-col items-center justify-center lg:w-[80vw]">
+      <div className="flex flex-col items-center justify-center w-[100vw] md:w-[80vw] lg:w-[80vw] xl:w-[80vw]">
         <div className="container mx-auto p-4 w-full">
           <h1 className="text-2xl font-bold mb-4">Receipts</h1>
-          <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0 mb-4">
+          <div className="flex flex-col md:flex-row gap-5 mb-4">
             <div className="flex flex-col space-y-2">
               <label htmlFor="year" className="text-sm font-medium">
                 Year
@@ -172,7 +172,7 @@ export default function ViewReceipts() {
                 onValueChange={onChangeYear}
                 disabled={dateRange || date ? true : false}
               >
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="w-[280px]">
                   <SelectValue placeholder="Select a Year" />
                 </SelectTrigger>
                 <SelectContent>

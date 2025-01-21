@@ -213,7 +213,7 @@ export function ServiceInfo({
                 <UpdateInput
                   value={taxValue === 0 ? '' : taxValue}
                   name="tax"
-                  className="text-2xl font-bold text-center w-12 h-8 md:w-12"
+                  className="text-center w-12 h-8 md:w-12"
                   placeholder="Tax"
                   onChange={(value: string | number) => {
                     if (value === '') {

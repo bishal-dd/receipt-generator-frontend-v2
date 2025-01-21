@@ -1,3 +1,4 @@
+'use client';
 import { Building, Receipt, List } from 'lucide-react';
 import { UserButton } from '@clerk/nextjs';
 import {
@@ -10,6 +11,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from '@/components/ui/sidebar';
 import Link from 'next/link';
 
@@ -33,6 +35,13 @@ const items = [
 ];
 
 export function SideBar() {
+  const { openMobile, setOpenMobile } = useSidebar();
+
+  const handleClickMobile = () => {
+    if (openMobile) {
+      setOpenMobile(false);
+    }
+  };
   return (
     <Sidebar collapsible="icon" variant="floating">
       <SidebarContent>
@@ -42,7 +51,7 @@ export function SideBar() {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton asChild onClick={handleClickMobile}>
                     <Link href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
