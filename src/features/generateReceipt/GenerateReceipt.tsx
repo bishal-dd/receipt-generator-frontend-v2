@@ -32,7 +32,6 @@ import {
   DownloadPdf,
 } from '@/gql/graphql';
 import { Loader } from '@/components/utils';
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { formatISO } from 'date-fns';
 
 export default function GenerateReceipt() {
