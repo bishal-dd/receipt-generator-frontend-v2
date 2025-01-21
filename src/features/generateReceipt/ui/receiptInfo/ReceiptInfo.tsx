@@ -38,7 +38,7 @@ export function ReceiptInfo({
   });
 
   return (
-    <div className="flex justify-between mb-6">
+    <div className="flex flex-col md:flex-row lg:flex-row xl:flex-row justify-between mb-6">
       {/* Left: Bill To Section */}
       <div className="p-5 space-y-5">
         <h2 className="font-semibold">Bill To:</h2>
@@ -118,7 +118,7 @@ export function ReceiptInfo({
       </div>
 
       {/* Right: Receipt Info Section */}
-      <div className="space-y-6">
+      <div className="p-5 space-y-5">
         {/* Receipt Number */}
         <div className="space-y-1">
           <FormField

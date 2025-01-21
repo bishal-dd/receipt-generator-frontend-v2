@@ -31,7 +31,7 @@ export function Header({
   updateCompanyEmail,
 }: Props) {
   return (
-    <div className="flex justify-between mb-6">
+    <div className="flex flex-col md:flex-row  justify-between mb-6">
       {organization.hasImage ? (
         <div className="flex items-center justify-center p-5">
           <Link href={'organization-profile'}>
@@ -51,7 +51,9 @@ export function Header({
           organization.hasImage ? 'w-auto' : 'w-full items-center'
         }`}
       >
-        <CardHeader className={`${organization.hasImage ? '' : 'text-center'}`}>
+        <CardHeader
+          className={` ${organization.hasImage ? '' : 'text-center'}`}
+        >
           <CardTitle className="text-2xl font-bold text-center">
             <TooltipProvider>
               <Tooltip>
@@ -60,7 +62,7 @@ export function Header({
                   <UpdateInput
                     value={organization.name}
                     name="company_name"
-                    className="text-2xl font-bold text-center w-auto mx-auto"
+                    className="text-2xl font-bold text-center md:w-auto  mx-auto"
                     placeholder="Company Name"
                     onChange={updateCompanyName}
                     type="text"
@@ -84,7 +86,7 @@ export function Header({
                 type="text"
               />
             </p>
-            <p className="flex justify-center gap-2">
+            <p className="flex flex-col md:flex-row justify-center gap-2">
               <UpdateInput
                 value={organization.phone}
                 name="phone"

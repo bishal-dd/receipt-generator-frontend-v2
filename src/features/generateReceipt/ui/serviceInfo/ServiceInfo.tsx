@@ -196,41 +196,46 @@ export function ServiceInfo({
         </TableBody>
       </Table>
 
-      <div className="mt-6 flex justify-end">
-        <div className="w-1/2">
-          <div className="flex justify-between">
-            <span>Subtotal:</span>
-            <span>
-              {subtotal.toFixed(2)} {currency}
+      <div className="mt-6 flex justify-start md:justify-end lg:justify-end gap-4 xl:justify-end">
+        <div className="w-auto">
+          <div className="flex justify-between mt-2 items-center">
+            <span className="flex items-center gap-2">
+              <span>Subtotal:</span>
+              <span>{subtotal.toFixed(2)}</span>
+              <span>{currency}</span>
             </span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="flex items-center gap-1">
-              Tax (
-              <UpdateInput
-                value={taxValue === 0 ? '' : taxValue}
-                name="tax"
-                className="text-2xl font-bold text-center w-12"
-                placeholder="Tax"
-                onChange={(value: string | number) => {
-                  if (value === '') {
-                    value = 0;
-                  }
-                  setTaxState(Number(value));
-                  updateCompanyTax(Number(value));
-                }}
-                type="text"
-              />
-              %):
-            </span>
-            <span>
-              {tax.toFixed(2)} {currency}
+            <span className="flex items-center gap-2">
+              <span>Tax</span>
+              <span>(</span>
+              <span>
+                <UpdateInput
+                  value={taxValue === 0 ? '' : taxValue}
+                  name="tax"
+                  className="text-2xl font-bold text-center w-12 h-8 md:w-12"
+                  placeholder="Tax"
+                  onChange={(value: string | number) => {
+                    if (value === '') {
+                      value = 0;
+                    }
+                    setTaxState(Number(value));
+                    updateCompanyTax(Number(value));
+                  }}
+                  type="text"
+                />
+              </span>
+              <span> %):</span>
+              <span>{tax.toFixed(2)}</span>
+              <span>{currency}</span>
             </span>
           </div>
-          <div className="flex justify-between font-semibold text-lg mt-2">
-            <span>Total:</span>
-            <span>
-              {total.toFixed(2)} {currency}
+
+          <div className="flex justify-between font-semibold mt-2 items-center">
+            <span className="flex items-center gap-2">
+              <span>Total:</span>
+              <span>{total.toFixed(2)}</span>
+              <span>{currency}</span>
             </span>
           </div>
         </div>
