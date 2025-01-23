@@ -56,9 +56,9 @@ export function FileUpload({
       try {
         setIsUploading(true);
         setUploadProgress(0);
-
+        const sanitizedFileName = selectedFile.name.replace(/\s+/g, '_');
         const presignedUrl = await getPresignedUrl(
-          selectedFile.name,
+          sanitizedFileName,
           selectedFile.type,
           orginizationId,
           userId
@@ -77,24 +77,24 @@ export function FileUpload({
 
         xhr.onload = () => {
           if (xhr.status === 200) {
-            onUpload(`${orginizationId}/${userId}/${selectedFile.name}`);
+            onUpload(`${orginizationId}/${userId}/${sanitizedFileName}`);
             const imageUrl = URL.createObjectURL(selectedFile);
             setPreviewUrl(imageUrl);
           } else {
-            console.error('Upload failed', xhr.responseText);
+            throw new Error(xhr.responseText);
           }
           setIsUploading(false);
         };
 
         xhr.onerror = () => {
-          console.error('Upload error', xhr.responseText);
           setIsUploading(false);
+          throw new Error(xhr.responseText);
         };
 
         xhr.send(selectedFile);
       } catch (error) {
-        console.error('Error uploading file:', error);
         setIsUploading(false);
+        throw new Error('Error uploading file:', error as Error);
       }
     }
   };
@@ -183,6 +183,9 @@ export function FileUpload({
           {error}
         </p>
       )}
+      <p className="text-gray-500 text-xs mt-2">
+        500 x 500 recommended. Max size: {MAX_FILE_SIZE_MB} MB
+      </p>
     </div>
   );
 }
