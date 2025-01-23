@@ -37,11 +37,16 @@ import { years } from './utils';
 import { DatePicker, DateRangePicker } from '@/components/utils';
 import { DateRange } from 'react-day-picker';
 import { Button } from '@/components/ui/button';
-import { Check, X } from 'lucide-react';
+import { Check, X, Filter } from 'lucide-react';
 import { DetailDialog } from './ui';
 import { useOrganization } from '@clerk/nextjs';
 import { ViewPdfModal } from '../generateReceipt/ui';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 
 export default function ViewReceipts() {
   const searchParams = useSearchParams();
@@ -164,57 +169,70 @@ export default function ViewReceipts() {
         <div className="container mx-auto p-4 w-full">
           <h1 className="text-2xl font-bold mb-4">Receipts</h1>
           <div className="flex flex-col md:flex-row gap-5 mb-4">
-            <div className="flex flex-col space-y-2">
-              <label htmlFor="year" className="text-sm font-medium">
-                Year
-              </label>
-              <Select
-                onValueChange={onChangeYear}
-                disabled={dateRange || date ? true : false}
-              >
-                <SelectTrigger className="w-[280px]">
-                  <SelectValue placeholder="Select a Year" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Years</SelectLabel>
-                    {years.map((year) => (
-                      <SelectItem key={year} value={String(year)}>
-                        {year}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="flex flex-col space-y-2">
-              <label htmlFor="date" className="text-sm font-medium">
-                Date
-              </label>
-              <DatePicker
-                isDisabled={dateRange || year ? true : false}
-                selected={date}
-                onSelect={onChangeDate}
-              />
-            </div>
-            <div className="flex flex-col space-y-2">
-              <label htmlFor="dateRange" className="text-sm font-medium">
-                Date Range
-              </label>
-              <DateRangePicker
-                id="dateRange"
-                date={dateRangeUI}
-                setDate={setDateRangeUI}
-                isDisabled={date || year ? true : false}
-                setDateRange={onChangeDateRange}
-                resetDateRange={resetDateRange}
-              />
-            </div>
-            <div>
-              <Button onClick={clearFilters} className="mt-7">
-                Clear Filters
-              </Button>
-            </div>
+            <Popover>
+              <PopoverTrigger>
+                <div className="flex">
+                  <Filter />
+                  Filters
+                </div>
+              </PopoverTrigger>
+              <PopoverContent className="w-80">
+                <div>
+                  <div className="flex flex-col space-y-2">
+                    <label htmlFor="dateRange" className="text-sm font-medium">
+                      Date Range
+                    </label>
+                    <DateRangePicker
+                      id="dateRange"
+                      date={dateRangeUI}
+                      setDate={setDateRangeUI}
+                      isDisabled={date || year ? true : false}
+                      setDateRange={onChangeDateRange}
+                      resetDateRange={resetDateRange}
+                    />
+                  </div>
+                  <div className="flex flex-col space-y-2">
+                    <label htmlFor="year" className="text-sm font-medium">
+                      Year
+                    </label>
+                    <Select
+                      onValueChange={onChangeYear}
+                      disabled={dateRange || date ? true : false}
+                    >
+                      <SelectTrigger className="w-[280px]">
+                        <SelectValue placeholder="Select a Year" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectLabel>Years</SelectLabel>
+                          {years.map((year) => (
+                            <SelectItem key={year} value={String(year)}>
+                              {year}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="flex flex-col space-y-2">
+                    <label htmlFor="date" className="text-sm font-medium">
+                      Date
+                    </label>
+                    <DatePicker
+                      isDisabled={dateRange || year ? true : false}
+                      selected={date}
+                      onSelect={onChangeDate}
+                    />
+                  </div>
+
+                  <div>
+                    <Button onClick={clearFilters} className="mt-7">
+                      Clear Filters
+                    </Button>
+                  </div>
+                </div>
+              </PopoverContent>
+            </Popover>
           </div>
           <ScrollArea className="sm:w-96 lg:w-full whitespace-nowrap rounded-md border">
             <Table>
