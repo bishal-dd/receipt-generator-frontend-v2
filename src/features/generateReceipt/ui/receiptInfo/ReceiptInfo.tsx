@@ -73,7 +73,6 @@ export function ReceiptInfo({
                     if (country) {
                       updatePhoneNumberCountryCode(country);
                       setPhoneNumberCountryCodeState(country);
-                      console.log('Selected country:', country);
                     }
                   }}
                 />

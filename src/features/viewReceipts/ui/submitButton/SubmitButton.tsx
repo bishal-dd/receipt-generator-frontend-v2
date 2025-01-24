@@ -6,20 +6,31 @@ import {
 } from '@/components/ui/popover';
 
 type Props = {
-  onSendToWhatsApp: (receiptId: string, organizationId: string) => void;
-  onSendToEmail: (receiptId: string, organizationId: string) => void;
-  onDownload: (receiptId: string, organizationId: string) => void;
   receiptId: string;
   organizationId: string;
+  onDownloadReceipt: (receiptId: string, organizationId: string) => void;
+  setIsSendReceiptToEmailModalOpen: (isOpen: boolean) => void;
+  setIsSendReceiptToWhatsAppModalOpen: (isOpen: boolean) => void;
+  setSelectedReceiptIdToSendReceipt: (receiptId: string | null) => void;
+  setSelectedEmail: (email: string | null) => void;
+  setSelectedWhatsApp: (phoneNumber: string | null) => void;
+  email: string | null;
+  phoneNumber: string | null;
 };
 
 export function SubmitButton({
-  onSendToWhatsApp,
-  onSendToEmail,
-  onDownload,
   receiptId,
   organizationId,
+  email,
+  phoneNumber,
+  setSelectedEmail,
+  onDownloadReceipt,
+  setSelectedWhatsApp,
+  setIsSendReceiptToEmailModalOpen,
+  setSelectedReceiptIdToSendReceipt,
+  setIsSendReceiptToWhatsAppModalOpen,
 }: Props) {
+  console.log(email);
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -29,19 +40,28 @@ export function SubmitButton({
         <div className="space-y-2">
           <Button
             className="w-full"
-            onClick={() => onSendToWhatsApp(receiptId, organizationId)}
+            onClick={() => {
+              setSelectedReceiptIdToSendReceipt(receiptId);
+              setSelectedWhatsApp(phoneNumber);
+              setIsSendReceiptToWhatsAppModalOpen(true);
+            }}
           >
             Send To WhatsApp
           </Button>
           <Button
             className="w-full"
-            onClick={() => onSendToEmail(receiptId, organizationId)}
+            onClick={() => {
+              setSelectedReceiptIdToSendReceipt(receiptId);
+              setSelectedEmail(email);
+              setIsSendReceiptToEmailModalOpen(true);
+            }}
           >
             Send To Email
           </Button>
           <Button
+            onClick={() => onDownloadReceipt(receiptId, organizationId)}
+            disabled={!organizationId}
             className="w-full"
-            onClick={() => onDownload(receiptId, organizationId)}
           >
             View/Download/Print
           </Button>

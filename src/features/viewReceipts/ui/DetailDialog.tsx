@@ -125,7 +125,7 @@ export function DetailDialog({
 
   return (
     <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-      <DialogContent className="max-w-3xl">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>Receipt Details</DialogTitle>
           <DialogDescription>

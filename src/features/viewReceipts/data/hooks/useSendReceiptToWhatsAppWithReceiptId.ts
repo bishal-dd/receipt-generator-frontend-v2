@@ -6,6 +6,7 @@ import { useRequestAPI } from '@/utils';
 type MutationVariables = {
   receiptId: string;
   orginazationId: string;
+  phoneNumber: string;
 };
 
 export function useSendReceiptToWhatsAppWithReceiptId() {
@@ -15,24 +16,28 @@ export function useSendReceiptToWhatsAppWithReceiptId() {
       return await requestAPI(sendReceiptToWhatsAppWithReceiptIdMutation, {
         receiptId: variables.receiptId,
         orginazationId: variables.orginazationId,
+        phoneNumber: variables.phoneNumber,
       });
     },
   });
 
   const sendReceiptToWhatsAppWithReceiptId = (
     receiptId: string,
-    orginazationId: string
+    orginazationId: string,
+    phoneNumber: string
   ) => {
-    mutation.mutate({ receiptId, orginazationId });
+    mutation.mutate({ receiptId, orginazationId, phoneNumber });
   };
 
   const sendReceiptToWhatsAppWithReceiptIdAsync = async (
     receiptId: string,
-    orginazationId: string
+    orginazationId: string,
+    phoneNumber: string
   ) => {
     const response = await mutation.mutateAsync({
       receiptId,
       orginazationId,
+      phoneNumber,
     });
     return response;
   };

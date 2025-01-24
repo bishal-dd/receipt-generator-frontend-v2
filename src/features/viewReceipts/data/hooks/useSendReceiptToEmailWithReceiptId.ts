@@ -6,6 +6,7 @@ import { useRequestAPI } from '@/utils';
 type MutationVariables = {
   receiptId: string;
   orginazationId: string;
+  email: string;
 };
 
 export function useSendReceiptToEmailWithReceiptId() {
@@ -15,24 +16,28 @@ export function useSendReceiptToEmailWithReceiptId() {
       return await requestAPI(sendReceiptToEmailWithReceiptIdMutation, {
         receiptId: variables.receiptId,
         orginazationId: variables.orginazationId,
+        email: variables.email,
       });
     },
   });
 
   const sendReceiptToEmailWithReceiptId = (
     receiptId: string,
-    orginazationId: string
+    orginazationId: string,
+    email: string
   ) => {
-    mutation.mutate({ receiptId, orginazationId });
+    mutation.mutate({ receiptId, orginazationId, email });
   };
 
   const sendReceiptToEmailWithReceiptIdAsync = async (
     receiptId: string,
-    orginazationId: string
+    orginazationId: string,
+    email: string
   ) => {
     const response = await mutation.mutateAsync({
       receiptId,
       orginazationId,
+      email,
     });
     return response;
   };

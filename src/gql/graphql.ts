@@ -169,6 +169,7 @@ export type MutationSendReceiptPdfToEmailArgs = {
 };
 
 export type MutationSendReceiptPdfToEmailWithReceiptIdArgs = {
+  email: Scalars['String']['input'];
   orginazationId: Scalars['String']['input'];
   receiptId: Scalars['String']['input'];
 };
@@ -179,6 +180,7 @@ export type MutationSendReceiptPdfToWhatsAppArgs = {
 
 export type MutationSendReceiptPdfToWhatsAppWithReceiptIdArgs = {
   orginazationId: Scalars['String']['input'];
+  phoneNumber: Scalars['String']['input'];
   receiptId: Scalars['String']['input'];
 };
 
@@ -533,6 +535,7 @@ export type DownloadReceiptPdfWithReceiptIdMutation = {
 export type SendReceiptPdfToEmailWithReceiptIdMutationVariables = Exact<{
   receiptId: Scalars['String']['input'];
   orginazationId: Scalars['String']['input'];
+  email: Scalars['String']['input'];
 }>;
 
 export type SendReceiptPdfToEmailWithReceiptIdMutation = {
@@ -543,6 +546,7 @@ export type SendReceiptPdfToEmailWithReceiptIdMutation = {
 export type SendReceiptPdfToWhatsAppWithReceiptIdMutationVariables = Exact<{
   receiptId: Scalars['String']['input'];
   orginazationId: Scalars['String']['input'];
+  phoneNumber: Scalars['String']['input'];
 }>;
 
 export type SendReceiptPdfToWhatsAppWithReceiptIdMutation = {
@@ -1157,6 +1161,20 @@ export const SendReceiptPdfToEmailWithReceiptIdDocument = {
             },
           },
         },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'email' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
       ],
       selectionSet: {
         kind: 'SelectionSet',
@@ -1179,6 +1197,14 @@ export const SendReceiptPdfToEmailWithReceiptIdDocument = {
                 value: {
                   kind: 'Variable',
                   name: { kind: 'Name', value: 'orginazationId' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'email' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'email' },
                 },
               },
             ],
@@ -1227,6 +1253,20 @@ export const SendReceiptPdfToWhatsAppWithReceiptIdDocument = {
             },
           },
         },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'phoneNumber' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
       ],
       selectionSet: {
         kind: 'SelectionSet',
@@ -1252,6 +1292,14 @@ export const SendReceiptPdfToWhatsAppWithReceiptIdDocument = {
                 value: {
                   kind: 'Variable',
                   name: { kind: 'Name', value: 'orginazationId' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'phoneNumber' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'phoneNumber' },
                 },
               },
             ],

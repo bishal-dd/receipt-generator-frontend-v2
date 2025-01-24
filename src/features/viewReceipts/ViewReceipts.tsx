@@ -11,6 +11,8 @@ import {
 import {
   useDownloadReceiptPDFWithReceiptId,
   useSearchReceipts,
+  useSendReceiptToEmailWithReceiptId,
+  useSendReceiptToWhatsAppWithReceiptId,
 } from './data/hooks';
 import { ReceiptFragmentFragment } from '@/gql/graphql';
 import {
@@ -38,8 +40,8 @@ import { DatePicker, DateRangePicker } from '@/components/utils';
 import { DateRange } from 'react-day-picker';
 import { Button } from '@/components/ui/button';
 import { Check, X, Filter } from 'lucide-react';
-import { DetailDialog } from './ui';
-import { useOrganization } from '@clerk/nextjs';
+import { DetailDialog, SubmitButton } from './ui';
+import { useOrganization, useUser } from '@clerk/nextjs';
 import { ViewPdfModal } from '../generateReceipt/ui';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import {
@@ -47,8 +49,16 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import { toast } from 'sonner';
+import { SendToEmailDialog } from './ui/sendToEmailDialog';
+import { SendToWhatsAppDialog } from './ui/sendToWhatsAppDialog';
+import { useGenerateReceipt } from '../generateReceipt/data/hooks';
 
 export default function ViewReceipts() {
+  const { user } = useUser();
+  const userId = user?.id;
+
+  const { profile } = useGenerateReceipt(userId!);
   const searchParams = useSearchParams();
   const router = useRouter();
   const currentPage = searchParams ? Number(searchParams.get('page')) || 1 : 1;
@@ -57,16 +67,30 @@ export default function ViewReceipts() {
   const [dateRangeUI, setDateRangeUI] = useState<DateRange | undefined>();
   const [year, setYear] = useState<string | undefined>();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSendReceiptToWhatsAppModalOpen, setSendReceiptToWhatsAppModalOpen] =
+    useState(false);
+  const [isSendReceiptToEmailModalOpen, setIsSendReceiptToEmailModalOpen] =
+    useState(false);
   const [isPDFModalOpen, setIsPDFModalOpen] = useState(false);
   const [selectedReceiptId, setSelectedReceiptId] = useState<string | null>(
     null
   );
+  const [selectedEmail, setSelectedEmail] = useState<string | null>(null);
+  const [selectedWhatsApp, setSelectedWhatsApp] = useState<string | null>(null);
+  const [selectedReceiptIdToSendReceipt, setSelectedReceiptIdToSendReceipt] =
+    useState<string | null>(null);
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const { organization } = useOrganization({
     memberships: true,
   });
+  const orgId = organization?.id || '';
+
   const { downloadReceiptPDFWithReceiptIdAsync } =
     useDownloadReceiptPDFWithReceiptId();
+  const { sendReceiptToEmailWithReceiptId } =
+    useSendReceiptToEmailWithReceiptId();
+  const { sendReceiptToWhatsAppWithReceiptId } =
+    useSendReceiptToWhatsAppWithReceiptId();
   const { receipts, foundCount } = useSearchReceipts(
     currentPage,
     Number(year),
@@ -134,23 +158,29 @@ export default function ViewReceipts() {
     setDateRangeUI(undefined);
   };
 
-  // const onSendToWhatsApp = (receiptId: string, organizationId: string) => {
-  //   sendReceiptToWhatsAppWithReceiptId(receiptId, organizationId);
-  //   toast.success("Receipt Successfully Send!.", {
-  //     description:
-  //       " If it doesn't arrive in 30s send it agian from the send receipts section",
-  //   });
-  //   console.log(receiptId, organizationId);
-  // };
+  const onSendToWhatsApp = (
+    receiptId: string,
+    organizationId: string,
+    phoneNumber: string
+  ) => {
+    sendReceiptToWhatsAppWithReceiptId(receiptId, organizationId, phoneNumber);
+    toast.success('Receipt Successfully Send!.', {
+      description:
+        " If it doesn't arrive in 30s send it agian from the sales list section",
+    });
+  };
 
-  // const onSendToEmail = (receiptId: string, organizationId: string) => {
-  //   sendReceiptToEmailWithReceiptId(receiptId, organizationId);
-  //   toast.success("Receipt Successfully Send!.", {
-  //     description:
-  //       " If it doesn't arrive in 30s send it agian from the send receipts section",
-  //   });
-  //   console.log(receiptId, organizationId);
-  // };
+  const onSendToEmail = (
+    receiptId: string,
+    organizationId: string,
+    email: string
+  ) => {
+    sendReceiptToEmailWithReceiptId(receiptId, organizationId, email);
+    toast.success('Receipt Successfully Send!.', {
+      description:
+        " If it doesn't arrive in 30s send it agian from the sales list section",
+    });
+  };
 
   const onDownloadReceipt = async (
     receiptId: string,
@@ -268,17 +298,24 @@ export default function ViewReceipts() {
                     </TableCell>
                     <TableCell>
                       <div className="flex flex-row gap-2">
-                        <Button
-                          onClick={() =>
-                            onDownloadReceipt(
-                              receipt.id,
-                              organization?.id || ''
-                            )
+                        <SubmitButton
+                          receiptId={receipt.id}
+                          organizationId={orgId}
+                          onDownloadReceipt={onDownloadReceipt}
+                          setIsSendReceiptToEmailModalOpen={
+                            setIsSendReceiptToEmailModalOpen
                           }
-                          disabled={!organization?.id}
-                        >
-                          Download
-                        </Button>
+                          setSelectedReceiptIdToSendReceipt={
+                            setSelectedReceiptIdToSendReceipt
+                          }
+                          setSelectedEmail={setSelectedEmail}
+                          email={receipt.recipient_email ?? null}
+                          phoneNumber={receipt.recipient_phone ?? null}
+                          setIsSendReceiptToWhatsAppModalOpen={
+                            setSendReceiptToWhatsAppModalOpen
+                          }
+                          setSelectedWhatsApp={setSelectedWhatsApp}
+                        />
 
                         <Button
                           onClick={() => {
@@ -376,6 +413,27 @@ export default function ViewReceipts() {
           isModalOpen={isPDFModalOpen}
           setIsModalOpen={setIsPDFModalOpen}
         />
+        {selectedReceiptIdToSendReceipt && (
+          <SendToEmailDialog
+            receiptId={selectedReceiptIdToSendReceipt}
+            organizationId={orgId}
+            isModalOpen={isSendReceiptToEmailModalOpen}
+            setIsModalOpen={setIsSendReceiptToEmailModalOpen}
+            onSendToEmail={onSendToEmail}
+            email={selectedEmail}
+          />
+        )}
+        {selectedReceiptIdToSendReceipt && (
+          <SendToWhatsAppDialog
+            receiptId={selectedReceiptIdToSendReceipt}
+            organizationId={orgId}
+            isModalOpen={isSendReceiptToWhatsAppModalOpen}
+            setIsModalOpen={setSendReceiptToWhatsAppModalOpen}
+            phoneNumber={selectedWhatsApp}
+            onSendToWhatsApp={onSendToWhatsApp}
+            phoneNumberCountryCode={profile.phone_number_country_code}
+          />
+        )}
       </div>
     </>
   );
