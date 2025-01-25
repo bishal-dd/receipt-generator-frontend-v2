@@ -38,6 +38,8 @@ const documents = {
     types.SendReceiptPdfToWhatsAppWithReceiptIdDocument,
   '\n  query Receipt($id: ID!) {\n    receipt(id: $id) {\n      ...ReceiptFragment\n      sub_total_amount\n      tax_amount\n      Services {\n        id\n        description\n        rate\n        quantity\n        amount\n      }\n    }\n  }\n':
     types.ReceiptDocument,
+  '\n  query ReceiptEmailAndPhoneNo($id: ID!) {\n    receipt(id: $id) {\n      recipient_phone\n      recipient_email\n    }\n  }\n':
+    types.ReceiptEmailAndPhoneNoDocument,
   '\n  query SearchReceipts(\n    $page: Int!\n    $year: Int\n    $date: String\n    $dateRange: [String!]\n  ) {\n    searchReceipts(\n      page: $page\n      year: $year\n      date: $date\n      dateRange: $dateRange\n    ) {\n      totalCount\n      foundCount\n      receipts {\n        id\n        receipt_name\n        recipient_name\n        recipient_phone\n        recipient_email\n        recipient_address\n        receipt_no\n        user_id\n        date\n        total_amount\n        payment_method\n        is_receipt_send\n      }\n    }\n  }\n':
     types.SearchReceiptsDocument,
   '\n  query GetUserReceipts {\n    receipts {\n      edges {\n        node {\n          ...ReceiptFragment\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        startCursor\n        hasNextPage\n        hasPreviousPage\n      }\n    }\n  }\n':
@@ -130,6 +132,12 @@ export function graphql(
 export function graphql(
   source: '\n  query Receipt($id: ID!) {\n    receipt(id: $id) {\n      ...ReceiptFragment\n      sub_total_amount\n      tax_amount\n      Services {\n        id\n        description\n        rate\n        quantity\n        amount\n      }\n    }\n  }\n'
 ): (typeof documents)['\n  query Receipt($id: ID!) {\n    receipt(id: $id) {\n      ...ReceiptFragment\n      sub_total_amount\n      tax_amount\n      Services {\n        id\n        description\n        rate\n        quantity\n        amount\n      }\n    }\n  }\n'];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  query ReceiptEmailAndPhoneNo($id: ID!) {\n    receipt(id: $id) {\n      recipient_phone\n      recipient_email\n    }\n  }\n'
+): (typeof documents)['\n  query ReceiptEmailAndPhoneNo($id: ID!) {\n    receipt(id: $id) {\n      recipient_phone\n      recipient_email\n    }\n  }\n'];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

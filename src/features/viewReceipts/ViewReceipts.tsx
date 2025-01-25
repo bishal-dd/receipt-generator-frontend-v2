@@ -197,7 +197,7 @@ export default function ViewReceipts() {
     <>
       <div className="flex flex-col items-center justify-center w-[100vw] md:w-[80vw] lg:w-[80vw] xl:w-[80vw]">
         <div className="container mx-auto p-4 w-full">
-          <h1 className="text-2xl font-bold mb-4">Receipts</h1>
+          <h1 className="text-2xl font-bold mb-4">Sales</h1>
           <div className="flex flex-col md:flex-row gap-5 mb-4">
             <Popover>
               <PopoverTrigger>
@@ -316,7 +316,6 @@ export default function ViewReceipts() {
                           }
                           setSelectedWhatsApp={setSelectedWhatsApp}
                         />
-
                         <Button
                           onClick={() => {
                             setSelectedReceiptId(receipt.id);

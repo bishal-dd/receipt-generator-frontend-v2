@@ -579,6 +579,19 @@ export type ReceiptQuery = {
     | null;
 };
 
+export type ReceiptEmailAndPhoneNoQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+export type ReceiptEmailAndPhoneNoQuery = {
+  __typename?: 'Query';
+  receipt?: {
+    __typename?: 'Receipt';
+    recipient_phone?: string | null;
+    recipient_email?: string | null;
+  } | null;
+};
+
 export type SearchReceiptsQueryVariables = Exact<{
   page: Scalars['Int']['input'];
   year?: InputMaybe<Scalars['Int']['input']>;
@@ -1414,6 +1427,61 @@ export const ReceiptDocument = {
     },
   ],
 } as unknown as DocumentNode<ReceiptQuery, ReceiptQueryVariables>;
+export const ReceiptEmailAndPhoneNoDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'ReceiptEmailAndPhoneNo' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'receipt' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'id' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'recipient_phone' },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'recipient_email' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  ReceiptEmailAndPhoneNoQuery,
+  ReceiptEmailAndPhoneNoQueryVariables
+>;
 export const SearchReceiptsDocument = {
   kind: 'Document',
   definitions: [

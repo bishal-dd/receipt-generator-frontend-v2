@@ -30,11 +30,10 @@ export function SubmitButton({
   setSelectedReceiptIdToSendReceipt,
   setIsSendReceiptToWhatsAppModalOpen,
 }: Props) {
-  console.log(email);
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button>Send</Button>
+        <Button>Send Receipt</Button>
       </PopoverTrigger>
       <PopoverContent className="w-40 p-2">
         <div className="space-y-2">

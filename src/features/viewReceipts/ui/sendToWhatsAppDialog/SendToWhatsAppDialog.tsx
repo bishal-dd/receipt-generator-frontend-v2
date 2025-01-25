@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/dialog';
 import { PhoneInput } from '@/components/utils';
 import * as RPNInput from 'react-phone-number-input';
+import { toast } from 'sonner';
 
 type Props = {
   receiptId: string;
@@ -39,24 +40,21 @@ export function SendToWhatsAppDialog({
     initialPhoneNumberCountryCode
   );
 
-  const [phoneNumber, setPhoneNumber] = useState<string | null>(
-    initialphoneNumber ?? null
-  );
-
   const handleClose = () => {
-    setPhoneNumber(null);
     setIsModalOpen(false);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!phoneNumber) return;
-    onSendToWhatsApp(receiptId, organizationId, phoneNumber);
+    const phoneNumber = (e.target as HTMLFormElement).elements.namedItem(
+      'phonenumber'
+    ) as HTMLInputElement;
+    if (!phoneNumber.value) {
+      toast.error('Please enter a phone number');
+      return;
+    }
+    onSendToWhatsApp(receiptId, organizationId, phoneNumber.value);
     handleClose();
-  };
-
-  const handlePhoneNumberChange = (value: RPNInput.Value) => {
-    setPhoneNumber(value);
   };
 
   return (
@@ -72,6 +70,7 @@ export function SendToWhatsAppDialog({
           <form onSubmit={handleSubmit}>
             <label htmlFor="email">Phone Number</label>
             <PhoneInput
+              name="phonenumber"
               placeholder="Customer Number"
               defaultCountry={phoneNumberCountryCode as RPNInput.Country}
               onCountryChange={(country) => {
@@ -79,8 +78,7 @@ export function SendToWhatsAppDialog({
                   setPhoneNumberCountryCode(country);
                 }
               }}
-              value={phoneNumber ?? undefined}
-              onChange={handlePhoneNumberChange}
+              value={initialphoneNumber ?? ''}
             />
             <div className="flex justify-center">
               <Button type="submit" className="mt-4">

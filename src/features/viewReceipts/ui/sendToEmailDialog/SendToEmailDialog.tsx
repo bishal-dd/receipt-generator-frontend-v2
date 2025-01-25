@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -10,6 +10,7 @@ import {
   DialogDescription,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import { toast } from 'sonner';
 
 type Props = {
   receiptId: string;
@@ -32,23 +33,21 @@ export function SendToEmailDialog({
   setIsModalOpen,
   email: initialEmail,
 }: Props) {
-  console.log(initialEmail, 'initialEmail');
-  const [email, setEmail] = useState<string | null>(initialEmail ?? null);
-
   const handleClose = () => {
     setIsModalOpen(false);
-    setEmail(null);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
-    onSendToEmail(receiptId, organizationId, email);
+    const email = (e.target as HTMLFormElement).elements.namedItem(
+      'email'
+    ) as HTMLInputElement;
+    if (!email.value) {
+      toast.error('Please enter a email');
+      return;
+    }
+    onSendToEmail(receiptId, organizationId, email.value);
     handleClose();
-  };
-
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
   };
 
   return (
@@ -67,8 +66,8 @@ export function SendToEmailDialog({
               type="email"
               id="email"
               required
-              value={email ?? undefined}
-              onChange={handleEmailChange}
+              name="email"
+              defaultValue={initialEmail ?? ''}
             />
             <div className="flex justify-center">
               <Button type="submit" className="mt-4">
