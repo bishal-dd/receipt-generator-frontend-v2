@@ -33,6 +33,7 @@ import {
 } from '@/gql/graphql';
 import { Loader } from '@/components/utils';
 import { formatISO } from 'date-fns';
+import { Button } from '@/components/ui/button';
 
 export default function GenerateReceipt() {
   const { user, isLoaded: userLoaded } = useUser();
@@ -243,6 +244,10 @@ export default function GenerateReceipt() {
     reset();
   };
 
+  const handleButtonClick = (action: (data: ReceiptFormData) => void) => {
+    handleSubmit(action)();
+  };
+
   // Render based on loading state AFTER all hooks have been called
   if (!userLoaded || !orgLoaded || profileLoading) {
     return <Loader />;
@@ -292,14 +297,16 @@ export default function GenerateReceipt() {
                 signature_image={profile.signature_image}
               />
             </CardFooter>
-            <CardFooter className="flex justify-center">
+            <CardFooter className="flex justify-center gap-4">
               <SubmitButton
                 onSendToWhatsApp={onSendToWhatsApp}
                 onSendToEmail={onSendToEmail}
                 onDownload={onDownload}
-                onSave={onSave}
                 handleSubmit={handleSubmit}
               />
+              <Button type="button" onClick={() => handleButtonClick(onSave)}>
+                Save Sale
+              </Button>
             </CardFooter>
           </Card>
         </form>

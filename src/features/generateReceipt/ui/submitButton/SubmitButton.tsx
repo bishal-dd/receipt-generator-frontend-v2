@@ -12,7 +12,6 @@ type Props = {
   onSendToWhatsApp: (data: ReceiptFormData) => void;
   onSendToEmail: (data: ReceiptFormData) => void;
   onDownload: (data: ReceiptFormData) => void;
-  onSave: (data: ReceiptFormData) => void;
   handleSubmit: (
     onValid: (data: ReceiptFormData) => void
   ) => (e?: React.BaseSyntheticEvent) => void;
@@ -22,7 +21,6 @@ export function SubmitButton({
   onSendToEmail,
   onDownload,
   handleSubmit,
-  onSave,
 }: Props) {
   const [openPopover, setOpenPopover] = useState(false);
 
@@ -34,7 +32,7 @@ export function SubmitButton({
   return (
     <Popover open={openPopover} onOpenChange={setOpenPopover}>
       <PopoverTrigger asChild>
-        <Button>Send</Button>
+        <Button>Send Receipt</Button>
       </PopoverTrigger>
       <PopoverContent className="w-40 p-2">
         <div className="space-y-2">
@@ -55,9 +53,6 @@ export function SubmitButton({
             onClick={() => handleButtonClick(onDownload)}
           >
             View/Download/Print
-          </Button>
-          <Button className="w-full" onClick={() => handleButtonClick(onSave)}>
-            Save
           </Button>
         </div>
       </PopoverContent>
