@@ -39,6 +39,12 @@ export type CreateBulkService = {
   rate: Scalars['Float']['input'];
 };
 
+export type CreateProduct = {
+  name: Scalars['String']['input'];
+  unit_price: Scalars['Float']['input'];
+  user_id: Scalars['ID']['input'];
+};
+
 export type CreateProfile = {
   address?: InputMaybe<Scalars['String']['input']>;
   city?: InputMaybe<Scalars['String']['input']>;
@@ -99,10 +105,12 @@ export type DownloadPdf = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createProduct: Product;
   createProfile: Profile;
   createReceipt: Receipt;
   createService: Service;
   createUser: User;
+  deleteProduct: Scalars['Boolean']['output'];
   deleteProfile: Scalars['Boolean']['output'];
   deleteReceipt: Scalars['Boolean']['output'];
   deleteService: Scalars['Boolean']['output'];
@@ -114,9 +122,14 @@ export type Mutation = {
   sendReceiptPDFToEmailWithReceiptId: Scalars['Boolean']['output'];
   sendReceiptPDFToWhatsApp: Scalars['Boolean']['output'];
   sendReceiptPDFToWhatsAppWithReceiptId: Scalars['Boolean']['output'];
+  updateProduct: Product;
   updateProfile: Profile;
   updateReceipt: Receipt;
   updateService: Service;
+};
+
+export type MutationCreateProductArgs = {
+  input: CreateProduct;
 };
 
 export type MutationCreateProfileArgs = {
@@ -133,6 +146,10 @@ export type MutationCreateServiceArgs = {
 
 export type MutationCreateUserArgs = {
   input: CreateUser;
+};
+
+export type MutationDeleteProductArgs = {
+  id: Scalars['ID']['input'];
 };
 
 export type MutationDeleteProfileArgs = {
@@ -184,6 +201,10 @@ export type MutationSendReceiptPdfToWhatsAppWithReceiptIdArgs = {
   receiptId: Scalars['String']['input'];
 };
 
+export type MutationUpdateProductArgs = {
+  input: UpdateProduct;
+};
+
 export type MutationUpdateProfileArgs = {
   input: UpdateProfile;
 };
@@ -202,6 +223,17 @@ export type PageInfo = {
   hasNextPage: Scalars['Boolean']['output'];
   hasPreviousPage: Scalars['Boolean']['output'];
   startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+export type Product = {
+  __typename?: 'Product';
+  created_at: Scalars['DateTime']['output'];
+  deleted_at?: Maybe<Scalars['DateTime']['output']>;
+  id: Scalars['UUID']['output'];
+  name: Scalars['String']['output'];
+  unit_price: Scalars['Float']['output'];
+  updated_at?: Maybe<Scalars['DateTime']['output']>;
+  user_id: Scalars['ID']['output'];
 };
 
 export type Profile = {
@@ -226,6 +258,8 @@ export type Profile = {
 
 export type Query = {
   __typename?: 'Query';
+  product?: Maybe<Product>;
+  products?: Maybe<Array<Product>>;
   profile?: Maybe<Profile>;
   profileByUserId?: Maybe<Profile>;
   receipt?: Maybe<Receipt>;
@@ -235,6 +269,10 @@ export type Query = {
   serviceByReceiptId?: Maybe<Array<Maybe<Service>>>;
   user?: Maybe<User>;
   users: UserConnection;
+};
+
+export type QueryProductArgs = {
+  id: Scalars['ID']['input'];
 };
 
 export type QueryProfileArgs = {
@@ -364,6 +402,12 @@ export type Service = {
   rate: Scalars['Float']['output'];
   receipt_id: Scalars['UUID']['output'];
   updated_at?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type UpdateProduct = {
+  id: Scalars['UUID']['input'];
+  name?: InputMaybe<Scalars['String']['input']>;
+  unit_price?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type UpdateProfile = {
@@ -503,6 +547,55 @@ export type UserProfileQuery = {
         ' $fragmentRefs'?: { ProfileFragmentFragment: ProfileFragmentFragment };
       })
     | null;
+};
+
+export type ProductFragmentFragment = {
+  __typename?: 'Product';
+  id: any;
+  name: string;
+  unit_price: number;
+} & { ' $fragmentName'?: 'ProductFragmentFragment' };
+
+export type CreateProductMutationVariables = Exact<{
+  input: CreateProduct;
+}>;
+
+export type CreateProductMutation = {
+  __typename?: 'Mutation';
+  createProduct: { __typename?: 'Product' } & {
+    ' $fragmentRefs'?: { ProductFragmentFragment: ProductFragmentFragment };
+  };
+};
+
+export type DeleteProductMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+export type DeleteProductMutation = {
+  __typename?: 'Mutation';
+  deleteProduct: boolean;
+};
+
+export type UpdateProductMutationVariables = Exact<{
+  input: UpdateProduct;
+}>;
+
+export type UpdateProductMutation = {
+  __typename?: 'Mutation';
+  updateProduct: { __typename?: 'Product' } & {
+    ' $fragmentRefs'?: { ProductFragmentFragment: ProductFragmentFragment };
+  };
+};
+
+export type ProductsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type ProductsQuery = {
+  __typename?: 'Query';
+  products?: Array<
+    { __typename?: 'Product' } & {
+      ' $fragmentRefs'?: { ProductFragmentFragment: ProductFragmentFragment };
+    }
+  > | null;
 };
 
 export type ReceiptFragmentFragment = {
@@ -681,6 +774,27 @@ export const ProfileFragmentFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<ProfileFragmentFragment, unknown>;
+export const ProductFragmentFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'ProductFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Product' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'unit_price' } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<ProductFragmentFragment, unknown>;
 export const ReceiptFragmentFragmentDoc = {
   kind: 'Document',
   definitions: [
@@ -1068,6 +1182,238 @@ export const UserProfileDocument = {
     },
   ],
 } as unknown as DocumentNode<UserProfileQuery, UserProfileQueryVariables>;
+export const CreateProductDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'CreateProduct' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'input' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'CreateProduct' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'createProduct' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'input' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'input' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'ProductFragment' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'ProductFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Product' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'unit_price' } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  CreateProductMutation,
+  CreateProductMutationVariables
+>;
+export const DeleteProductDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'DeleteProduct' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'deleteProduct' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'id' },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  DeleteProductMutation,
+  DeleteProductMutationVariables
+>;
+export const UpdateProductDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'UpdateProduct' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'input' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'UpdateProduct' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'updateProduct' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'input' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'input' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'ProductFragment' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'ProductFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Product' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'unit_price' } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  UpdateProductMutation,
+  UpdateProductMutationVariables
+>;
+export const ProductsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'Products' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'products' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'ProductFragment' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'ProductFragment' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'Product' },
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'unit_price' } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<ProductsQuery, ProductsQueryVariables>;
 export const DownloadReceiptPdfWithReceiptIdDocument = {
   kind: 'Document',
   definitions: [

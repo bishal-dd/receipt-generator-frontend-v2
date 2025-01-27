@@ -28,6 +28,11 @@ const items = [
     icon: List,
   },
   {
+    title: 'Products/Services',
+    url: '/dashboard/products',
+    icon: List,
+  },
+  {
     title: 'Organization Profile',
     url: '/dashboard/organization-profile',
     icon: Building,
