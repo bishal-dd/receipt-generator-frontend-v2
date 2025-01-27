@@ -554,6 +554,7 @@ export type ProductFragmentFragment = {
   id: any;
   name: string;
   unit_price: number;
+  user_id: string;
 } & { ' $fragmentName'?: 'ProductFragmentFragment' };
 
 export type CreateProductMutationVariables = Exact<{
@@ -790,6 +791,7 @@ export const ProductFragmentFragmentDoc = {
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'name' } },
           { kind: 'Field', name: { kind: 'Name', value: 'unit_price' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'user_id' } },
         ],
       },
     },
@@ -1247,6 +1249,7 @@ export const CreateProductDocument = {
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'name' } },
           { kind: 'Field', name: { kind: 'Name', value: 'unit_price' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'user_id' } },
         ],
       },
     },
@@ -1362,6 +1365,7 @@ export const UpdateProductDocument = {
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'name' } },
           { kind: 'Field', name: { kind: 'Name', value: 'unit_price' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'user_id' } },
         ],
       },
     },
@@ -1409,6 +1413,7 @@ export const ProductsDocument = {
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'Field', name: { kind: 'Name', value: 'name' } },
           { kind: 'Field', name: { kind: 'Name', value: 'unit_price' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'user_id' } },
         ],
       },
     },

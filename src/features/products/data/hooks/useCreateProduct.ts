@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { createProductMutation } from '../graphql/mutations/createProductMutation';
 import { useRequestAPI } from '@/utils';
-import { CreateProduct } from '@/gql/graphql';
+import { CreateProduct, ProductFragmentFragment } from '@/gql/graphql';
 
 export function useCreateProduct() {
   const requestAPI = useRequestAPI();
@@ -17,7 +17,7 @@ export function useCreateProduct() {
 
   const createProductAsync = async (input: CreateProduct) => {
     const response = await mutation.mutateAsync(input);
-    return response;
+    return response.createProduct as ProductFragmentFragment;
   };
 
   return {

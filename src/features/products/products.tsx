@@ -7,14 +7,16 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-
 import { Button } from '@/components/ui/button';
 import { useUser } from '@clerk/nextjs';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AddProductDialog } from './ui/addProduct';
 import { Loader } from '@/components/utils';
-import { useCreateProduct } from './data/hooks/useCreateProduct';
+import { useCreateProduct, useDeleteProduct } from './data/hooks';
+import { useProducts } from './data/hooks';
+import { useProductsStore } from './data/store';
+import { Trash2 } from 'lucide-react';
 
 export default function Products() {
   const { user } = useUser();
@@ -22,17 +24,39 @@ export default function Products() {
   const [isAddProductModalOpen, setIsAddProductModalOpen] =
     useState<boolean>(false);
   const { createProductAsync } = useCreateProduct();
+  const { deleteProduct } = useDeleteProduct();
+  const { products } = useProducts();
+  const {
+    products: productsStore,
+    setProducts,
+    addProduct,
+    deleteProduct: deleteProductStore,
+  } = useProductsStore();
 
+  useEffect(() => {
+    setProducts(products);
+  }, [products, setProducts]);
+  console.log(products.length);
   const handleAddProduct = async (
     userId: string,
     name: string,
     unit_price: number
   ) => {
-    await createProductAsync({
+    const product = await createProductAsync({
       user_id: userId,
       name,
       unit_price,
     });
+    addProduct({
+      id: product.id,
+      name,
+      unit_price,
+      user_id: userId,
+    });
+  };
+  const handleDeleteProduct = (productId: string) => {
+    deleteProduct(productId);
+    deleteProductStore(productId);
   };
   if (!userId) {
     return <Loader />;
@@ -43,9 +67,11 @@ export default function Products() {
         <div className="container mx-auto p-4 w-full">
           <h1 className="text-2xl font-bold mb-4">Products / Services</h1>
           <div className="flex flex-col md:flex-row gap-5 mb-4">
-            <Button onClick={() => setIsAddProductModalOpen(true)}>
-              Add Product
-            </Button>
+            <div className="flex justify-center">
+              <Button onClick={() => setIsAddProductModalOpen(true)}>
+                Add Product
+              </Button>
+            </div>
           </div>
           <ScrollArea className="sm:w-96 lg:w-full whitespace-nowrap rounded-md border">
             <Table>
@@ -58,12 +84,25 @@ export default function Products() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                <TableRow>
-                  <TableCell>1</TableCell>
-                  <TableCell className="font-medium">test</TableCell>
-                  <TableCell>10</TableCell>
-                  <TableCell></TableCell>
-                </TableRow>
+                {productsStore.map((product, index) => (
+                  <TableRow key={product.id}>
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell className="font-medium">
+                      {product.name}
+                    </TableCell>
+                    <TableCell>{product.unit_price}</TableCell>
+                    <TableCell>
+                      <Button
+                        variant={'ghost'}
+                        onClick={() => {
+                          handleDeleteProduct(product.id);
+                        }}
+                      >
+                        <Trash2 className=" text-red-700" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
             <ScrollBar orientation="horizontal" />
