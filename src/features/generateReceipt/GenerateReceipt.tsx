@@ -73,7 +73,7 @@ export default function GenerateReceipt() {
     updateCompanyTax,
     updatePhoneNumberCountryCode,
   } = useUpdateProfile(profile.id);
-  const { receiptForm, fields, append, remove, handleSubmit, reset } =
+  const { receiptForm, fields, append, remove, handleSubmit, reset, setValue } =
     useReceiptForm();
   const organizationName = useMemo(
     () => organization?.name || 'No Organization',
@@ -84,7 +84,7 @@ export default function GenerateReceipt() {
     [organization]
   );
   const orgHasImage = useMemo(() => organization?.hasImage, [organization]);
-
+  console.log('elllooo');
   // Memoize organization profile
   const organizationProfile = useMemo(
     () => ({
@@ -285,6 +285,7 @@ export default function GenerateReceipt() {
                 updateCompanyTax={updateCompanyTax}
                 taxValue={tax}
                 setTaxState={setTax}
+                setValue={setValue}
               />
             </CardContent>
             <CardFooter>

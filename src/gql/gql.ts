@@ -26,6 +26,8 @@ const documents = {
     types.SendReceiptPdfToWhatsAppDocument,
   '\n  mutation UpdateProfile($input: UpdateProfile!) {\n    updateProfile(input: $input) {\n      ...ProfileFragment\n    }\n  }\n':
     types.UpdateProfileDocument,
+  '\n  query SearchProducts($query: String) {\n    searchProducts(query: $query) {\n      name\n      user_id\n      unit_price\n    }\n  }\n':
+    types.SearchProductsDocument,
   '\n  query UserProfile($userId: String!) {\n    profileByUserId(userId: $userId) {\n      ...ProfileFragment\n    }\n  }\n':
     types.UserProfileDocument,
   '\n  fragment ProductFragment on Product {\n    id\n    name\n    unit_price\n    user_id\n  }\n':
@@ -106,6 +108,12 @@ export function graphql(
 export function graphql(
   source: '\n  mutation UpdateProfile($input: UpdateProfile!) {\n    updateProfile(input: $input) {\n      ...ProfileFragment\n    }\n  }\n'
 ): (typeof documents)['\n  mutation UpdateProfile($input: UpdateProfile!) {\n    updateProfile(input: $input) {\n      ...ProfileFragment\n    }\n  }\n'];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  query SearchProducts($query: String) {\n    searchProducts(query: $query) {\n      name\n      user_id\n      unit_price\n    }\n  }\n'
+): (typeof documents)['\n  query SearchProducts($query: String) {\n    searchProducts(query: $query) {\n      name\n      user_id\n      unit_price\n    }\n  }\n'];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

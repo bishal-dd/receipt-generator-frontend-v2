@@ -6,3 +6,4 @@ export * from './PhoneInput';
 export * from './PdfViewer';
 export * from './DateRangePicker';
 export * from './Loader';
+export * from './SearchableDropdown';

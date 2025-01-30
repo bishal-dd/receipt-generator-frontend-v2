@@ -53,6 +53,7 @@
     "react-hook-form": "^7.54.1",
     "react-pdf-viewer": "^0.1.0",
     "react-phone-number-input": "^3.4.10",
+    "react-select": "^5.10.0",
     "resend": "^4.0.1",
     "sonner": "^1.7.1",
     "svix": "^1.44.0",

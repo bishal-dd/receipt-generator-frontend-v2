@@ -264,6 +264,7 @@ export type Query = {
   profileByUserId?: Maybe<Profile>;
   receipt?: Maybe<Receipt>;
   receipts: ReceiptConnection;
+  searchProducts?: Maybe<Array<Product>>;
   searchReceipts: SearchReceipt;
   service?: Maybe<Service>;
   serviceByReceiptId?: Maybe<Array<Maybe<Service>>>;
@@ -290,6 +291,10 @@ export type QueryReceiptArgs = {
 export type QueryReceiptsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type QuerySearchProductsArgs = {
+  query?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type QuerySearchReceiptsArgs = {
@@ -534,6 +539,20 @@ export type UpdateProfileMutation = {
   updateProfile: { __typename?: 'Profile' } & {
     ' $fragmentRefs'?: { ProfileFragmentFragment: ProfileFragmentFragment };
   };
+};
+
+export type SearchProductsQueryVariables = Exact<{
+  query?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type SearchProductsQuery = {
+  __typename?: 'Query';
+  searchProducts?: Array<{
+    __typename?: 'Product';
+    name: string;
+    user_id: string;
+    unit_price: number;
+  }> | null;
 };
 
 export type UserProfileQueryVariables = Exact<{
@@ -1102,6 +1121,53 @@ export const UpdateProfileDocument = {
   UpdateProfileMutation,
   UpdateProfileMutationVariables
 >;
+export const SearchProductsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'SearchProducts' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'query' },
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'searchProducts' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'query' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'query' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'user_id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'unit_price' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<SearchProductsQuery, SearchProductsQueryVariables>;
 export const UserProfileDocument = {
   kind: 'Document',
   definitions: [

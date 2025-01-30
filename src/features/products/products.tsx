@@ -36,7 +36,6 @@ export default function Products() {
   useEffect(() => {
     setProducts(products);
   }, [products, setProducts]);
-  console.log(products.length);
   const handleAddProduct = async (
     userId: string,
     name: string,

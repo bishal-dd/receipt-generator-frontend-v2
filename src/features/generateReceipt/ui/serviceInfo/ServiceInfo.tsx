@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { Plus, Minus } from 'lucide-react';
 import {
   FieldArrayWithId,
@@ -26,6 +26,7 @@ import {
 } from '@/components/ui/form';
 import { CurrencyInput } from '@/components/utils';
 import { UpdateInput } from '@/components/utils';
+import { ProductSearch } from './ProductSearch';
 
 type Props = {
   control: any; // Replace `any` with appropriate type
@@ -37,7 +38,9 @@ type Props = {
   updateCompanyTax: (taxValue: number) => void;
   taxValue: number;
   setTaxState: (tax: number) => void;
+  setValue: any;
 };
+
 export function ServiceInfo({
   fields,
   append,
@@ -48,6 +51,7 @@ export function ServiceInfo({
   updateCompanyTax,
   taxValue,
   setTaxState,
+  setValue,
 }: Props) {
   const services = useWatch({
     control,
@@ -68,6 +72,21 @@ export function ServiceInfo({
   const taxRate = useMemo(() => taxValue / 100, [taxValue]);
   const tax = useMemo(() => subtotal * taxRate, [subtotal, taxRate]);
   const total = useMemo(() => subtotal * (1 + taxRate), [subtotal, taxRate]);
+  const handleAppend = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      append({ description: '', quantity: 1, unitPrice: 0 });
+    },
+    [append]
+  );
+
+  const handleRemove = useCallback(
+    (index: number) => (e: React.MouseEvent) => {
+      e.preventDefault();
+      remove(index);
+    },
+    [remove]
+  );
   return (
     <>
       <Table>
@@ -98,10 +117,7 @@ export function ServiceInfo({
                   variant="ghost"
                   size="icon"
                   className="h-6 w-6 text-green-700 hover:bg-black/10 hover:text-green-700"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    append({ description: '', quantity: 1, unitPrice: 0 });
-                  }}
+                  onClick={handleAppend}
                 >
                   <Plus className="h-4 w-4" />
                 </Button>
@@ -110,27 +126,17 @@ export function ServiceInfo({
                     variant="ghost"
                     size="icon"
                     className="h-6 w-6 text-red-700 hover:bg-black/10 hover:text-red-700"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      remove(index);
-                    }}
+                    onClick={handleRemove(index)}
                   >
                     <Minus className="h-4 w-4" />
                   </Button>
                 )}
               </TableCell>
               <TableCell className="w-64 px-4 py-2">
-                <FormField
+                <ProductSearch
+                  index={index}
                   control={control}
-                  name={`services.${index}.description`}
-                  render={({ field }) => (
-                    <FormItem className="max-h-10">
-                      <FormControl>
-                        <Input placeholder="Description" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+                  setValue={setValue}
                 />
               </TableCell>
               <TableCell className="w-24 text-right px-4 py-2">
