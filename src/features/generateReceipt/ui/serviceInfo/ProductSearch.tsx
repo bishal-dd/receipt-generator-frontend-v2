@@ -27,7 +27,6 @@ export function ProductSearch({ control, setValue, index }: Props) {
 
   const loadOptions = useCallback(
     async (inputValue: string) => {
-      console.log(inputValue);
       try {
         const response = await searchProducts(inputValue);
         const products = response.searchProducts || [];
@@ -46,10 +45,16 @@ export function ProductSearch({ control, setValue, index }: Props) {
   );
   useEffect(() => {
     (async () => {
-      const defaultProducts = await loadOptions('');
-      setDefaultOptions(defaultProducts);
+      const defaultProducts = await searchProducts('');
+      const products = defaultProducts.searchProducts || [];
+      const data = products.map((product) => ({
+        value: product.name,
+        label: product.name,
+        unitPrice: product.unit_price,
+      }));
+      setDefaultOptions(data);
     })();
-  }, [loadOptions]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <FormField
       control={control}
