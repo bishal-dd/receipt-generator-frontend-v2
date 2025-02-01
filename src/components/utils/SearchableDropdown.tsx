@@ -40,9 +40,9 @@ export const SearchableDropdown = ({
   const NoOptionsMessage = (props: any) => {
     return (
       <components.NoOptionsMessage {...props}>
-        <div style={{ textAlign: 'center', padding: '10px' }}>
+        <div className="text-center p-4">
           <Button asChild>
-            <Link href="/dashboard/products">+ Add Product</Link>
+            <Link href="/dashboard/products">Add Product</Link>
           </Button>
         </div>
       </components.NoOptionsMessage>

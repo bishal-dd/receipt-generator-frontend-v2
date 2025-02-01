@@ -1,5 +1,5 @@
 'use client';
-import { Building, Receipt, List } from 'lucide-react';
+import { Building, Receipt, List, ShoppingCart } from 'lucide-react';
 import { UserButton } from '@clerk/nextjs';
 import {
   Sidebar,
@@ -28,9 +28,9 @@ const items = [
     icon: List,
   },
   {
-    title: 'Products/Services',
+    title: 'Products / Services',
     url: '/dashboard/products',
-    icon: List,
+    icon: ShoppingCart,
   },
   {
     title: 'Organization Profile',
