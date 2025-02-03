@@ -84,7 +84,6 @@ export default function GenerateReceipt() {
     [organization]
   );
   const orgHasImage = useMemo(() => organization?.hasImage, [organization]);
-  console.log('elllooo');
   // Memoize organization profile
   const organizationProfile = useMemo(
     () => ({
