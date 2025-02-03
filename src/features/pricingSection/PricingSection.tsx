@@ -49,7 +49,9 @@ export default function PricingSection() {
             </CardContent>
             <CardFooter>
               <Button className="w-full" variant={'outline'} asChild>
-                <Link href={'#'}>Get Started</Link>
+                <Link href={plan.checkoutLink} target="_blank">
+                  Get Started
+                </Link>
               </Button>
             </CardFooter>
           </Card>
