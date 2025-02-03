@@ -16,33 +16,39 @@ import {
 
 const features = [
   {
-    title: 'Saves Money',
-    description: "You don't have to buy printers or paper",
+    title: 'Cost-Effective',
+    description:
+      'Eliminate the need for printers, ink, and paper, reducing operational expenses.',
     icon: HandCoins,
   },
   {
-    title: 'Easy management',
-    description: "You don't have to be afraid of loosing the paper",
+    title: 'Effortless Organization',
+    description:
+      'Digitally store and access receipts anytime, eliminating the risk of lost paperwork.',
     icon: FolderKanban,
   },
   {
-    title: 'Saves Time',
-    description: "You don't have to waste time managing your paperwork",
+    title: 'Time-Saving',
+    description:
+      'Automate receipt management and reduce manual paperwork, allowing you to focus on business growth.',
     icon: Timer,
   },
   {
-    title: 'Less Errors',
-    description: "You don't have to worry about errors.",
+    title: 'Error Reduction',
+    description:
+      'Minimize human errors with automated receipt generation and tracking.',
     icon: ShieldOff,
   },
   {
-    title: 'Secure',
-    description: "You don't have to worry about security.",
+    title: 'Enhanced Security',
+    description:
+      'Ensure your receipts are securely stored and protected from unauthorized access.',
     icon: Lock,
   },
   {
     title: 'Mobile Accessibility',
-    description: 'Access your work from anywhere.',
+    description:
+      'Manage and send receipts on the go, anytime, from any device.',
     icon: Smartphone,
   },
 ];

@@ -1,42 +1,42 @@
 export const pricingTiers = [
   {
-    name: 'Basic',
+    name: 'Starter',
+    price: '$3.99',
+    period: 'per month',
+    description:
+      'Best for freelancers and small businesses with limited transactions.',
+    features: [
+      'Up to 300 receipts per month',
+      'WhatsApp & email receipts',
+      'Unlimited sales list',
+      'Basic email support',
+    ],
+  },
+  {
+    name: 'Growth',
     price: '$9.99',
     period: 'per month',
-    description: 'Perfect for individuals and small teams',
+    description:
+      'Great for businesses that need a balance between affordability and volume.',
     features: [
-      'Up to 100 documents',
-      'Basic e-signatures',
-      '5GB storage',
-      'Email support',
-    ],
-  },
-  {
-    name: 'Pro',
-    price: '$29.99',
-    period: 'per month',
-    description: 'Ideal for growing businesses',
-    features: [
-      'Unlimited documents',
-      'Advanced e-signatures',
-      '25GB storage',
+      'Up to 3,000 receipts per month',
+      'WhatsApp & email receipts',
+      'Unlimited sales list',
       'Priority email support',
-      'Team collaboration',
-      'Analytics dashboard',
     ],
   },
   {
-    name: 'Enterprise',
-    price: 'Custom',
-    period: 'contact us for pricing',
-    description: 'Tailored solutions for large organizations',
+    name: 'Business',
+    price: '$19.99',
+    period: 'per month',
+    description:
+      'For businesses that need higher limits and advanced features.',
     features: [
-      'Unlimited everything',
-      'Advanced security features',
-      'Dedicated account manager',
-      '24/7 phone support',
-      'Custom integrations',
-      'On-premise deployment option',
+      'Unlimited receipts per month',
+      'Unlimited sales list',
+      'WhatsApp & email receipts',
+      'Priority support',
+      'First to get access to new features',
     ],
   },
 ];
