@@ -8,7 +8,6 @@ export default function HomeLayout({
   return (
     <div className="bg-black/[0.96] antialiased bg-grid-white/[0.02]">
       <PublicNavigation />
-
       {children}
       <Footer />
     </div>

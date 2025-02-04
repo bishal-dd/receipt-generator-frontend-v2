@@ -9,7 +9,7 @@ export default function ActionLinks() {
   return (
     <>
       <SignedOut>
-        <Button size="sm" asChild>
+        <Button size="sm" className="mr-2" asChild>
           <Link href="/home/sign-in">
             Sign In
             <User className="ml-2 h-4 w-4" />

@@ -16,6 +16,7 @@ import {
   Music2,
 } from 'lucide-react';
 import Link from 'next/link';
+import Grid from '@/components/ui/grid';
 
 const contactInfo = [
   {
@@ -47,72 +48,74 @@ const socialLinks = [
 
 export default function ContactSection() {
   return (
-    <div className="container mx-auto px-4 py-16 min-h-screen">
-      <h1 className="text-4xl font-bold text-center mb-12 text-neutral-300">
-        Get in Touch
-      </h1>
-      <div className="max-w-3xl mx-auto ">
-        <Card className=" bg-black/[0.96] antialiased bg-grid-white/[0.02] ">
-          <CardHeader>
-            <CardTitle className="text-2xl text-neutral-300">
-              Contact Information
-            </CardTitle>
-            <CardDescription className="text-neutral-300">
-              Reach out to us through any of the following methods:
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {contactInfo.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col items-center text-center"
-                >
-                  <div className="mb-4 p-3 rounded-full bg-white/10">
-                    <item.icon className="h-6 w-6 text-white" />
+    <Grid color="white" size={50}>
+      <div className=" mx-auto px-4 py-16 min-h-screen bg-black/[0.96] antialiased bg-grid-white/[0.02]">
+        <h1 className="text-4xl font-bold text-center mb-12 text-neutral-300">
+          Get in Touch
+        </h1>
+        <div className="max-w-3xl mx-auto ">
+          <Card className=" bg-black/[0.96] antialiased bg-grid-white/[0.02] ">
+            <CardHeader>
+              <CardTitle className="text-2xl text-neutral-300">
+                Contact Information
+              </CardTitle>
+              <CardDescription className="text-neutral-300">
+                Reach out to us through any of the following methods:
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {contactInfo.map((item, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-col items-center text-center"
+                  >
+                    <div className="mb-4 p-3 rounded-full bg-white/10">
+                      <item.icon className="h-6 w-6 text-white" />
+                    </div>
+                    <h3 className="font-semibold mb-1 text-neutral-300">
+                      {item.title}
+                    </h3>
+                    <Link
+                      href={item.href}
+                      className="text-muted-foreground hover:text-white transition-colors text-neutral-300"
+                    >
+                      {item.content}
+                    </Link>
                   </div>
-                  <h3 className="font-semibold mb-1 text-neutral-300">
-                    {item.title}
-                  </h3>
-                  <Link
-                    href={item.href}
-                    className="text-muted-foreground hover:text-white transition-colors text-neutral-300"
-                  >
-                    {item.content}
-                  </Link>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
 
-        <Card className="mt-8  bg-black/[0.96] antialiased bg-grid-white/[0.02] ">
-          <CardHeader>
-            <CardTitle className="text-2xl text-neutral-300">
-              Connect With Us
-            </CardTitle>
-            <CardDescription className="text-neutral-300">
-              Follow us on social media for the latest updates and news.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="flex justify-center space-x-4">
-              {socialLinks.map((link, index) => (
-                <Button key={index} variant="outline" size="icon" asChild>
-                  <Link
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <link.icon className="h-5 w-5 " />
-                    <span className="sr-only">{link.icon.name}</span>
-                  </Link>
-                </Button>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+          <Card className="mt-8  bg-black/[0.96] antialiased bg-grid-white/[0.02] ">
+            <CardHeader>
+              <CardTitle className="text-2xl text-neutral-300">
+                Connect With Us
+              </CardTitle>
+              <CardDescription className="text-neutral-300">
+                Follow us on social media for the latest updates and news.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex justify-center space-x-4">
+                {socialLinks.map((link, index) => (
+                  <Button key={index} variant="outline" size="icon" asChild>
+                    <Link
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <link.icon className="h-5 w-5 " />
+                      <span className="sr-only">{link.icon.name}</span>
+                    </Link>
+                  </Button>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
-    </div>
+    </Grid>
   );
 }
