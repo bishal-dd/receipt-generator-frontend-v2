@@ -1,9 +1,7 @@
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
 import { Spotlight } from '@/components/ui/Spotlight';
-import DemoVideo from './DemoVideo';
 import Grid from '@/components/ui/grid';
+import { HeroVideoDialogDemo } from './HeroVideo';
+import GetStartedButton from './GetStartedButton';
 export default function HeroSection() {
   return (
     <>
@@ -24,13 +22,10 @@ export default function HeroSection() {
               seamless experience for both you and your customers.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
-              <Button size="lg" asChild>
-                <Link href="/home/sign-up">
-                  Get Started
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <DemoVideo />
+              <GetStartedButton />
+            </div>
+            <div className="flex justify-center mt-4">
+              <HeroVideoDialogDemo />
             </div>
           </div>
         </div>

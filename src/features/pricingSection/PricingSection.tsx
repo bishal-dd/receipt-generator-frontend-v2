@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Check } from 'lucide-react';
+import { Check, MessageSquareText } from 'lucide-react';
 import Link from 'next/link';
 import { pricingTiers } from './data';
 import Grid from '@/components/ui/grid';
@@ -19,6 +19,20 @@ export default function PricingSection() {
         <h1 className="text-4xl font-bold text-center mb-12 text-neutral-300">
           Choose the Right Plan
         </h1>
+        <div className=" flex justify-center text-neutral-300 mb-2">
+          If a payment method you can use is not available or you want to pay
+          directly, contact us here:&nbsp;
+          <Button
+            className=" bg-white text-black hover:bg-white-[0.9] "
+            asChild
+            size={'sm'}
+          >
+            <Link href={'https://api.whatsapp.com/send?phone=17959259'}>
+              <MessageSquareText />
+              WhatsApp
+            </Link>
+          </Button>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-3  gap-8 ">
           {pricingTiers.map((plan, index) => (
             <Card
@@ -29,7 +43,7 @@ export default function PricingSection() {
                 <CardTitle className="text-2xl text-neutral-300">
                   {plan.name}
                 </CardTitle>
-                <CardDescription className="text-neutral-300">
+                <CardDescription className="text-neutral-300 text-md">
                   {plan.description}
                 </CardDescription>
               </CardHeader>

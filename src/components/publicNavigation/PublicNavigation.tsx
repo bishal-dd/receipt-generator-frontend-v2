@@ -29,7 +29,7 @@ export default function PublicNavigation() {
                   <Link
                     key={link.link}
                     href={link.link}
-                    className={`px-3 py-2 text-sm font-medium rounded-md ${
+                    className={`px-3 py-2 text-lg font-bold rounded-md  ${
                       pathname === link.link
                         ? 'text-black outline outline-1 outline-black'
                         : 'text-black font-bold hover:text-primary hover:bg-accent'
