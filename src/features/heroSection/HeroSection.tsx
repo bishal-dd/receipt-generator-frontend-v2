@@ -2,6 +2,7 @@ import { Spotlight } from '@/components/ui/Spotlight';
 import Grid from '@/components/ui/grid';
 import { HeroVideoDialogDemo } from './HeroVideo';
 import GetStartedButton from './GetStartedButton';
+import Link from 'next/link';
 export default function HeroSection() {
   return (
     <>
@@ -21,6 +22,13 @@ export default function HeroSection() {
               solution simplifies your workflow, saves time, and provides a
               seamless experience for both you and your customers.
             </p>
+            <p className="mt-4 font-normal text-base text-neutral-300 max-w-lg text-center mx-auto">
+              *Looking for serious investors, contact{' '}
+              <Link href="/home/contact" className="underline">
+                here.
+              </Link>
+            </p>
+
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <GetStartedButton />
             </div>

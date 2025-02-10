@@ -66,23 +66,19 @@ export default function ContactSection() {
             <CardContent>
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {contactInfo.map((item, index) => (
-                  <div
-                    key={index}
-                    className="flex flex-col items-center text-center"
-                  >
-                    <div className="mb-4 p-3 rounded-full bg-white/10">
-                      <item.icon className="h-6 w-6 text-white" />
+                  <Link href={item.href} key={index}>
+                    <div className="flex flex-col items-center text-center">
+                      <div className="mb-4 p-3 rounded-full bg-white/10">
+                        <item.icon className="h-6 w-6 text-white" />
+                      </div>
+                      <h3 className="font-semibold mb-1 text-neutral-300">
+                        {item.title}
+                      </h3>
+                      <p className="text-muted-foreground hover:text-white transition-colors text-neutral-300">
+                        {item.content}
+                      </p>
                     </div>
-                    <h3 className="font-semibold mb-1 text-neutral-300">
-                      {item.title}
-                    </h3>
-                    <Link
-                      href={item.href}
-                      className="text-muted-foreground hover:text-white transition-colors text-neutral-300"
-                    >
-                      {item.content}
-                    </Link>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </CardContent>
