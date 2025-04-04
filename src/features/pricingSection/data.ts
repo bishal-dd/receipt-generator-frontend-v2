@@ -1,7 +1,7 @@
 export const pricingTiers = [
   {
     name: 'Starter',
-    price: '$3.99',
+    price: '$2.99',
     period: 'per month',
     description:
       'Best for freelancers and small businesses with limited transactions.',
@@ -16,7 +16,7 @@ export const pricingTiers = [
   },
   {
     name: 'Growth',
-    price: '$9.99',
+    price: '$6.99',
     period: 'per month',
     description:
       'Great for businesses that need a balance between affordability and volume.',
@@ -31,7 +31,7 @@ export const pricingTiers = [
   },
   {
     name: 'Business',
-    price: '$19.99',
+    price: '$10.99',
     period: 'per month',
     description:
       'For businesses that need higher limits and advanced features.',
