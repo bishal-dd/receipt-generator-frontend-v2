@@ -18,7 +18,7 @@ import {
   ViewPdfModal,
 } from './ui';
 import { useEffect, useMemo, useState } from 'react';
-import { ReceiptFormData, useReceiptForm } from './utils';
+import { ReceiptFormData, useReceiptForm, getDefaultFormValues } from './utils';
 import { Form } from '@/components/ui/form';
 import {
   useCurrencyStore,
@@ -132,7 +132,7 @@ export default function GenerateReceipt() {
     toast.success('Sending Receipt in progress!.', {
       description: " If it doesn't arrive in 30s check the  Sales List",
     });
-    reset();
+    reset(getDefaultFormValues());
   };
 
   const onSendToEmail = (data: ReceiptFormData) => {
@@ -169,7 +169,7 @@ export default function GenerateReceipt() {
     toast.success('Sending Receipt in progress!.', {
       description: " If it doesn't arrive in 30s check the  Sales List",
     });
-    reset();
+    reset(getDefaultFormValues());
   };
 
   const onDownload = async (data: ReceiptFormData) => {
@@ -202,7 +202,7 @@ export default function GenerateReceipt() {
     };
     const pdfUrl = await downloadReceiptPDFAsync(input);
     setPdfUrl(pdfUrl);
-    reset();
+    reset(getDefaultFormValues());
   };
 
   const onSave = async (data: ReceiptFormData) => {
@@ -240,7 +240,7 @@ export default function GenerateReceipt() {
     toast.success('Receipt Was Saved!.', {
       description: 'You can check in the Sales List',
     });
-    reset();
+    reset(getDefaultFormValues());
   };
 
   const handleButtonClick = (action: (data: ReceiptFormData) => void) => {

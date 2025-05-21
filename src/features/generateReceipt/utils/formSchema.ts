@@ -1,5 +1,7 @@
 import { z } from 'zod';
 import { isValidPhoneNumber } from 'react-phone-number-input';
+import { generateRandomNumbers } from '@/utils';
+import { startOfDay } from 'date-fns';
 
 // Receipt validation schema
 export const receiptSchema = z.object({
@@ -26,6 +28,18 @@ export const receiptSchema = z.object({
       })
     )
     .min(1, 'At least one service is required.'),
+});
+
+export const getDefaultFormValues = (): ReceiptFormData => ({
+  receiptNumber: 'REC-' + generateRandomNumbers(6),
+  customerName: '',
+  customerPhoneNumber: '',
+  customerEmail: '',
+  customerAddress: '',
+  paymentMethod: '',
+  date: startOfDay(new Date()),
+  paymentNote: '',
+  services: [{ description: '', quantity: 1, unitPrice: 0 }],
 });
 
 // Infer the schema type for TypeScript
