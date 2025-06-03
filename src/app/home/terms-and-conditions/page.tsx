@@ -6,7 +6,7 @@ export default function Page() {
     <div className="min-h-screen bg-black py-12">
       <div className="max-w-4xl mx-auto px-4">
         <h1 className="text-4xl font-bold text-center mb-8 text-white">
-          Terms and Conditions for 2QuickPaper
+          Terms and Conditions for BillsToTrack
         </h1>
         <Card className="bg-neutral-900 shadow-lg border-neutral-800">
           <CardContent className="p-6 space-y-6">
@@ -72,7 +72,7 @@ export default function Page() {
                 <p>
                   All content, features, and functionality of our services,
                   including but not limited to text, graphics, logos, and
-                  software, are the exclusive property of 2Quickpaper and are
+                  software, are the exclusive property of BillsToTrack and are
                   protected by international copyright, trademark, and other
                   intellectual property laws.
                 </p>
@@ -143,7 +143,7 @@ export default function Page() {
               </p>
               <div className="pl-6">
                 <ul className="list-disc space-y-2 text-neutral-300">
-                  <li>Website: https://www.2quickpaper.com</li>
+                  <li>Website: https://www.billstotrack.com</li>
                   <li>Email: contact@lightwebx.com</li>
                 </ul>
               </div>

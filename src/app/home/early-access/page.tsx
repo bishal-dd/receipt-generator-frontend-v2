@@ -38,10 +38,10 @@ export default function Page() {
           Early Access List
         </h1>
         <p className="text-neutral-300 max-w-lg mx-auto my-2 text-sm text-center relative z-10">
-          Welcome to 2QuickPaper, you will be one of the first to get access to
-          2Quickpaper, which means you get a free trial. and when it is
+          Welcome to BillsToTrack, you will be one of the first to get access to
+          BillsToTrack, which means you get a free trial. and when it is
           officially launched you will get a discount. You will be able to use
-          2quickpaper unlimited at $4.99 per month. You can pay now to solidify
+          BillsToTrack unlimited at $4.99 per month. You can pay now to solidify
           your spot.
         </p>
         <div className="flex flex-col items-center relative z-10">

@@ -29,7 +29,7 @@ export default withSentryConfig(nextConfig, {
   // https://github.com/getsentry/sentry-webpack-plugin#options
 
   org: 'light-webx-6a',
-  project: '2quickpaper',
+  project: 'BillsToTrack',
 
   // Only print logs for uploading source maps in CI
   silent: !process.env.CI,

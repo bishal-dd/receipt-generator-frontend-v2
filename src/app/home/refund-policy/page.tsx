@@ -16,7 +16,7 @@ export default function Page() {
               </p>
 
               <p className="text-neutral-300">
-                Thank you for shopping at 2QuickPaper. The following terms are
+                Thank you for shopping at BillsToTrack. The following terms are
                 applicable for any products that you have purchased from us.
               </p>
             </section>

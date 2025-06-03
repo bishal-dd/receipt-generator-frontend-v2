@@ -6,7 +6,7 @@ export default function Page() {
     <div className="min-h-screen bg-black py-12">
       <div className="max-w-4xl mx-auto px-4">
         <h1 className="text-4xl font-bold text-center mb-8 text-white">
-          Privacy Policy for 2QuickPaper
+          Privacy Policy for BillsToTrack
         </h1>
         <Card className="bg-neutral-900 shadow-lg border-neutral-800">
           <CardContent className="p-6 space-y-6">
@@ -16,9 +16,9 @@ export default function Page() {
               </p>
 
               <p className="text-neutral-300">
-                At 2QuickPaper, one of our main priorities is the privacy of our
-                visitors. This Privacy Policy document contains types of
-                information that is collected and recorded by 2QuickPaper and
+                At BillsToTrack, one of our main priorities is the privacy of
+                our visitors. This Privacy Policy document contains types of
+                information that is collected and recorded by BillsToTrack and
                 how we use it.
               </p>
             </section>
@@ -40,7 +40,7 @@ export default function Page() {
                 This Privacy Policy applies only to our online activities and is
                 valid for visitors to our website with regards to the
                 information that they shared and/or collected on
-                https://www.2quickpaper.com. This policy is not applicable to
+                https://www.billstotrack.com. This policy is not applicable to
                 any information collected offline or via channels other than
                 this website.
               </p>
@@ -90,7 +90,7 @@ export default function Page() {
             <section className="space-y-4">
               <h2 className="text-2xl font-semibold text-white">Log Files</h2>
               <p className="text-neutral-300">
-                2QuickPaper follows a standard procedure of using log files.
+                BillsToTrack follows a standard procedure of using log files.
                 These files log visitors when they visit websites. The
                 information collected includes IP addresses, browser type, ISP,
                 timestamps, referring/exit pages, and click counts.
@@ -120,10 +120,10 @@ export default function Page() {
                 Children&apos;s Information
               </h2>
               <p className="text-neutral-300">
-                2QuickPaper does not knowingly collect any Personal Identifiable
-                Information from children under the age of 13. If you think that
-                your child provided this kind of information on our website,
-                please contact us immediately.
+                BillsToTrack does not knowingly collect any Personal
+                Identifiable Information from children under the age of 13. If
+                you think that your child provided this kind of information on
+                our website, please contact us immediately.
               </p>
             </section>
           </CardContent>

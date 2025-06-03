@@ -21,7 +21,7 @@ export default function PublicNavigation() {
                 href="/"
                 className="flex-shrink-0 text-2xl font-bold text-primary"
               >
-                2QuickPaper
+                BillsToTrack
               </Link>
 
               <div className="hidden md:flex items-center space-x-4">

@@ -18,7 +18,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: '2QuickPaper | Send money receipts to email and WhatsApp',
+  title: 'BillsToTrack | Send money receipts to email and WhatsApp',
   description:
     'you can send money money receipts to email and WhatsApp and also keep track of your sales',
 };

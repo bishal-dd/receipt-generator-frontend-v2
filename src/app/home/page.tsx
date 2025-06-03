@@ -37,7 +37,7 @@ export default function Component() {
         <Link href="/" className="flex items-center justify-center">
           <Zap className="h-8 w-8 text-green-600" />
           <span className="ml-2 text-2xl font-bold text-gray-900">
-            2quick paper
+            Bills To Track
           </span>
         </Link>
         <nav className="ml-auto flex gap-4 sm:gap-6 mt-4">
@@ -211,16 +211,16 @@ export default function Component() {
           <div className="container mx-auto px-4 md:px-6">
             <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
               <Image
-                src="/placeholder.svg?height=400&width=600"
-                width="600"
-                height="400"
+                src="/images/sales.webp"
+                width="800"
+                height="800"
                 alt="Benefits Illustration"
                 className="mx-auto aspect-video overflow-hidden rounded-xl object-cover"
               />
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
                   <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
-                    Why businesses love 2quick paper
+                    Why businesses love Bills To Track
                   </h2>
                   <p className="max-w-[600px] text-gray-500 md:text-xl/relaxed">
                     Join businesses already saving time and money with digital
@@ -455,7 +455,7 @@ export default function Component() {
                     ))}
                   </div>
                   <p className="text-gray-600 mb-4">
-                    "2quick paper has revolutionized our checkout process.
+                    "Bills To Track has revolutionized our checkout process.
                     Customers love getting instant receipts on WhatsApp!"
                   </p>
                   <div className="flex items-center gap-3">
@@ -529,7 +529,7 @@ export default function Component() {
                   Frequently asked questions
                 </h2>
                 <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Everything you need to know about 2quick paper.
+                  Everything you need to know about Bills To Track.
                 </p>
               </div>
             </div>
@@ -537,7 +537,7 @@ export default function Component() {
               <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="item-1">
                   <AccordionTrigger>
-                    How does 2quick paper work?
+                    How does Bills To Track work?
                   </AccordionTrigger>
                   <AccordionContent>
                     When a transaction is completed, with just a few clicks, we
@@ -631,7 +631,7 @@ export default function Component() {
       {/* Footer */}
       <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
         <p className="text-xs text-gray-500">
-          © 2024 2quick paper. All rights reserved.
+          © 2024 Bills To Track. All rights reserved.
         </p>
         <nav className="sm:ml-auto flex gap-4 sm:gap-6">
           <Link href="#" className="text-xs hover:underline underline-offset-4">
