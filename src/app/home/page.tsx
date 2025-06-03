@@ -70,9 +70,10 @@ export default function Component() {
 
       <main className="flex-1 border">
         {/* Hero Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-green-50 to-blue-50  ">
-          <div className="container mx-auto px-4 md:px-6  ">
-            <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-green-50 to-blue-50">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="grid gap-12 lg:grid-cols-2 items-center">
+              {/* Text Content */}
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
                   <Badge className="bg-green-100 text-green-800 hover:bg-green-100">
@@ -94,7 +95,7 @@ export default function Component() {
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </div>
-                <div className="flex items-center gap-4 text-sm text-gray-500">
+                <div className="flex items-center gap-4 text-sm text-gray-500 flex-wrap">
                   <div className="flex items-center gap-1">
                     <CheckCircle className="h-4 w-4 text-green-600" />
                     <span>No setup fees</span>
@@ -105,15 +106,19 @@ export default function Component() {
                   </div>
                 </div>
               </div>
-              <div className="flex items-center justify-center">
-                <div className="relative">
+
+              {/* Video Content */}
+              <div className="flex justify-center">
+                <div className="relative w-full max-w-md sm:max-w-lg lg:max-w-xl">
                   <HeroVideoDialogDemo />
+                  {/* Email Sent Badge */}
                   <div className="absolute -bottom-4 -left-4 bg-white p-4 rounded-lg shadow-lg border">
                     <div className="flex items-center gap-2">
                       <Mail className="h-5 w-5 text-blue-600" />
                       <span className="text-sm font-medium">Email Sent</span>
                     </div>
                   </div>
+                  {/* WhatsApp Delivered Badge */}
                   <div className="absolute -top-4 -right-4 bg-white p-4 rounded-lg shadow-lg border">
                     <div className="flex items-center gap-2">
                       <MessageCircle className="h-5 w-5 text-green-600" />
