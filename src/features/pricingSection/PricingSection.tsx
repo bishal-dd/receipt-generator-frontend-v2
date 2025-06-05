@@ -15,9 +15,9 @@ import useCurrency from '@/hooks/useCurrency';
 export default function PricingSection() {
   const { symbol, rate, code } = useCurrency();
 
-  const starterPrice = (2.99 * rate).toFixed(2);
-  const growthPrice = (4.99 * rate).toFixed(2);
-  const enterprisePrice = (10.99 * rate).toFixed(2);
+  const starterPrice = (2.99 * rate).toFixed(0);
+  const growthPrice = (4.99 * rate).toFixed(0);
+  const enterprisePrice = (10.99 * rate).toFixed(0);
 
   return (
     <section id="pricing" className="w-full py-12 md:py-24 lg:py-32">

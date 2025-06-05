@@ -15,7 +15,7 @@ function useCurrency() {
   const [currency, setCurrency] = useState({
     symbol: '$',
     rate: 1,
-    code: 'BTN',
+    code: 'USD',
   });
 
   useEffect(() => {
@@ -23,7 +23,7 @@ function useCurrency() {
       const c = countryToCurrency[code] || {
         symbol: '$',
         rate: 1,
-        code: 'BTN',
+        code: 'USD',
       };
       setCurrency(c);
     });
