@@ -21,7 +21,7 @@ export default function SignedInLinks() {
     <>
       <div className="flex items-center gap-2">
         {userMemberships.count === 0 ? (
-          <Button size="sm" asChild>
+          <Button size="sm" asChild className="bg-green-600 hover:bg-green-700">
             <Link href="/home/create-organization">
               Create Organization
               <Plus className="ml-2 h-4 w-4" />
@@ -29,7 +29,11 @@ export default function SignedInLinks() {
           </Button>
         ) : (
           <>
-            <Button size="sm" asChild>
+            <Button
+              size="sm"
+              asChild
+              className="bg-green-600 hover:bg-green-700"
+            >
               <Link href="/dashboard/generate-receipt">
                 Dashboard
                 <ArrowRight className="ml-2 h-4 w-4" />

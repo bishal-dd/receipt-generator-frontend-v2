@@ -3,77 +3,213 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Check, MessageSquareText } from 'lucide-react';
+import { CheckCircle } from 'lucide-react';
 import Link from 'next/link';
-import { pricingTiers } from './data';
-import Grid from '@/components/ui/grid';
+import { Badge } from '@/components/ui/badge';
+import useCurrency from '@/hooks/useCurrency';
 
 export default function PricingSection() {
+  const { symbol, rate, code } = useCurrency();
+
+  const starterPrice = (2.99 * rate).toFixed(2);
+  const growthPrice = (4.99 * rate).toFixed(2);
+  const enterprisePrice = (10.99 * rate).toFixed(2);
+
   return (
-    <Grid color="white" size={50}>
-      <div className=" mx-auto px-4 py-16 min-h-screen bg-black/[0.96] antialiased bg-grid-white/[0.02]">
-        <h1 className="text-4xl font-bold text-center mb-12 text-neutral-300">
-          Choose the Right Plan
-        </h1>
-        <div className=" flex justify-center text-neutral-300 mb-2">
-          If a payment method you can use is not available or you want to pay
-          directly, contact us here:&nbsp;
-          <Button
-            className=" bg-white text-black hover:bg-white-[0.9] "
-            asChild
-            size={'sm'}
-          >
-            <Link href={'https://api.whatsapp.com/send?phone=17959259'}>
-              <MessageSquareText />
-              WhatsApp
-            </Link>
-          </Button>
+    <section id="pricing" className="w-full py-12 md:py-24 lg:py-32">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="flex flex-col items-center justify-center space-y-4 text-center">
+          <div className="space-y-2">
+            <Badge variant="secondary">Pricing</Badge>
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+              Simple, transparent pricing
+            </h2>
+            <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              Choose the plan that fits your business size. All plans include
+              email and WhatsApp delivery.
+            </p>
+          </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3  gap-8 ">
-          {pricingTiers.map((plan, index) => (
-            <Card
-              key={index}
-              className={`flex flex-col  bg-black/[0.96] antialiased bg-grid-white/[0.02] transition-all duration-300 hover:shadow-lg hover:shadow-white`}
-            >
-              <CardHeader>
-                <CardTitle className="text-2xl text-neutral-300">
-                  {plan.name}
-                </CardTitle>
-                <CardDescription className="text-neutral-300 text-md">
-                  {plan.description}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="flex-grow text-neutral-300">
-                <p className="text-4xl font-bold mb-6">
-                  {plan.price}
-                  <span className="text-xl font-normal text-neutral-300">
-                    /month
-                  </span>
-                </p>
-                <ul className="space-y-2">
-                  {plan.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="flex items-center">
-                      <Check className="h-5 w-5 text-primary mr-2 text-white" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-              <CardFooter>
-                <Button className="w-full" variant={'outline'} asChild>
-                  <Link href={plan.checkoutLink} target="_blank">
-                    Get Started
+        <div className="grid gap-6 mt-12 md:grid-cols-3 md:gap-8">
+          <Card>
+            <CardHeader>
+              <CardTitle>Starter</CardTitle>
+              <CardDescription>
+                Best for freelancers and small businesses with limited
+                transactions.{' '}
+              </CardDescription>
+              <div className="text-4xl font-bold">
+                {symbol}
+                {starterPrice}
+                <span className="text-lg font-normal text-gray-500">
+                  /month
+                </span>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <ul className="space-y-2">
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-600" />
+                  <span>Up to 300 receipts per month</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-600" />
+                  <span>WhatsApp & email receipts</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-600" />
+                  <span>Unlimited sales list</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-600" />
+                  <span>Basic email support</span>
+                </li>
+              </ul>
+              {code === 'BTN' ? (
+                <Button className="w-full" variant="outline" asChild>
+                  <Link
+                    href="https://api.whatsapp.com/send?phone=97517959259&text=Hi+Light+WebX%2C+I'm+interested+in+the+Starter+Plan.+Please+help+me+get+started."
+                    target="_blank"
+                  >
+                    Start Free Trial
                   </Link>
                 </Button>
-              </CardFooter>
-            </Card>
-          ))}
+              ) : (
+                <Button className="w-full" variant="outline" asChild>
+                  <Link
+                    href="https://2quickpaper.lemonsqueezy.com/buy/3a59d41f-b7c4-4079-80f9-d437bf4fe853"
+                    target="_blank"
+                  >
+                    Start Free Trial
+                  </Link>
+                </Button>
+              )}
+            </CardContent>
+          </Card>
+
+          <Card className="border-green-200 relative">
+            <Badge className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-green-600">
+              Most Popular
+            </Badge>
+            <CardHeader>
+              <CardTitle>Growth</CardTitle>
+              <CardDescription>
+                Great for businesses that need a balance between affordability
+                and volume.
+              </CardDescription>
+              <div className="text-4xl font-bold">
+                {symbol}
+                {growthPrice}
+                <span className="text-lg font-normal text-gray-500">
+                  /month
+                </span>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <ul className="space-y-2">
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-600" />
+                  <span>Up to 2,500 receipts/month</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-600" />
+                  <span>WhatsApp & email receipts</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-600" />
+                  <span>Unlimited sales list</span>
+                </li>
+
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-600" />
+                  <span>Priority email support</span>
+                </li>
+              </ul>
+              {code === 'BTN' ? (
+                <Button className="w-full" variant="outline" asChild>
+                  <Link
+                    href="https://api.whatsapp.com/send?phone=97517959259&text=Hi+Light+WebX%2C+I'm+interested+in+the+Growth+Plan.+Please+help+me+get+started."
+                    target="_blank"
+                  >
+                    Start Free Trial
+                  </Link>
+                </Button>
+              ) : (
+                <Button className="w-full" variant="outline" asChild>
+                  <Link
+                    href="https://2quickpaper.lemonsqueezy.com/buy/9bd0b65a-b293-434c-95fd-0ab31eb8f126"
+                    target="_blank"
+                  >
+                    Start Free Trial
+                  </Link>
+                </Button>
+              )}
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Enterprise</CardTitle>
+              <CardDescription>
+                For businesses that need higher limits and advanced features.
+              </CardDescription>
+              <div className="text-4xl font-bold">
+                {symbol}
+                {enterprisePrice}
+                <span className="text-lg font-normal text-gray-500">
+                  /month
+                </span>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <ul className="space-y-2">
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-600" />
+                  <span>Unlimited receipts per month</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-600" />
+                  <span>Unlimited sales list</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-600" />
+                  <span>WhatsApp & email receipts</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-600" />
+                  <span>Priority support</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-600" />
+                  <span>First to get access to new features</span>
+                </li>
+              </ul>
+              {code === 'BTN' ? (
+                <Button className="w-full" variant="outline" asChild>
+                  <Link
+                    href="https://api.whatsapp.com/send?phone=97517959259&text=Hi+Light+WebX%2C+I'm+interested+in+the+enterprise+Plan.+Please+help+me+get+started."
+                    target="_blank"
+                  >
+                    Start Free Trial
+                  </Link>
+                </Button>
+              ) : (
+                <Button className="w-full" variant="outline" asChild>
+                  <Link
+                    href="https://2quickpaper.lemonsqueezy.com/buy/9f1f3e6a-4649-4478-9cdd-9d4680e707c9"
+                    target="_blank"
+                  >
+                    Start Free Trial
+                  </Link>
+                </Button>
+              )}
+            </CardContent>
+          </Card>
         </div>
       </div>
-    </Grid>
+    </section>
   );
 }

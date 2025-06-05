@@ -1,43 +1,71 @@
-import { Spotlight } from '@/components/ui/Spotlight';
-import Grid from '@/components/ui/grid';
 import { HeroVideoDialogDemo } from './HeroVideo';
-import GetStartedButton from './GetStartedButton';
 import Link from 'next/link';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { ArrowRight, CheckCircle, Mail, MessageCircle } from 'lucide-react';
 export default function HeroSection() {
   return (
-    <>
-      <Grid color="white" size={50}>
-        <div className="h-[40rem] w-full  flex md:items-center md:justify-center min-h-screen bg-black/[0.96] antialiased bg-grid-white/[0.02] relative overflow-hidden">
-          <Spotlight
-            className="-top-40 left-0 md:left-60 md:-top-20"
-            fill="white"
-          />
-          <div className=" p-4 max-w-7xl  mx-auto relative z-10  w-full pt-20 md:pt-0">
-            <h1 className="text-4xl md:text-7xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50">
-              Improve Your Service with BillsToTrack
-            </h1>
-            <p className="mt-4 font-normal text-base text-neutral-300 max-w-lg text-center mx-auto">
-              Enhance your service by instantly delivering payment receipts
-              directly to your customers&apos; WhatsApp or email. This efficient
-              solution simplifies your workflow, saves time, and provides a
-              seamless experience for both you and your customers.
-            </p>
-            <p className="mt-4 font-normal text-base text-neutral-300 max-w-lg text-center mx-auto">
-              *Looking for serious investors, contact{' '}
-              <Link href="/home/contact" className="underline">
-                here.
-              </Link>
-            </p>
-
-            <div className="mt-10 flex items-center justify-center gap-x-6">
-              <GetStartedButton />
+    <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-green-50 to-blue-50">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="grid gap-12 lg:grid-cols-2 items-center">
+          {/* Text Content */}
+          <div className="flex flex-col justify-center space-y-4">
+            <div className="space-y-2">
+              <Badge className="bg-green-100 text-green-800 hover:bg-green-100">
+                🌱 Go Paperless Today
+              </Badge>
+              <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
+                Send Digital Receipts in{' '}
+                <span className="text-green-600">Seconds</span>
+              </h1>
+              <p className="max-w-[600px] text-gray-500 md:text-xl">
+                Transform your business with instant digital receipts delivered
+                via email and WhatsApp. Save money, save trees, and delight your
+                customers.
+              </p>
             </div>
-            <div className="flex justify-center mt-4">
+            <div className="flex flex-col gap-2 min-[400px]:flex-row">
+              <Button size="lg" className="bg-green-600 hover:bg-green-700">
+                <Link href="/home/sign-up">Start Free Trial</Link>
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
+            <div className="flex items-center gap-4 text-sm text-gray-500 flex-wrap">
+              <div className="flex items-center gap-1">
+                <CheckCircle className="h-4 w-4 text-green-600" />
+                <span>No setup fees</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <CheckCircle className="h-4 w-4 text-green-600" />
+                <span>Cancel anytime</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Video Content */}
+          <div className="flex justify-center">
+            <div className="relative w-full max-w-md sm:max-w-lg lg:max-w-xl">
               <HeroVideoDialogDemo />
+              {/* Email Sent Badge */}
+              <div className="absolute -bottom-4 -left-4 bg-white p-4 rounded-lg shadow-lg border">
+                <div className="flex items-center gap-2">
+                  <Mail className="h-5 w-5 text-blue-600" />
+                  <span className="text-sm font-medium">Email Sent</span>
+                </div>
+              </div>
+              {/* WhatsApp Delivered Badge */}
+              <div className="absolute -top-4 -right-4 bg-white p-4 rounded-lg shadow-lg border">
+                <div className="flex items-center gap-2">
+                  <MessageCircle className="h-5 w-5 text-green-600" />
+                  <span className="text-sm font-medium">
+                    WhatsApp Delivered
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </Grid>
-    </>
+      </div>
+    </section>
   );
 }

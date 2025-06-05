@@ -2,82 +2,142 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Menu, X } from 'lucide-react';
-import { ActionLinks, navItems } from './segments';
-import Grid from '../ui/grid';
+import { Menu, X, Zap } from 'lucide-react';
+import { Button } from '../ui/button';
+import clsx from 'clsx';
+import { useAuth } from '@clerk/nextjs';
+import SignedInLinks from './segments/ActionLinks/SignedInLinks';
 
 export default function PublicNavigation() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const pathname = usePathname();
-
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { isSignedIn } = useAuth();
   return (
-    <Grid color="white" size={50}>
-      <div className="flex justify-center bg-black/[0.96] antialiased bg-grid-white/[0.02] p-4 relative">
-        <nav className="bg-white/90 backdrop-blur-3xl sticky top-0 z-40 w-full md:w-1/2 lg:w-1/2 xl:w-1/2 border-b border-b-slate-200 dark:border-b-slate-700 rounded-full px-4">
-          <div className="container mx-auto sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between h-16">
-              <Link
-                href="/"
-                className="flex-shrink-0 text-2xl font-bold text-primary"
-              >
-                BillsToTrack
-              </Link>
+    <>
+      <header className="px-4 lg:px-6 h-16 flex items-center justify-between border-b fixed top-0 left-0 right-0 z-50 bg-white">
+        <Link href="/" className="flex items-center justify-center">
+          <Zap className="h-8 w-8 text-green-600" />
+          <span className="ml-2 text-2xl font-bold text-gray-900">
+            Bills To Track
+          </span>
+        </Link>
 
-              <div className="hidden md:flex items-center space-x-4">
-                {navItems.map((link) => (
-                  <Link
-                    key={link.link}
-                    href={link.link}
-                    className={`px-3 py-2 text-lg font-bold rounded-md  ${
-                      pathname === link.link
-                        ? 'text-black outline outline-1 outline-black'
-                        : 'text-black font-bold hover:text-primary hover:bg-accent'
-                    }`}
-                  >
-                    {link.name}
-                  </Link>
-                ))}
-                <ActionLinks />
-              </div>
+        {/* Hamburger Button (Mobile) */}
+        <button
+          className="lg:hidden p-2"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          {isMobileMenuOpen ? (
+            <X className="h-6 w-6" />
+          ) : (
+            <Menu className="h-6 w-6" />
+          )}
+        </button>
 
-              {/* Mobile Menu Button */}
-              <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-muted-foreground hover:text-primary hover:bg-accent focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+        {/* Desktop Menu */}
+        <nav className="hidden lg:flex ml-auto gap-4 sm:gap-6 items-center">
+          <Link
+            href="/home#features"
+            className="text-sm font-medium hover:text-green-600 transition-colors"
+          >
+            Features
+          </Link>
+          <Link
+            href="/home#pricing"
+            className="text-sm font-medium hover:text-green-600 transition-colors"
+          >
+            Pricing
+          </Link>
+          <Link
+            href="/home#faq"
+            className="text-sm font-medium hover:text-green-600 transition-colors"
+          >
+            FAQ
+          </Link>
+          {isSignedIn ? (
+            <SignedInLinks />
+          ) : (
+            <>
+              {' '}
+              <Button variant="outline" size="sm" asChild>
+                <Link href="/home/sign-in">Sign In</Link>
+              </Button>
+              <Button
+                size="sm"
+                className="bg-green-600 hover:bg-green-700"
+                asChild
               >
-                <span className="sr-only">Open main menu</span>
-                {isMenuOpen ? (
-                  <X className="block h-6 w-6" aria-hidden="true" />
-                ) : (
-                  <Menu className="block h-6 w-6" aria-hidden="true" />
-                )}
-              </button>
-            </div>
-          </div>
+                <Link href="/home/sign-up">Get Started</Link>
+              </Button>
+            </>
+          )}
         </nav>
+      </header>
 
-        {/* Mobile Menu (Moves Outside of Nav) */}
-        {isMenuOpen && (
-          <div className="absolute top-20 left-0 w-full bg-white shadow-lg z-20 rounded-lg p-4 md:hidden">
-            {navItems.map((link) => (
-              <Link
-                key={link.link}
-                href={link.link}
-                className={`block px-3 py-2 text-base font-medium rounded-md mb-2 ${
-                  pathname === link.link
-                    ? 'text-white bg-primary w-40'
-                    : 'text-muted-foreground hover:text-primary hover:bg-accent '
-                }`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {link.name}
-              </Link>
-            ))}
-            <ActionLinks />
-          </div>
+      {/* Mobile Menu (Dropdown) */}
+      <div
+        className={clsx(
+          'lg:hidden fixed top-16 left-0 right-0 z-40 px-4 py-4 bg-white transition-transform duration-300 ease-in-out shadow-md',
+          isMobileMenuOpen ? 'translate-y-0' : '-translate-y-full'
         )}
+      >
+        <nav className="flex flex-col gap-2 max-h-[80vh] overflow-y-auto">
+          <Link
+            href="/home#features"
+            className="text-sm font-medium hover:text-green-600 transition-colors py-2"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Features
+          </Link>
+          <Link
+            href="/home#pricing"
+            className="text-sm font-medium hover:text-green-600 transition-colors py-2"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Pricing
+          </Link>
+          <Link
+            href="/home#faq"
+            className="text-sm font-medium hover:text-green-600 transition-colors py-2"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            FAQ
+          </Link>
+          <Button
+            variant="outline"
+            size="sm"
+            asChild
+            className="w-full text-sm py-2"
+          >
+            <Link
+              href="/home/sign-in"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Sign In
+            </Link>
+          </Button>
+          <Button
+            size="sm"
+            className="w-full text-sm bg-green-600 hover:bg-green-700 py-2"
+            asChild
+          >
+            <Link
+              href="/home/sign-up"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Get Started
+            </Link>
+          </Button>
+        </nav>
       </div>
-    </Grid>
+
+      {/* Overlay (Optional for UX) */}
+      {isMobileMenuOpen && (
+        <div
+          className="fixed inset-0 bg-black/30 backdrop-blur-sm z-30 lg:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+    </>
   );
 }
