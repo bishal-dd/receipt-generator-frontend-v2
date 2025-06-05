@@ -129,7 +129,11 @@ export default function PricingSection() {
                 </li>
               </ul>
               {code === 'BTN' ? (
-                <Button className="w-full" variant="outline" asChild>
+                <Button
+                  className="w-full bg-green-600 hover:bg-green-700 text-white"
+                  variant="outline"
+                  asChild
+                >
                   <Link
                     href="https://api.whatsapp.com/send?phone=97517959259&text=Hi+Light+WebX%2C+I'm+interested+in+the+Growth+Plan.+Please+help+me+get+started."
                     target="_blank"
@@ -138,7 +142,11 @@ export default function PricingSection() {
                   </Link>
                 </Button>
               ) : (
-                <Button className="w-full" variant="outline" asChild>
+                <Button
+                  className="w-full bg-green-600 hover:bg-green-700 text-white"
+                  variant="outline"
+                  asChild
+                >
                   <Link
                     href="https://2quickpaper.lemonsqueezy.com/buy/9bd0b65a-b293-434c-95fd-0ab31eb8f126"
                     target="_blank"
