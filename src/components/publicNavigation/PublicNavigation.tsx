@@ -54,6 +54,12 @@ export default function PublicNavigation() {
           >
             FAQ
           </Link>
+          <Link
+            href="/home/validate"
+            className="text-sm font-medium hover:text-green-600 transition-colors"
+          >
+            Validate
+          </Link>
           {isSignedIn ? (
             <SignedInLinks />
           ) : (
