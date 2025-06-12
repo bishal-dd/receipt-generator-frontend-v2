@@ -103,6 +103,13 @@ export default function PublicNavigation() {
             Pricing
           </Link>
           <Link
+            href="/home/validate"
+            className="text-sm font-medium hover:text-green-600 transition-colors py-2"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Validate
+          </Link>
+          <Link
             href="/home#faq"
             className="text-sm font-medium hover:text-green-600 transition-colors py-2"
             onClick={() => setIsMobileMenuOpen(false)}
