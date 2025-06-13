@@ -2,11 +2,12 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Menu, X, Zap } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { Button } from '../ui/button';
 import clsx from 'clsx';
 import { useAuth } from '@clerk/nextjs';
 import SignedInLinks from './segments/ActionLinks/SignedInLinks';
+import Image from 'next/image';
 
 export default function PublicNavigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -15,10 +16,14 @@ export default function PublicNavigation() {
     <>
       <header className="px-4 lg:px-6 h-16 flex items-center justify-between border-b fixed top-0 left-0 right-0 z-50 bg-white">
         <Link href="/" className="flex items-center justify-center">
-          <Zap className="h-8 w-8 text-green-600" />
-          <span className="ml-2 text-2xl font-bold text-gray-900">
-            Bills To Track
-          </span>
+          <Image
+            src={'/images/logo.webp'}
+            width="200"
+            height="200"
+            alt="Logo"
+            className="ml-2"
+            priority={true}
+          />
         </Link>
 
         {/* Hamburger Button (Mobile) */}

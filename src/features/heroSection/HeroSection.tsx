@@ -25,9 +25,15 @@ export default function HeroSection() {
               </p>
             </div>
             <div className="flex flex-col gap-2 min-[400px]:flex-row">
-              <Button size="lg" className="bg-green-600 hover:bg-green-700">
-                <Link href="/home/sign-up">Start Free Trial</Link>
-                <ArrowRight className="ml-2 h-4 w-4" />
+              <Button
+                size="lg"
+                className="bg-green-600 hover:bg-green-700"
+                asChild
+              >
+                <Link href="/home/sign-up">
+                  Start Free Trial
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
               </Button>
             </div>
             <div className="flex items-center gap-4 text-sm text-gray-500 flex-wrap">
