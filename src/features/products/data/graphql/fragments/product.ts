@@ -6,5 +6,6 @@ graphql(`
     name
     unit_price
     user_id
+    quantity
   }
 `);

@@ -39,18 +39,21 @@ export default function Products() {
   const handleAddProduct = async (
     userId: string,
     name: string,
-    unit_price: number
+    unit_price: number,
+    quantity: number
   ) => {
     const product = await createProductAsync({
       user_id: userId,
       name,
       unit_price,
+      quantity,
     });
     addProduct({
       id: product.id,
       name,
       unit_price,
       user_id: userId,
+      quantity,
     });
   };
   const handleDeleteProduct = (productId: string) => {
@@ -79,6 +82,7 @@ export default function Products() {
                   <TableHead>Sl.No</TableHead>
                   <TableHead className="w-[150px]">Name</TableHead>
                   <TableHead>Unit Price</TableHead>
+                  <TableHead>Quantity</TableHead>
                   <TableHead>Actions</TableHead>
                 </TableRow>
               </TableHeader>
@@ -90,6 +94,7 @@ export default function Products() {
                       {product.name}
                     </TableCell>
                     <TableCell>{product.unit_price}</TableCell>
+                    <TableCell>{product.quantity}</TableCell>
                     <TableCell>
                       <Button
                         variant={'ghost'}

@@ -6,6 +6,7 @@ export const searchProductsQuery = graphql(`
       name
       user_id
       unit_price
+      id
     }
   }
 `);

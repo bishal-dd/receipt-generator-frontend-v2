@@ -2,12 +2,7 @@ import { ProductFragmentFragment } from '@/gql/graphql';
 import { create } from 'zustand';
 
 interface ProductsState {
-  products: {
-    id: string;
-    name: string;
-    unit_price: number;
-    user_id: string;
-  }[];
+  products: ProductFragmentFragment[];
   setProducts: (products: ProductFragmentFragment[]) => void;
   addProduct: (product: ProductFragmentFragment) => void;
   deleteProduct: (productId: string) => void;

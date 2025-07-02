@@ -8,6 +8,7 @@ interface ProductOption {
   value: string;
   label: string;
   unitPrice: number;
+  id: string;
 }
 
 interface SearchableDropdownProps {

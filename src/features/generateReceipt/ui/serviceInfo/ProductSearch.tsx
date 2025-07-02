@@ -13,6 +13,7 @@ type ProductOption = {
   value: string;
   label: string;
   unitPrice: number;
+  id: string;
 };
 
 type Props = {
@@ -35,6 +36,7 @@ export function ProductSearch({ control, setValue, index }: Props) {
           value: product.name,
           label: product.name,
           unitPrice: product.unit_price,
+          id: product.id,
         }));
       } catch (error) {
         console.error('Error loading product options:', error);
@@ -51,6 +53,7 @@ export function ProductSearch({ control, setValue, index }: Props) {
         value: product.name,
         label: product.name,
         unitPrice: product.unit_price,
+        id: product.id,
       }));
       setDefaultOptions(data);
     })();
@@ -66,10 +69,16 @@ export function ProductSearch({ control, setValue, index }: Props) {
               loadOptions={loadOptions}
               value={
                 field.value
-                  ? { value: field.value, label: field.value, unitPrice: 0 }
+                  ? {
+                      value: field.value,
+                      label: field.value,
+                      unitPrice: 0,
+                      id: '',
+                    }
                   : null
               }
               onChange={(selectedOption) => {
+                console.log(selectedOption);
                 field.onChange(selectedOption ? selectedOption.value : '');
                 setValue(
                   `services.${index}.unitPrice`,

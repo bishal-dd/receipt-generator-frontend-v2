@@ -19,7 +19,8 @@ type Props = {
   handleAddProduct: (
     userId: string,
     name: string,
-    unit_price: number
+    unit_price: number,
+    quantity: number
   ) => Promise<void>;
 };
 
@@ -41,6 +42,10 @@ export function AddProductDialog({
     const productUnitPrice = (e.target as HTMLFormElement).elements.namedItem(
       'productUnitPrice'
     ) as HTMLInputElement;
+    const productQuantity = (e.target as HTMLFormElement).elements.namedItem(
+      'productQuantity'
+    ) as HTMLInputElement;
+
     if (!productName.value || !productUnitPrice.value) {
       toast.error('Please enter a product name and unit price');
       return;
@@ -48,7 +53,8 @@ export function AddProductDialog({
     await handleAddProduct(
       userId,
       productName.value,
-      Number(productUnitPrice.value)
+      Number(productUnitPrice.value),
+      Number(productQuantity.value)
     );
     toast.success('Product added successfully');
     handleClose();
@@ -75,6 +81,14 @@ export function AddProductDialog({
                   name="productUnitPrice"
                   id="productUnitPrice"
                   required
+                />
+              </div>
+              <div>
+                <label htmlFor="productQuantity">Quantity</label>
+                <Input
+                  type="number"
+                  name="productQuantity"
+                  id="productQuantity"
                 />
               </div>
             </div>
