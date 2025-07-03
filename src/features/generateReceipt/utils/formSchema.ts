@@ -22,6 +22,7 @@ export const receiptSchema = z.object({
   services: z
     .array(
       z.object({
+        id: z.string().optional(),
         description: z.string().min(1, 'Description is required.'),
         quantity: z.number().min(1, 'Quantity must be at least 1.'),
         unitPrice: z.number().min(0.01, 'Unit price must be greater than 0.'),
@@ -39,7 +40,7 @@ export const getDefaultFormValues = (): ReceiptFormData => ({
   paymentMethod: '',
   date: startOfDay(new Date()),
   paymentNote: '',
-  services: [{ description: '', quantity: 1, unitPrice: 0 }],
+  services: [{ description: '', quantity: 1, unitPrice: 0, id: '' }],
 });
 
 // Infer the schema type for TypeScript

@@ -78,12 +78,12 @@ export function ProductSearch({ control, setValue, index }: Props) {
                   : null
               }
               onChange={(selectedOption) => {
-                console.log(selectedOption);
                 field.onChange(selectedOption ? selectedOption.value : '');
                 setValue(
                   `services.${index}.unitPrice`,
                   selectedOption?.unitPrice || 0
                 );
+                setValue(`services.${index}.id`, selectedOption?.id || '');
               }}
               isLoading={false}
               defaultOptions={defaultOptions}

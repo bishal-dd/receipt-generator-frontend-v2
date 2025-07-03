@@ -106,6 +106,7 @@ export default function GenerateReceipt() {
 
     const Services = data.services.map((service) => {
       return {
+        id: service.id,
         description: service.description,
         quantity: service.quantity,
         rate: service.unitPrice,
@@ -142,6 +143,7 @@ export default function GenerateReceipt() {
     }
     const Services = data.services.map((service) => {
       return {
+        id: service.id,
         description: service.description,
         quantity: service.quantity,
         rate: service.unitPrice,
@@ -177,6 +179,7 @@ export default function GenerateReceipt() {
 
     const Services = data.services.map((service) => {
       return {
+        id: service.id,
         description: service.description,
         quantity: service.quantity,
         rate: service.unitPrice,
@@ -208,6 +211,7 @@ export default function GenerateReceipt() {
   const onSave = async (data: ReceiptFormData) => {
     const Services = data.services.map((service) => {
       return {
+        id: service.id,
         description: service.description,
         quantity: service.quantity,
         rate: service.unitPrice,

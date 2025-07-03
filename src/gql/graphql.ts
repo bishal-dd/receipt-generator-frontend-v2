@@ -22,6 +22,7 @@ export type Scalars = {
 export type CreateBulkService = {
   amount: Scalars['Float']['input'];
   description: Scalars['String']['input'];
+  id?: InputMaybe<Scalars['String']['input']>;
   quantity: Scalars['Int']['input'];
   rate: Scalars['Float']['input'];
 };
