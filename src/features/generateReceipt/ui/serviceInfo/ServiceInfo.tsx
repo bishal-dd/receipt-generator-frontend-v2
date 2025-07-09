@@ -75,7 +75,7 @@ export function ServiceInfo({
   const handleAppend = useCallback(
     (e: React.MouseEvent) => {
       e.preventDefault();
-      append({ description: '', quantity: 1, unitPrice: 0 });
+      append({ description: '', quantity: 1, unitPrice: 0, id: '' });
     },
     [append]
   );
