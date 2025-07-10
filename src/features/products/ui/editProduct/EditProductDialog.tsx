@@ -29,8 +29,8 @@ export function EditProductDialog({
   handleEditProduct,
 }: Props) {
   const [name, setName] = useState('');
-  const [unitPrice, setUnitPrice] = useState(0);
-  const [quantity, setQuantity] = useState(0);
+  const [unitPrice, setUnitPrice] = useState<number | string>(0);
+  const [quantity, setQuantity] = useState<number | string>(0);
 
   useEffect(() => {
     if (product) {
@@ -50,8 +50,8 @@ export function EditProductDialog({
     await handleEditProduct({
       ...product!,
       name,
-      unit_price: unitPrice,
-      quantity,
+      unit_price: Number(unitPrice),
+      quantity: Number(quantity),
     });
     toast.success('Product updated successfully');
     setIsModalOpen(false);
@@ -82,7 +82,11 @@ export function EditProductDialog({
                 id="productUnitPrice"
                 required
                 value={unitPrice}
-                onChange={(e) => setUnitPrice(Number(e.target.value))}
+                onChange={(e) =>
+                  setUnitPrice(
+                    e.target.value === '' ? '' : Number(e.target.value)
+                  )
+                }
               />
             </div>
             <div>
@@ -91,7 +95,11 @@ export function EditProductDialog({
                 type="number"
                 id="productQuantity"
                 value={quantity}
-                onChange={(e) => setQuantity(Number(e.target.value))}
+                onChange={(e) =>
+                  setQuantity(
+                    e.target.value === '' ? '' : Number(e.target.value)
+                  )
+                }
               />
             </div>
           </div>
