@@ -6,6 +6,7 @@ interface ProductsState {
   setProducts: (products: ProductFragmentFragment[]) => void;
   addProduct: (product: ProductFragmentFragment) => void;
   deleteProduct: (productId: string) => void;
+  editProduct: (product: ProductFragmentFragment) => void;
 }
 
 export const useProductsStore = create<ProductsState>()((set) => ({
@@ -16,5 +17,11 @@ export const useProductsStore = create<ProductsState>()((set) => ({
   deleteProduct: (productId) =>
     set((state) => ({
       products: state.products.filter((product) => product.id !== productId),
+    })),
+  editProduct: (product) =>
+    set((state) => ({
+      products: state.products.map((p) =>
+        p.id === product.id ? product : p
+      ) as ProductFragmentFragment[],
     })),
 }));

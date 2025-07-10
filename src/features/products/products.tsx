@@ -13,17 +13,31 @@ import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { useEffect, useState } from 'react';
 import { AddProductDialog } from './ui/addProduct';
 import { Loader } from '@/components/utils';
-import { useCreateProduct, useDeleteProduct } from './data/hooks';
+import {
+  useCreateProduct,
+  useDeleteProduct,
+  useUpdateProduct,
+} from './data/hooks';
 import { useProducts } from './data/hooks';
 import { useProductsStore } from './data/store';
-import { Trash2 } from 'lucide-react';
+import { Pencil, Trash2 } from 'lucide-react';
+import { EditProductDialog } from './ui/editProduct';
+import { ProductFragmentFragment } from '@/gql/graphql';
+import { toast } from 'sonner';
 
 export default function Products() {
   const { user } = useUser();
   const userId = user?.id;
   const [isAddProductModalOpen, setIsAddProductModalOpen] =
     useState<boolean>(false);
+  const [isEditProductModalOpen, setIsEditProductModalOpen] =
+    useState<boolean>(false);
+  const [productToEdit, setProductToEdit] =
+    useState<ProductFragmentFragment | null>(null);
+
   const { createProductAsync } = useCreateProduct();
+  const { updateProductAsync } = useUpdateProduct();
+
   const { deleteProduct } = useDeleteProduct();
   const { products } = useProducts();
   const {
@@ -56,6 +70,25 @@ export default function Products() {
       quantity,
     });
   };
+  const handleEditProduct = async (updatedProduct: ProductFragmentFragment) => {
+    try {
+      const response = await updateProductAsync({
+        id: updatedProduct.id,
+        name: updatedProduct.name,
+        unit_price: updatedProduct.unit_price,
+        quantity: updatedProduct.quantity,
+      });
+      console.log(response.updateProduct);
+      // Assuming response returns the updated product
+      useProductsStore
+        .getState()
+        .editProduct(response.updateProduct as ProductFragmentFragment);
+    } catch (error) {
+      console.error(error);
+      toast.error('Failed to update product');
+    }
+  };
+
   const handleDeleteProduct = (productId: string) => {
     deleteProduct(productId);
     deleteProductStore(productId);
@@ -99,6 +132,15 @@ export default function Products() {
                       <Button
                         variant={'ghost'}
                         onClick={() => {
+                          setProductToEdit(product);
+                          setIsEditProductModalOpen(true);
+                        }}
+                      >
+                        <Pencil className="text-green-500" />
+                      </Button>
+                      <Button
+                        variant={'ghost'}
+                        onClick={() => {
                           handleDeleteProduct(product.id);
                         }}
                       >
@@ -118,6 +160,13 @@ export default function Products() {
         isModalOpen={isAddProductModalOpen}
         setIsModalOpen={setIsAddProductModalOpen}
         handleAddProduct={handleAddProduct}
+      />
+      <EditProductDialog
+        userId={userId}
+        isModalOpen={isEditProductModalOpen}
+        setIsModalOpen={setIsEditProductModalOpen}
+        product={productToEdit}
+        handleEditProduct={handleEditProduct}
       />
     </>
   );
