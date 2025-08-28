@@ -162,7 +162,6 @@ export default function Products() {
         handleAddProduct={handleAddProduct}
       />
       <EditProductDialog
-        userId={userId}
         isModalOpen={isEditProductModalOpen}
         setIsModalOpen={setIsEditProductModalOpen}
         product={productToEdit}

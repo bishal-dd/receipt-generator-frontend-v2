@@ -14,7 +14,6 @@ import { Input } from '@/components/ui/input';
 import { ProductFragmentFragment } from '@/gql/graphql';
 
 type Props = {
-  userId: string;
   isModalOpen: boolean;
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
   product: ProductFragmentFragment | null;
@@ -22,7 +21,6 @@ type Props = {
 };
 
 export function EditProductDialog({
-  userId,
   isModalOpen,
   setIsModalOpen,
   product,

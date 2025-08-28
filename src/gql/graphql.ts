@@ -27,6 +27,31 @@ export type CreateBulkService = {
   rate: Scalars['Float']['input'];
 };
 
+export type CreateEncryptedReceipt = {
+  aes_iv?: InputMaybe<Scalars['String']['input']>;
+  aes_key_encrypted?: InputMaybe<Scalars['String']['input']>;
+  date: Scalars['Date']['input'];
+  is_receipt_send: Scalars['Boolean']['input'];
+  payment_method: Scalars['String']['input'];
+  payment_note?: InputMaybe<Scalars['String']['input']>;
+  receipt_name?: InputMaybe<Scalars['String']['input']>;
+  receipt_no: Scalars['String']['input'];
+  recipient_address?: InputMaybe<Scalars['String']['input']>;
+  recipient_email?: InputMaybe<Scalars['String']['input']>;
+  recipient_name?: InputMaybe<Scalars['String']['input']>;
+  recipient_phone?: InputMaybe<Scalars['String']['input']>;
+  total_amount: Scalars['String']['input'];
+  user_id: Scalars['ID']['input'];
+};
+
+export type CreateEncryptedService = {
+  amount: Scalars['String']['input'];
+  description: Scalars['String']['input'];
+  encrypted_receipt_id: Scalars['UUID']['input'];
+  quantity: Scalars['String']['input'];
+  rate: Scalars['String']['input'];
+};
+
 export type CreateProduct = {
   name: Scalars['String']['input'];
   quantity?: InputMaybe<Scalars['Int']['input']>;
@@ -92,29 +117,101 @@ export type DownloadPdf = {
   user_id: Scalars['ID']['input'];
 };
 
+export type EncryptedReceipt = {
+  __typename?: 'EncryptedReceipt';
+  EncryptedServices?: Maybe<Array<Maybe<EncryptedService>>>;
+  aes_iv?: Maybe<Scalars['String']['output']>;
+  aes_key_encrypted?: Maybe<Scalars['String']['output']>;
+  created_at: Scalars['DateTime']['output'];
+  date: Scalars['Date']['output'];
+  deleted_at?: Maybe<Scalars['DateTime']['output']>;
+  id: Scalars['UUID']['output'];
+  is_receipt_send: Scalars['Boolean']['output'];
+  payment_method: Scalars['String']['output'];
+  payment_note?: Maybe<Scalars['String']['output']>;
+  receipt_name?: Maybe<Scalars['String']['output']>;
+  receipt_no: Scalars['String']['output'];
+  recipient_address?: Maybe<Scalars['String']['output']>;
+  recipient_email?: Maybe<Scalars['String']['output']>;
+  recipient_name?: Maybe<Scalars['String']['output']>;
+  recipient_phone?: Maybe<Scalars['String']['output']>;
+  sub_total_amount?: Maybe<Scalars['String']['output']>;
+  tax_amount?: Maybe<Scalars['String']['output']>;
+  total_amount?: Maybe<Scalars['String']['output']>;
+  updated_at?: Maybe<Scalars['DateTime']['output']>;
+  user_id: Scalars['ID']['output'];
+};
+
+export type EncryptedReceiptConnection = {
+  __typename?: 'EncryptedReceiptConnection';
+  edges: Array<EncryptedReceiptEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int']['output'];
+};
+
+export type EncryptedReceiptEdge = {
+  __typename?: 'EncryptedReceiptEdge';
+  cursor: Scalars['String']['output'];
+  node: EncryptedReceipt;
+};
+
+export type EncryptedService = {
+  __typename?: 'EncryptedService';
+  aes_iv?: Maybe<Scalars['String']['output']>;
+  aes_key_encrypted?: Maybe<Scalars['String']['output']>;
+  amount: Scalars['String']['output'];
+  created_at: Scalars['DateTime']['output'];
+  deleted_at?: Maybe<Scalars['DateTime']['output']>;
+  description: Scalars['String']['output'];
+  encrypted_receipt_id: Scalars['UUID']['output'];
+  id: Scalars['UUID']['output'];
+  quantity: Scalars['String']['output'];
+  rate: Scalars['String']['output'];
+  updated_at?: Maybe<Scalars['DateTime']['output']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
+  createEncryptedReceipt: EncryptedReceipt;
+  createEncryptedService: EncryptedService;
   createProduct: Product;
   createProfile: Profile;
   createReceipt: Receipt;
   createService: Service;
   createUser: User;
+  deleteEncryptedReceipt: Scalars['Boolean']['output'];
+  deleteEncryptedService: Scalars['Boolean']['output'];
   deleteProduct: Scalars['Boolean']['output'];
   deleteProfile: Scalars['Boolean']['output'];
   deleteReceipt: Scalars['Boolean']['output'];
   deleteService: Scalars['Boolean']['output'];
   deleteUser: Scalars['Boolean']['output'];
+  downloadEncryptedReceiptPDFWithReceiptId: Scalars['String']['output'];
   downloadReceiptPDF: Scalars['String']['output'];
   downloadReceiptPDFWithReceiptId: Scalars['String']['output'];
   saveReceipt: Scalars['Boolean']['output'];
+  sendEncryptedReceiptPDFToEmailWithReceiptID: Scalars['Boolean']['output'];
+  sendEncryptedReceiptPDFToWhatsAppWithReceiptID: Scalars['Boolean']['output'];
   sendReceiptPDFToEmail: Scalars['Boolean']['output'];
   sendReceiptPDFToEmailWithReceiptId: Scalars['Boolean']['output'];
   sendReceiptPDFToWhatsApp: Scalars['Boolean']['output'];
   sendReceiptPDFToWhatsAppWithReceiptId: Scalars['Boolean']['output'];
+  updateEncryptedReceipt: Receipt;
+  updateEncryptedService: EncryptedService;
   updateProduct: Product;
   updateProfile: Profile;
   updateReceipt: Receipt;
   updateService: Service;
+};
+
+
+export type MutationCreateEncryptedReceiptArgs = {
+  input: CreateEncryptedReceipt;
+};
+
+
+export type MutationCreateEncryptedServiceArgs = {
+  input: CreateEncryptedService;
 };
 
 
@@ -143,6 +240,16 @@ export type MutationCreateUserArgs = {
 };
 
 
+export type MutationDeleteEncryptedReceiptArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationDeleteEncryptedServiceArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
 export type MutationDeleteProductArgs = {
   id: Scalars['ID']['input'];
 };
@@ -168,6 +275,12 @@ export type MutationDeleteUserArgs = {
 };
 
 
+export type MutationDownloadEncryptedReceiptPdfWithReceiptIdArgs = {
+  orginazationId: Scalars['String']['input'];
+  receiptId: Scalars['String']['input'];
+};
+
+
 export type MutationDownloadReceiptPdfArgs = {
   input: DownloadPdf;
 };
@@ -181,6 +294,20 @@ export type MutationDownloadReceiptPdfWithReceiptIdArgs = {
 
 export type MutationSaveReceiptArgs = {
   input: DownloadPdf;
+};
+
+
+export type MutationSendEncryptedReceiptPdfToEmailWithReceiptIdArgs = {
+  email: Scalars['String']['input'];
+  orginazationId: Scalars['String']['input'];
+  receiptId: Scalars['String']['input'];
+};
+
+
+export type MutationSendEncryptedReceiptPdfToWhatsAppWithReceiptIdArgs = {
+  orginazationId: Scalars['String']['input'];
+  phoneNumber: Scalars['String']['input'];
+  receiptId: Scalars['String']['input'];
 };
 
 
@@ -205,6 +332,16 @@ export type MutationSendReceiptPdfToWhatsAppWithReceiptIdArgs = {
   orginazationId: Scalars['String']['input'];
   phoneNumber: Scalars['String']['input'];
   receiptId: Scalars['String']['input'];
+};
+
+
+export type MutationUpdateEncryptedReceiptArgs = {
+  input: UpdateEncryptedReceipt;
+};
+
+
+export type MutationUpdateEncryptedServiceArgs = {
+  input: UpdateEncryptedService;
 };
 
 
@@ -269,6 +406,9 @@ export type Profile = {
 
 export type Query = {
   __typename?: 'Query';
+  encryptedReceipt?: Maybe<Receipt>;
+  encryptedReceipts: EncryptedReceiptConnection;
+  encryptedServiceByReceiptId?: Maybe<Array<Maybe<EncryptedService>>>;
   product?: Maybe<Product>;
   products?: Maybe<Array<Product>>;
   profile?: Maybe<Profile>;
@@ -281,6 +421,22 @@ export type Query = {
   serviceByReceiptId?: Maybe<Array<Maybe<Service>>>;
   user?: Maybe<User>;
   users: UserConnection;
+};
+
+
+export type QueryEncryptedReceiptArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryEncryptedReceiptsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryEncryptedServiceByReceiptIdArgs = {
+  receiptId: Scalars['ID']['input'];
 };
 
 
@@ -379,6 +535,13 @@ export type ReceiptEdge = {
   node: Receipt;
 };
 
+export type SearchEncryptedReceipt = {
+  __typename?: 'SearchEncryptedReceipt';
+  foundCount: Scalars['Int']['output'];
+  receipts: Array<EncryptedReceipt>;
+  totalCount: Scalars['Int']['output'];
+};
+
 export type SearchReceipt = {
   __typename?: 'SearchReceipt';
   foundCount: Scalars['Int']['output'];
@@ -429,6 +592,30 @@ export type Service = {
   rate: Scalars['Float']['output'];
   receipt_id: Scalars['UUID']['output'];
   updated_at?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type UpdateEncryptedReceipt = {
+  date?: InputMaybe<Scalars['Date']['input']>;
+  id: Scalars['UUID']['input'];
+  is_receipt_send?: InputMaybe<Scalars['Boolean']['input']>;
+  payment_method?: InputMaybe<Scalars['String']['input']>;
+  payment_note?: InputMaybe<Scalars['String']['input']>;
+  receipt_name?: InputMaybe<Scalars['String']['input']>;
+  receipt_no?: InputMaybe<Scalars['String']['input']>;
+  recipient_address?: InputMaybe<Scalars['String']['input']>;
+  recipient_email?: InputMaybe<Scalars['String']['input']>;
+  recipient_name?: InputMaybe<Scalars['String']['input']>;
+  recipient_phone?: InputMaybe<Scalars['String']['input']>;
+  total_amount?: InputMaybe<Scalars['Float']['input']>;
+  user_id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type UpdateEncryptedService = {
+  amount?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['UUID']['input'];
+  quantity?: InputMaybe<Scalars['String']['input']>;
+  rate?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UpdateProduct = {
@@ -595,6 +782,8 @@ export type ProductsQuery = { __typename?: 'Query', products?: Array<(
     & { ' $fragmentRefs'?: { 'ProductFragmentFragment': ProductFragmentFragment } }
   )> | null };
 
+export type EncryptedReceiptFragmentFragment = { __typename?: 'Receipt', id: any, receipt_name?: string | null, recipient_name?: string | null, recipient_phone?: string | null, recipient_email?: string | null, recipient_address?: string | null, receipt_no: string, user_id: string, date: any, payment_method: string, payment_note?: string | null, total_amount?: number | null, is_receipt_send: boolean } & { ' $fragmentName'?: 'EncryptedReceiptFragmentFragment' };
+
 export type ReceiptFragmentFragment = { __typename?: 'Receipt', id: any, receipt_name?: string | null, recipient_name?: string | null, recipient_phone?: string | null, recipient_email?: string | null, recipient_address?: string | null, receipt_no: string, user_id: string, date: any, payment_method: string, payment_note?: string | null, total_amount?: number | null, is_receipt_send: boolean } & { ' $fragmentName'?: 'ReceiptFragmentFragment' };
 
 export type DownloadReceiptPdfWithReceiptIdMutationVariables = Exact<{
@@ -660,6 +849,7 @@ export type GetUserReceiptsQuery = { __typename?: 'Query', receipts: { __typenam
 
 export const ProfileFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ProfileFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Profile"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"company_name"}},{"kind":"Field","name":{"kind":"Name","value":"logo_image"}},{"kind":"Field","name":{"kind":"Name","value":"phone_no"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"city"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"signature_image"}},{"kind":"Field","name":{"kind":"Name","value":"currency"}},{"kind":"Field","name":{"kind":"Name","value":"tax"}},{"kind":"Field","name":{"kind":"Name","value":"phone_number_country_code"}}]}}]} as unknown as DocumentNode<ProfileFragmentFragment, unknown>;
 export const ProductFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ProductFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Product"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"unit_price"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}}]}}]} as unknown as DocumentNode<ProductFragmentFragment, unknown>;
+export const EncryptedReceiptFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"EncryptedReceiptFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Receipt"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"receipt_name"}},{"kind":"Field","name":{"kind":"Name","value":"recipient_name"}},{"kind":"Field","name":{"kind":"Name","value":"recipient_phone"}},{"kind":"Field","name":{"kind":"Name","value":"recipient_email"}},{"kind":"Field","name":{"kind":"Name","value":"recipient_address"}},{"kind":"Field","name":{"kind":"Name","value":"receipt_no"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"payment_method"}},{"kind":"Field","name":{"kind":"Name","value":"payment_note"}},{"kind":"Field","name":{"kind":"Name","value":"total_amount"}},{"kind":"Field","name":{"kind":"Name","value":"is_receipt_send"}}]}}]} as unknown as DocumentNode<EncryptedReceiptFragmentFragment, unknown>;
 export const ReceiptFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ReceiptFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Receipt"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"receipt_name"}},{"kind":"Field","name":{"kind":"Name","value":"recipient_name"}},{"kind":"Field","name":{"kind":"Name","value":"recipient_phone"}},{"kind":"Field","name":{"kind":"Name","value":"recipient_email"}},{"kind":"Field","name":{"kind":"Name","value":"recipient_address"}},{"kind":"Field","name":{"kind":"Name","value":"receipt_no"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"payment_method"}},{"kind":"Field","name":{"kind":"Name","value":"payment_note"}},{"kind":"Field","name":{"kind":"Name","value":"total_amount"}},{"kind":"Field","name":{"kind":"Name","value":"is_receipt_send"}}]}}]} as unknown as DocumentNode<ReceiptFragmentFragment, unknown>;
 export const DownloadReceiptPdfDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DownloadReceiptPDF"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DownloadPDF"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"downloadReceiptPDF"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}]}]}}]} as unknown as DocumentNode<DownloadReceiptPdfMutation, DownloadReceiptPdfMutationVariables>;
 export const SaveReceiptDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SaveReceipt"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DownloadPDF"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"saveReceipt"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}]}]}}]} as unknown as DocumentNode<SaveReceiptMutation, SaveReceiptMutationVariables>;
