@@ -6,7 +6,7 @@ export const sendReceiptToWhatsAppWithReceiptIdMutation = graphql(`
     $orginazationId: String!
     $phoneNumber: String!
   ) {
-    sendReceiptPDFToWhatsAppWithReceiptId(
+    sendEncryptedReceiptPDFToWhatsAppWithReceiptID(
       receiptId: $receiptId
       orginazationId: $orginazationId
       phoneNumber: $phoneNumber

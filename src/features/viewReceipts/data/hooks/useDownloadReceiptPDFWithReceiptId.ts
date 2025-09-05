@@ -36,7 +36,8 @@ export function useDownloadReceiptPDFWithReceiptId() {
       receiptId,
       orginazationId,
     });
-    return response.downloadReceiptPDFWithReceiptId;
+    console.log(response);
+    return response.downloadEncryptedReceiptPDFWithReceiptId;
   };
 
   return {

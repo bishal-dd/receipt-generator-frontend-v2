@@ -5,7 +5,7 @@ export const downloadReceiptPDFWithReceiptIdMutation = graphql(`
     $receiptId: String!
     $orginazationId: String!
   ) {
-    downloadReceiptPDFWithReceiptId(
+    downloadEncryptedReceiptPDFWithReceiptId(
       receiptId: $receiptId
       orginazationId: $orginazationId
     )

@@ -6,7 +6,7 @@ export const sendReceiptToEmailWithReceiptIdMutation = graphql(`
     $orginazationId: String!
     $email: String!
   ) {
-    sendReceiptPDFToEmailWithReceiptId(
+    sendEncryptedReceiptPDFToEmailWithReceiptID(
       receiptId: $receiptId
       orginazationId: $orginazationId
       email: $email
