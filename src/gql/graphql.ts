@@ -16,7 +16,9 @@ export type Scalars = {
   Float: { input: number; output: number; }
   Date: { input: any; output: any; }
   DateTime: { input: any; output: any; }
+  JSON: { input: any; output: any; }
   UUID: { input: any; output: any; }
+  Upload: { input: any; output: any; }
 };
 
 export type CreateBulkService = {
@@ -188,20 +190,18 @@ export type Mutation = {
   deleteUser: Scalars['Boolean']['output'];
   downloadEncryptedReceiptPDFWithReceiptId: Scalars['String']['output'];
   downloadReceiptPDF: Scalars['String']['output'];
-  downloadReceiptPDFWithReceiptId: Scalars['String']['output'];
   saveReceipt: Scalars['Boolean']['output'];
   sendEncryptedReceiptPDFToEmailWithReceiptID: Scalars['Boolean']['output'];
   sendEncryptedReceiptPDFToWhatsAppWithReceiptID: Scalars['Boolean']['output'];
   sendReceiptPDFToEmail: Scalars['Boolean']['output'];
-  sendReceiptPDFToEmailWithReceiptId: Scalars['Boolean']['output'];
   sendReceiptPDFToWhatsApp: Scalars['Boolean']['output'];
-  sendReceiptPDFToWhatsAppWithReceiptId: Scalars['Boolean']['output'];
   updateEncryptedReceipt: Receipt;
   updateEncryptedService: EncryptedService;
   updateProduct: Product;
   updateProfile: Profile;
   updateReceipt: Receipt;
   updateService: Service;
+  verifyReceiptFile: Scalars['Boolean']['output'];
 };
 
 
@@ -286,12 +286,6 @@ export type MutationDownloadReceiptPdfArgs = {
 };
 
 
-export type MutationDownloadReceiptPdfWithReceiptIdArgs = {
-  orginazationId: Scalars['String']['input'];
-  receiptId: Scalars['String']['input'];
-};
-
-
 export type MutationSaveReceiptArgs = {
   input: DownloadPdf;
 };
@@ -316,22 +310,8 @@ export type MutationSendReceiptPdfToEmailArgs = {
 };
 
 
-export type MutationSendReceiptPdfToEmailWithReceiptIdArgs = {
-  email: Scalars['String']['input'];
-  orginazationId: Scalars['String']['input'];
-  receiptId: Scalars['String']['input'];
-};
-
-
 export type MutationSendReceiptPdfToWhatsAppArgs = {
   input: SendReceiptPdfToWhatsApp;
-};
-
-
-export type MutationSendReceiptPdfToWhatsAppWithReceiptIdArgs = {
-  orginazationId: Scalars['String']['input'];
-  phoneNumber: Scalars['String']['input'];
-  receiptId: Scalars['String']['input'];
 };
 
 
@@ -362,6 +342,11 @@ export type MutationUpdateReceiptArgs = {
 
 export type MutationUpdateServiceArgs = {
   input: UpdateService;
+};
+
+
+export type MutationVerifyReceiptFileArgs = {
+  file: Scalars['Upload']['input'];
 };
 
 export type PageInfo = {
@@ -535,6 +520,16 @@ export type ReceiptEdge = {
   node: Receipt;
 };
 
+export type ReceiptFile = {
+  __typename?: 'ReceiptFile';
+  created_at: Scalars['DateTime']['output'];
+  encrypted_receipt_id: Scalars['UUID']['output'];
+  id: Scalars['UUID']['output'];
+  issued_at: Scalars['DateTime']['output'];
+  receipt_no: Scalars['String']['output'];
+  updated_at: Scalars['DateTime']['output'];
+};
+
 export type SearchEncryptedReceipt = {
   __typename?: 'SearchEncryptedReceipt';
   foundCount: Scalars['Int']['output'];
@@ -688,6 +683,14 @@ export type UserEdge = {
   node: User;
 };
 
+export type VerifyReceiptFile = {
+  __typename?: 'VerifyReceiptFile';
+  encrypted_receipt_id: Scalars['UUID']['output'];
+  id: Scalars['UUID']['output'];
+  issued_at: Scalars['DateTime']['output'];
+  receipt_no: Scalars['String']['output'];
+};
+
 export type ProfileFragmentFragment = { __typename?: 'Profile', id: any, company_name?: string | null, logo_image?: string | null, phone_no?: string | null, email?: string | null, address?: string | null, city?: string | null, title?: string | null, signature_image?: string | null, currency: string, tax: number, phone_number_country_code: string } & { ' $fragmentName'?: 'ProfileFragmentFragment' };
 
 export type DownloadReceiptPdfMutationVariables = Exact<{
@@ -782,6 +785,13 @@ export type ProductsQuery = { __typename?: 'Query', products?: Array<(
     & { ' $fragmentRefs'?: { 'ProductFragmentFragment': ProductFragmentFragment } }
   )> | null };
 
+export type VerifyReceiptFileMutationVariables = Exact<{
+  file: Scalars['Upload']['input'];
+}>;
+
+
+export type VerifyReceiptFileMutation = { __typename?: 'Mutation', verifyReceiptFile: boolean };
+
 export type ReceiptFragmentFragment = { __typename?: 'Receipt', id: any, receipt_name?: string | null, recipient_name?: string | null, recipient_phone?: string | null, recipient_email?: string | null, recipient_address?: string | null, receipt_no: string, user_id: string, date: any, payment_method: string, payment_note?: string | null, total_amount?: number | null, is_receipt_send: boolean } & { ' $fragmentName'?: 'ReceiptFragmentFragment' };
 
 export type DownloadReceiptPdfWithReceiptIdMutationVariables = Exact<{
@@ -859,6 +869,7 @@ export const CreateProductDocument = {"kind":"Document","definitions":[{"kind":"
 export const DeleteProductDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteProduct"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteProduct"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode<DeleteProductMutation, DeleteProductMutationVariables>;
 export const UpdateProductDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateProduct"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateProduct"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateProduct"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ProductFragment"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ProductFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Product"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"unit_price"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}}]}}]} as unknown as DocumentNode<UpdateProductMutation, UpdateProductMutationVariables>;
 export const ProductsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Products"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"products"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ProductFragment"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ProductFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Product"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"unit_price"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}}]}}]} as unknown as DocumentNode<ProductsQuery, ProductsQueryVariables>;
+export const VerifyReceiptFileDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"VerifyReceiptFile"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"file"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Upload"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"verifyReceiptFile"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"file"},"value":{"kind":"Variable","name":{"kind":"Name","value":"file"}}}]}]}}]} as unknown as DocumentNode<VerifyReceiptFileMutation, VerifyReceiptFileMutationVariables>;
 export const DownloadReceiptPdfWithReceiptIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DownloadReceiptPDFWithReceiptId"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"receiptId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orginazationId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"downloadEncryptedReceiptPDFWithReceiptId"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"receiptId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"receiptId"}}},{"kind":"Argument","name":{"kind":"Name","value":"orginazationId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orginazationId"}}}]}]}}]} as unknown as DocumentNode<DownloadReceiptPdfWithReceiptIdMutation, DownloadReceiptPdfWithReceiptIdMutationVariables>;
 export const SendReceiptPdfToEmailWithReceiptIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SendReceiptPDFToEmailWithReceiptId"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"receiptId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orginazationId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sendEncryptedReceiptPDFToEmailWithReceiptID"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"receiptId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"receiptId"}}},{"kind":"Argument","name":{"kind":"Name","value":"orginazationId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orginazationId"}}},{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}]}]}}]} as unknown as DocumentNode<SendReceiptPdfToEmailWithReceiptIdMutation, SendReceiptPdfToEmailWithReceiptIdMutationVariables>;
 export const SendReceiptPdfToWhatsAppWithReceiptIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SendReceiptPDFToWhatsAppWithReceiptId"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"receiptId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orginazationId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"phoneNumber"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sendEncryptedReceiptPDFToWhatsAppWithReceiptID"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"receiptId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"receiptId"}}},{"kind":"Argument","name":{"kind":"Name","value":"orginazationId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orginazationId"}}},{"kind":"Argument","name":{"kind":"Name","value":"phoneNumber"},"value":{"kind":"Variable","name":{"kind":"Name","value":"phoneNumber"}}}]}]}}]} as unknown as DocumentNode<SendReceiptPdfToWhatsAppWithReceiptIdMutation, SendReceiptPdfToWhatsAppWithReceiptIdMutationVariables>;

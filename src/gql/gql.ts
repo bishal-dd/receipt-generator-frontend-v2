@@ -27,6 +27,7 @@ const documents = {
     "\n  mutation DeleteProduct($id: ID!) {\n    deleteProduct(id: $id)\n  }\n": types.DeleteProductDocument,
     "\n  mutation UpdateProduct($input: UpdateProduct!) {\n    updateProduct(input: $input) {\n      ...ProductFragment\n    }\n  }\n": types.UpdateProductDocument,
     "\n  query Products {\n    products {\n      ...ProductFragment\n    }\n  }\n": types.ProductsDocument,
+    "\n  mutation VerifyReceiptFile($file: Upload!) {\n    verifyReceiptFile(file: $file)\n  }\n": types.VerifyReceiptFileDocument,
     "\n  fragment ReceiptFragment on Receipt {\n    id\n    receipt_name\n    recipient_name\n    recipient_phone\n    recipient_email\n    recipient_address\n    receipt_no\n    user_id\n    date\n    payment_method\n    payment_note\n    total_amount\n    is_receipt_send\n  }\n": types.ReceiptFragmentFragmentDoc,
     "\n  mutation DownloadReceiptPDFWithReceiptId(\n    $receiptId: String!\n    $orginazationId: String!\n  ) {\n    downloadEncryptedReceiptPDFWithReceiptId(\n      receiptId: $receiptId\n      orginazationId: $orginazationId\n    )\n  }\n": types.DownloadReceiptPdfWithReceiptIdDocument,
     "\n  mutation SendReceiptPDFToEmailWithReceiptId(\n    $receiptId: String!\n    $orginazationId: String!\n    $email: String!\n  ) {\n    sendEncryptedReceiptPDFToEmailWithReceiptID(\n      receiptId: $receiptId\n      orginazationId: $orginazationId\n      email: $email\n    )\n  }\n": types.SendReceiptPdfToEmailWithReceiptIdDocument,
@@ -103,6 +104,10 @@ export function graphql(source: "\n  mutation UpdateProduct($input: UpdateProduc
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query Products {\n    products {\n      ...ProductFragment\n    }\n  }\n"): (typeof documents)["\n  query Products {\n    products {\n      ...ProductFragment\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation VerifyReceiptFile($file: Upload!) {\n    verifyReceiptFile(file: $file)\n  }\n"): (typeof documents)["\n  mutation VerifyReceiptFile($file: Upload!) {\n    verifyReceiptFile(file: $file)\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
