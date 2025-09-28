@@ -1,5 +1,4 @@
 import { useMutation } from '@tanstack/react-query';
-import { verifyReceiptFileMutation } from '../graphql/mutations/verifyReceiptFile';
 
 export function useVerifyReceiptFile() {
   return useMutation({

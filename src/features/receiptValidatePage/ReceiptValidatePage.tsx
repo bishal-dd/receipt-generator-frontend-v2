@@ -9,7 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Progress } from '@/components/ui/progress';
 import {
@@ -17,18 +16,12 @@ import {
   FileText,
   CheckCircle,
   XCircle,
-  AlertTriangle,
   Loader2,
   ArrowLeft,
   Shield,
-  Calendar,
-  DollarSign,
-  Building,
-  Hash,
 } from 'lucide-react';
 import Link from 'next/link';
 import { useDropzone } from 'react-dropzone';
-import { extractReceiptID } from './util';
 import { useVerifyReceiptFile } from './data/hooks';
 
 interface ValidationResult {
