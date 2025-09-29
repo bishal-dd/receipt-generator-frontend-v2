@@ -106,8 +106,7 @@ export default function ReceiptValidatePage() {
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold mb-4">Validate Your Receipt</h1>
             <p className="text-gray-600 text-lg mb-6">
-              Upload a PDF receipt to check if it meets compliance standards and
-              contains all required information.
+              Upload a PDF receipt to check if it is issued by BillsToTrack
             </p>
           </div>
 
@@ -120,8 +119,7 @@ export default function ReceiptValidatePage() {
                   Upload Receipt
                 </CardTitle>
                 <CardDescription>
-                  Upload a PDF receipt to validate its compliance and
-                  completeness
+                  Upload a PDF receipt to validate
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -210,10 +208,7 @@ export default function ReceiptValidatePage() {
                   <CheckCircle className="h-5 w-5" />
                   Validation Results
                 </CardTitle>
-                <CardDescription>
-                  Detailed analysis of your receipt&apos;s compliance and
-                  completeness
-                </CardDescription>
+                <CardDescription>Analysis of your receipt</CardDescription>
               </CardHeader>
               <CardContent>
                 {!validationResult ? (
@@ -248,42 +243,6 @@ export default function ReceiptValidatePage() {
                 )}
               </CardContent>
             </Card>
-          </div>
-
-          {/* Features Section */}
-          <div className="mt-12">
-            <h2 className="text-2xl font-bold text-center mb-8">
-              Why Use Our Receipt Validator?
-            </h2>
-            <div className="grid gap-6 md:grid-cols-3">
-              <Card>
-                <CardHeader>
-                  <Shield className="h-8 w-8 text-green-600" />
-                  <CardTitle>Compliance Check</CardTitle>
-                  <CardDescription>
-                    Ensures your receipts meet tax and legal requirements
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CheckCircle className="h-8 w-8 text-blue-600" />
-                  <CardTitle>Completeness Verification</CardTitle>
-                  <CardDescription>
-                    Validates all required fields and information are present
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <FileText className="h-8 w-8 text-purple-600" />
-                  <CardTitle>Format Analysis</CardTitle>
-                  <CardDescription>
-                    Checks document structure and formatting standards
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-            </div>
           </div>
 
           {/* CTA Section */}
