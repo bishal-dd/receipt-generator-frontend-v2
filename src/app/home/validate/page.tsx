@@ -1,5 +1,5 @@
-import Validate from '@/pages/validate/Validate';
+import ReceiptValidatePage from '@/features/receiptValidatePage/ReceiptValidatePage';
 
 export default function page() {
-  return <Validate />;
+  return <ReceiptValidatePage />;
 }
