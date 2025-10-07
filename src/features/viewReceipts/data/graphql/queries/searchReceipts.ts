@@ -15,6 +15,7 @@ export const searchReceiptsQuery = graphql(`
     ) {
       totalCount
       foundCount
+      totalAmount
       receipts {
         id
         receipt_name

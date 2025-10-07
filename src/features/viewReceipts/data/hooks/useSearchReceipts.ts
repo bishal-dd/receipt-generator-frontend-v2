@@ -33,6 +33,7 @@ export function useSearchReceipts(
     receiptLoading,
     totalCount: data.searchReceipts.totalCount,
     foundCount: data.searchReceipts.foundCount,
+    totalAmount: data.searchReceipts.totalAmount,
     error,
   };
 }

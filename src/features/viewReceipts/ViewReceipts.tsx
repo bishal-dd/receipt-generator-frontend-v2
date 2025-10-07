@@ -91,7 +91,7 @@ export default function ViewReceipts() {
     useSendReceiptToEmailWithReceiptId();
   const { sendReceiptToWhatsAppWithReceiptId } =
     useSendReceiptToWhatsAppWithReceiptId();
-  const { receipts, foundCount } = useSearchReceipts(
+  const { receipts, foundCount, totalAmount } = useSearchReceipts(
     currentPage,
     Number(year),
     date ? format(date, 'yyyy-MM-dd') : null,
@@ -328,6 +328,13 @@ export default function ViewReceipts() {
                     </TableCell>
                   </TableRow>
                 ))}
+                {totalAmount > 0 && (
+                  <TableRow>
+                    <TableCell colSpan={6}>
+                      Total Amount: {totalAmount}
+                    </TableCell>
+                  </TableRow>
+                )}
               </TableBody>
             </Table>
             <ScrollBar orientation="horizontal" />

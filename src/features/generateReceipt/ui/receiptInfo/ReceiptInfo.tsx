@@ -127,7 +127,7 @@ export function ReceiptInfo({
               <FormItem>
                 <FormLabel>Receipt Number</FormLabel>
                 <FormControl>
-                  <Input placeholder="Receipt Number" {...field} />
+                  <Input placeholder="Receipt Number" {...field} disabled />
                 </FormControl>
                 <FormDescription>Unique Id for the receipt</FormDescription>
                 <FormMessage />
