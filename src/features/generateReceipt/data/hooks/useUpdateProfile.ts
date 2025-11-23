@@ -15,6 +15,8 @@ export function useUpdateProfile(profileId: string) {
     updateCompanyEmail: (email: string) => updateField('email', email),
     updateCompanyTitle: (title: string) => updateField('title', title),
     updateCompanyTax: (taxValue: number) => updateField('tax', taxValue),
+    updateCompanyDiscountPercentage: (discountValue: number) =>
+      updateField('discount_percentage', discountValue),
     updateCompanyCurrency: (currency: string) =>
       updateField('currency', currency),
     updateCompanySignature: (key: string) =>

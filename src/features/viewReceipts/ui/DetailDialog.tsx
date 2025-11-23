@@ -70,6 +70,10 @@ function ReceiptDetails({ receiptId }: { receiptId: string }) {
           <p>{receipt.sub_total_amount?.toFixed(2) || '-'}</p>
         </div>
         <div>
+          <h4 className="font-semibold">Discount Amount</h4>
+          <p>{receipt.discount_amount?.toFixed(2) || '-'}</p>
+        </div>
+        <div>
           <h4 className="font-semibold">Tax Amount</h4>
           <p>{receipt.tax_amount?.toFixed(2) || '-'}</p>
         </div>

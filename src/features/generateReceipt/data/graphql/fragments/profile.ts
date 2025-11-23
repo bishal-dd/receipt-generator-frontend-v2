@@ -13,6 +13,7 @@ graphql(`
     signature_image
     currency
     tax
+    discount_percentage
     phone_number_country_code
   }
 `);

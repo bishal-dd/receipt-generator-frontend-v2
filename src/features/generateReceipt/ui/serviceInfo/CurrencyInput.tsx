@@ -19,7 +19,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import cc from 'currency-codes';
-import { useCurrencyStore } from '@/store/currency';
+import { useProfileStore } from '@/features/generateReceipt/store';
 
 type Props = {
   defaultCurrency: string;
@@ -31,7 +31,7 @@ const currencies = cc.codes().map((code) => ({
 }));
 export function CurrencyInput({ defaultCurrency, onSelect }: Props) {
   const [open, setOpen] = React.useState(false);
-  const { currency, setCurrency } = useCurrencyStore();
+  const { currency, setCurrency } = useProfileStore();
   const onSelectCurrency = (value: string) => {
     setCurrency(value);
     onSelect(value);

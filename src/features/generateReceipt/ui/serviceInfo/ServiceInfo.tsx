@@ -25,7 +25,7 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form';
-import { CurrencyInput } from '@/components/utils';
+import { CurrencyInput } from './CurrencyInput';
 import { UpdateInput } from '@/components/utils';
 import { ProductSearch } from './ProductSearch';
 
@@ -37,7 +37,10 @@ type Props = {
   currency: string;
   onSelectCurrencyAction: (currency: string) => void;
   updateCompanyTaxAction: (taxValue: number) => void;
+  setDiscountPercentageAction: (discountPercentage: number) => void;
+  updateDiscountPercentageAction: (discountPercentage: number) => void;
   taxValue: number;
+  discountPercent: number;
   setTaxStateAction: (tax: number) => void;
   setValue: any;
 };
@@ -50,7 +53,10 @@ export function ServiceInfo({
   currency,
   onSelectCurrencyAction,
   updateCompanyTaxAction,
+  updateDiscountPercentageAction,
+  setDiscountPercentageAction,
   taxValue,
+  discountPercent,
   setTaxStateAction,
   setValue,
 }: Props) {
@@ -70,9 +76,34 @@ export function ServiceInfo({
       : 0;
   }, [services]);
 
+  // Convert % to rate
+  const discountRate = useMemo(() => discountPercent / 100, [discountPercent]);
+
+  // Discount amount
+  const discount = useMemo(
+    () => subtotal * discountRate,
+    [subtotal, discountRate]
+  );
+
+  // Subtotal after discount
+  const discountedSubtotal = useMemo(
+    () => subtotal - discount,
+    [subtotal, discount]
+  );
+
+  // Tax calculation (based on discounted subtotal)
   const taxRate = useMemo(() => taxValue / 100, [taxValue]);
-  const tax = useMemo(() => subtotal * taxRate, [subtotal, taxRate]);
-  const total = useMemo(() => subtotal * (1 + taxRate), [subtotal, taxRate]);
+  const tax = useMemo(
+    () => discountedSubtotal * taxRate,
+    [discountedSubtotal, taxRate]
+  );
+
+  // Final total
+  const total = useMemo(
+    () => discountedSubtotal + tax,
+    [discountedSubtotal, tax]
+  );
+
   const handleAppend = useCallback(
     (e: React.MouseEvent) => {
       e.preventDefault();
@@ -212,6 +243,32 @@ export function ServiceInfo({
               <span>{currency}</span>
             </span>
           </div>
+          <div className="flex justify-between items-center">
+            <span className="flex items-center gap-2">
+              <span>Discount</span>
+              <span>(</span>
+              <span>
+                <UpdateInput
+                  value={discountPercent === 0 ? '' : discountPercent}
+                  name="discount"
+                  className="text-center w-12 h-8 md:w-12"
+                  placeholder="Discount"
+                  onChange={(value: string | number) => {
+                    if (value === '') {
+                      value = 0;
+                    }
+                    setDiscountPercentageAction(Number(value));
+                    updateDiscountPercentageAction(Number(value));
+                  }}
+                  type="text"
+                />
+              </span>
+              <span> %):</span>
+              <span>{discount.toFixed(2)}</span>
+              <span>{currency}</span>
+            </span>
+          </div>
+
           <div className="flex justify-between items-center">
             <span className="flex items-center gap-2">
               <span>GST</span>

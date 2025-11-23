@@ -20,11 +20,7 @@ import {
 import { useEffect, useMemo, useState } from 'react';
 import { ReceiptFormData, useReceiptForm, getDefaultFormValues } from './utils';
 import { Form } from '@/components/ui/form';
-import {
-  useCurrencyStore,
-  useTaxStore,
-  usePhoneNumberCountryCodeStore,
-} from '@/store';
+import { useProfileStore } from '@/features/generateReceipt/store';
 import { toast } from 'sonner';
 import {
   SendReceiptPdfToWhatsApp,
@@ -49,19 +45,32 @@ export default function GenerateReceipt() {
   const { sendReceiptPDFToEmail } = useReceiptPDFToEmailMutation();
   const { downloadReceiptPDFAsync } = useDownloadReceiptPDFMutation();
   const { saveReceiptAsync, error: saveReceiptError } = useSaveReceipt();
-  const { currency, setCurrency } = useCurrencyStore();
-  const { tax, setTax } = useTaxStore();
-  const { phoneNumberCountryCode, setPhoneNumberCountryCode } =
-    usePhoneNumberCountryCodeStore();
+  const {
+    phoneNumberCountryCode,
+    setPhoneNumberCountryCode,
+    taxPercent,
+    setTaxPercent,
+    currency,
+    setCurrency,
+    discountPercent,
+    setDiscountPercent,
+  } = useProfileStore();
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   useEffect(() => {
     if (profile) {
       setPhoneNumberCountryCode(profile.phone_number_country_code);
       setCurrency(profile.currency);
-      setTax(profile.tax);
+      setTaxPercent(profile.tax);
+      setDiscountPercent(profile.discount_percentage);
     }
-  }, [setPhoneNumberCountryCode, setCurrency, setTax, profile]);
+  }, [
+    setPhoneNumberCountryCode,
+    setCurrency,
+    setTaxPercent,
+    setDiscountPercent,
+    profile,
+  ]);
   const {
     updateCompanyName,
     updateCompanyAddress,
@@ -72,6 +81,7 @@ export default function GenerateReceipt() {
     updateCompanyCurrency,
     updateCompanyTax,
     updatePhoneNumberCountryCode,
+    updateCompanyDiscountPercentage,
   } = useUpdateProfile(profile.id);
   const { receiptForm, fields, append, remove, handleSubmit, reset, setValue } =
     useReceiptForm();
@@ -286,8 +296,11 @@ export default function GenerateReceipt() {
                 currency={currency}
                 onSelectCurrencyAction={updateCompanyCurrency}
                 updateCompanyTaxAction={updateCompanyTax}
-                taxValue={tax}
-                setTaxStateAction={setTax}
+                taxValue={taxPercent}
+                setTaxStateAction={setTaxPercent}
+                discountPercent={discountPercent}
+                setDiscountPercentageAction={setDiscountPercent}
+                updateDiscountPercentageAction={updateCompanyDiscountPercentage}
                 setValue={setValue}
               />
             </CardContent>
