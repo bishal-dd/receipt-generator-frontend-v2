@@ -1,4 +1,5 @@
 'use client';
+
 import { Input } from '@/components/ui/input';
 import {
   Table,
@@ -31,26 +32,26 @@ import { ProductSearch } from './ProductSearch';
 type Props = {
   control: any; // Replace `any` with appropriate type
   fields: FieldArrayWithId<ReceiptFormData, 'services', 'id'>[];
-  append: UseFieldArrayAppend<ReceiptFormData, 'services'>;
-  remove: UseFieldArrayRemove;
+  appendAction: UseFieldArrayAppend<ReceiptFormData, 'services'>;
+  removeAction: UseFieldArrayRemove;
   currency: string;
-  onSelectCurrency: (currency: string) => void;
-  updateCompanyTax: (taxValue: number) => void;
+  onSelectCurrencyAction: (currency: string) => void;
+  updateCompanyTaxAction: (taxValue: number) => void;
   taxValue: number;
-  setTaxState: (tax: number) => void;
+  setTaxStateAction: (tax: number) => void;
   setValue: any;
 };
 
 export function ServiceInfo({
   fields,
-  append,
-  remove,
+  appendAction,
+  removeAction,
   control,
   currency,
-  onSelectCurrency,
-  updateCompanyTax,
+  onSelectCurrencyAction,
+  updateCompanyTaxAction,
   taxValue,
-  setTaxState,
+  setTaxStateAction,
   setValue,
 }: Props) {
   const services = useWatch({
@@ -75,17 +76,17 @@ export function ServiceInfo({
   const handleAppend = useCallback(
     (e: React.MouseEvent) => {
       e.preventDefault();
-      append({ description: '', quantity: 1, unitPrice: 0, id: '' });
+      appendAction({ description: '', quantity: 1, unitPrice: 0, id: '' });
     },
-    [append]
+    [appendAction]
   );
 
   const handleRemove = useCallback(
     (index: number) => (e: React.MouseEvent) => {
       e.preventDefault();
-      remove(index);
+      removeAction(index);
     },
-    [remove]
+    [removeAction]
   );
   return (
     <>
@@ -104,7 +105,7 @@ export function ServiceInfo({
               Total
               <CurrencyInput
                 defaultCurrency={currency}
-                onSelect={onSelectCurrency}
+                onSelect={onSelectCurrencyAction}
               />
             </TableHead>
           </TableRow>
@@ -213,7 +214,7 @@ export function ServiceInfo({
           </div>
           <div className="flex justify-between items-center">
             <span className="flex items-center gap-2">
-              <span>Tax</span>
+              <span>GST</span>
               <span>(</span>
               <span>
                 <UpdateInput
@@ -225,8 +226,8 @@ export function ServiceInfo({
                     if (value === '') {
                       value = 0;
                     }
-                    setTaxState(Number(value));
-                    updateCompanyTax(Number(value));
+                    setTaxStateAction(Number(value));
+                    updateCompanyTaxAction(Number(value));
                   }}
                   type="text"
                 />

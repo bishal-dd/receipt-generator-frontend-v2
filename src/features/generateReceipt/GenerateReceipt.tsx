@@ -281,13 +281,13 @@ export default function GenerateReceipt() {
               <ServiceInfo
                 control={receiptForm.control}
                 fields={fields}
-                append={append}
-                remove={remove}
+                appendAction={append}
+                removeAction={remove}
                 currency={currency}
-                onSelectCurrency={updateCompanyCurrency}
-                updateCompanyTax={updateCompanyTax}
+                onSelectCurrencyAction={updateCompanyCurrency}
+                updateCompanyTaxAction={updateCompanyTax}
                 taxValue={tax}
-                setTaxState={setTax}
+                setTaxStateAction={setTax}
                 setValue={setValue}
               />
             </CardContent>
