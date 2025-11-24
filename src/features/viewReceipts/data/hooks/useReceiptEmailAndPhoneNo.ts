@@ -21,7 +21,7 @@ export function useReceiptEmailAndPhoneNo(id: string) {
     },
   });
   return {
-    receiptEmailAndPhoneNo: data.receipt as Receipt,
+    receiptEmailAndPhoneNo: data.encryptedReceipt as Receipt,
     receiptEmailAndPhoneNoLoading,
     error,
   };
