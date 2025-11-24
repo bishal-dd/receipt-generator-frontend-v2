@@ -2,7 +2,7 @@ import { graphql } from '@/gql';
 
 export const receiptQuery = graphql(`
   query Receipt($id: ID!) {
-    receipt(id: $id) {
+    encryptedReceipt(id: $id) {
       ...ReceiptFragment
       Services {
         id

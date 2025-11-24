@@ -29,6 +29,7 @@ type Props = {
 
 function ReceiptDetails({ receiptId }: { receiptId: string }) {
   const { receipt } = useReceipt(receiptId);
+  console.log(receipt);
 
   return (
     <div className="space-y-4">

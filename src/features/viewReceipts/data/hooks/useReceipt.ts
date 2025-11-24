@@ -18,7 +18,7 @@ export function useReceipt(id: string) {
     },
   });
   return {
-    receipt: data.receipt as Receipt,
+    receipt: data.encryptedReceipt as Receipt,
     receiptLoading,
     error,
   };
