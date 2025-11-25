@@ -4,9 +4,17 @@ import posthog from 'posthog-js';
 
 export default function ErrorTestPage() {
   const throwError = () => {
-    posthog.captureException(new Error('Test error from the Error Test Page!'));
+    try {
+      throw new Error('Test error from the Error Test Page!');
+    } catch (err: any) {
+      posthog.capture('$exception', {
+        error: err.message,
+        stack: err.stack,
+        source: 'ErrorTestPage',
+      });
 
-    throw new Error('Test error from the Error Test Page!');
+      throw err; // keep normal crash behavior
+    }
   };
 
   return (

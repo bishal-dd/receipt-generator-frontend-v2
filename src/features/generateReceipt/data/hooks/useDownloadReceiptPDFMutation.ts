@@ -14,8 +14,6 @@ export function useDownloadReceiptPDFMutation() {
       const res = await requestAPI(downloadReceiptPDFMutation, {
         input,
       });
-      console.log(res.downloadReceiptPDF);
-
       return res;
     },
     onError: (error: any) => receiptGenerationError(error, router),
