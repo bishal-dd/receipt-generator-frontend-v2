@@ -13,11 +13,7 @@ import { Badge } from '@/components/ui/badge';
 import useCurrency from '@/hooks/useCurrency';
 
 export default function PricingSection() {
-  const { symbol, rate, code } = useCurrency();
-
-  const starterPrice = (2.99 * rate).toFixed(0);
-  const growthPrice = (4.99 * rate).toFixed(0);
-  const enterprisePrice = (10.99 * rate).toFixed(0);
+  const { code } = useCurrency();
 
   return (
     <section id="pricing" className="w-full py-12 md:py-24 lg:py-32">
@@ -43,8 +39,7 @@ export default function PricingSection() {
                 transactions.{' '}
               </CardDescription>
               <div className="text-4xl font-bold">
-                {symbol}
-                {starterPrice}
+                {code === 'BTN' ? 'Nu. 299' : '$3.99'}
                 <span className="text-lg font-normal text-gray-500">
                   /month
                 </span>
@@ -54,7 +49,7 @@ export default function PricingSection() {
               <ul className="space-y-2">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 text-green-600" />
-                  <span>Up to 300 receipts per month</span>
+                  <span>Up to 200 receipts per month</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4 text-green-600" />
@@ -102,8 +97,7 @@ export default function PricingSection() {
                 and volume.
               </CardDescription>
               <div className="text-4xl font-bold">
-                {symbol}
-                {growthPrice}
+                {code === 'BTN' ? 'Nu. 499' : '$4.99'}
                 <span className="text-lg font-normal text-gray-500">
                   /month
                 </span>
@@ -166,8 +160,7 @@ export default function PricingSection() {
                 For businesses that need higher limits and advanced features.
               </CardDescription>
               <div className="text-4xl font-bold">
-                {symbol}
-                {enterprisePrice}
+                {code === 'BTN' ? 'Nu. 899' : '$9.99'}
                 <span className="text-lg font-normal text-gray-500">
                   /month
                 </span>
