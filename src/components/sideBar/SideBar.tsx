@@ -1,6 +1,5 @@
 'use client';
 import { Building, Receipt, List, ShoppingCart } from 'lucide-react';
-import { UserButton } from '@clerk/nextjs';
 import {
   Sidebar,
   SidebarContent,
