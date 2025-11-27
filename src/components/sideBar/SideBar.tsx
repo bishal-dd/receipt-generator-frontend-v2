@@ -14,6 +14,7 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 import Link from 'next/link';
+import CustomUserButton from './CustomUserButton';
 
 // Menu items.
 const items = [
@@ -48,7 +49,7 @@ export function SideBar() {
     }
   };
   return (
-    <Sidebar collapsible="icon" variant="floating">
+    <Sidebar collapsible="icon">
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>BillsToTrack</SidebarGroupLabel>
@@ -68,8 +69,8 @@ export function SideBar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
-        <UserButton />
+      <SidebarFooter className="p-2">
+        <CustomUserButton />
       </SidebarFooter>
     </Sidebar>
   );
