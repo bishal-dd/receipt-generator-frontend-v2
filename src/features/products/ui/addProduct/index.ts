@@ -1,1 +1,1 @@
-export * from './AddProductDialog';
+export * from '../Product/AddProductDialog';

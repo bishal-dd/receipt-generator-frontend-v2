@@ -2,12 +2,12 @@ import { useMutation } from '@tanstack/react-query';
 import { SendReceiptPdfToWhatsApp } from '@/gql/graphql';
 import { sendReceiptPDFToWhatsAppMutation } from '../graphql/mutations/sendReceiptPDFToWhatsAppMutation';
 import { useRequestAPI } from '@/utils';
-import { useRouter } from 'next/navigation';
-import { receiptGenerationError } from '../../utils';
+import { useReceiptGenerationError } from '../../utils';
 
 export function useReceiptPDFToWhatsAppMutation() {
   const requestAPI = useRequestAPI();
-  const router = useRouter();
+  const handleReceiptError = useReceiptGenerationError();
+
   const mutation = useMutation({
     mutationFn: async (input: SendReceiptPdfToWhatsApp) => {
       const res = await requestAPI(sendReceiptPDFToWhatsAppMutation, {
@@ -15,7 +15,7 @@ export function useReceiptPDFToWhatsAppMutation() {
       });
       return res;
     },
-    onError: (error: any) => receiptGenerationError(error, router),
+    onError: (error: any) => handleReceiptError(error),
   });
 
   const sendReceiptPDFToWhatsApp = (input: SendReceiptPdfToWhatsApp) => {

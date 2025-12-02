@@ -1,8 +1,8 @@
 import { graphql } from '@/gql';
 
 export const productsQuery = graphql(`
-  query Products {
-    products {
+  query Products($productType: String!) {
+    products(productType: $productType) {
       ...ProductFragment
     }
   }

@@ -2,6 +2,7 @@
 
 import { useClerk, useUser } from '@clerk/nextjs';
 import { LogOut, User } from 'lucide-react';
+import Image from 'next/image';
 import { useState, useRef, useEffect } from 'react';
 
 export default function CustomUserButton() {
@@ -35,7 +36,7 @@ export default function CustomUserButton() {
         className="flex items-center gap-3 w-full p-2 rounded-lg hover:bg-muted transition"
         onClick={() => setOpen((v) => !v)}
       >
-        <img
+        <Image
           src={user.imageUrl}
           alt={user.fullName || 'User'}
           className="h-8 w-8 rounded-full"

@@ -2,12 +2,11 @@ import { useMutation } from '@tanstack/react-query';
 import { SendReceiptPdfToEmail } from '@/gql/graphql';
 import { sendReceiptPDFToEmailMutation } from '../graphql/mutations/sendReceiptPDFToEmailMutation';
 import { useRequestAPI } from '@/utils';
-import { useRouter } from 'next/navigation';
-import { receiptGenerationError } from '../../utils';
+import { useReceiptGenerationError } from '../../utils';
 
 export function useReceiptPDFToEmailMutation() {
   const requestAPI = useRequestAPI();
-  const router = useRouter();
+  const handleReceiptError = useReceiptGenerationError();
 
   const mutation = useMutation({
     mutationFn: async (input: SendReceiptPdfToEmail) => {
@@ -15,7 +14,7 @@ export function useReceiptPDFToEmailMutation() {
         input,
       });
     },
-    onError: (error: any) => receiptGenerationError(error, router),
+    onError: (error: any) => handleReceiptError(error),
   });
 
   const sendReceiptPDFToEmail = (input: SendReceiptPdfToEmail) => {

@@ -1,3 +1,3 @@
 export * from './formSchema';
 export * from './useReceiptForm';
-export * from './error';
+export * from './useReceiptGenerationError';

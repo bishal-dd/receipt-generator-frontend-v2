@@ -2,12 +2,11 @@ import { useMutation } from '@tanstack/react-query';
 import { DownloadPdf } from '@/gql/graphql';
 import { downloadReceiptPDFMutation } from '../graphql/mutations/downloadReceiptPDFMutation';
 import { useRequestAPI } from '@/utils';
-import { useRouter } from 'next/navigation';
-import { receiptGenerationError } from '../../utils';
+import { useReceiptGenerationError } from '../../utils';
 
 export function useDownloadReceiptPDFMutation() {
   const requestAPI = useRequestAPI();
-  const router = useRouter();
+  const handleReceiptError = useReceiptGenerationError();
 
   const mutation = useMutation({
     mutationFn: async (input: DownloadPdf) => {
@@ -16,7 +15,7 @@ export function useDownloadReceiptPDFMutation() {
       });
       return res;
     },
-    onError: (error: any) => receiptGenerationError(error, router),
+    onError: (error: any) => handleReceiptError(error),
   });
 
   const downloadReceiptPDF = (input: DownloadPdf) => {
